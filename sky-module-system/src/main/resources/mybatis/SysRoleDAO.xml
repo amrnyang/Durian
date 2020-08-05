@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysRoleDAO">
+<mapper namespace="com.swing.sky.system.module.dao.SysRoleDAO">
     <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysRoleDO">
+               type="com.swing.sky.system.module.domain.SysRoleDO">
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
         <result column="is_deleted" jdbcType="BOOLEAN" property="deleted"/>
     </resultMap>
@@ -36,7 +36,7 @@
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.swing.sky.module.system.domain.SysRoleDO" useGeneratedKeys="true">
+            parameterType="com.swing.sky.system.module.domain.SysRoleDO" useGeneratedKeys="true">
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -58,7 +58,7 @@
             <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
         </trim>
     </insert>
-    <update id="update" parameterType="com.swing.sky.module.system.domain.SysRoleDO">
+    <update id="update" parameterType="com.swing.sky.system.module.domain.SysRoleDO">
         update
         <include refid="table_name"/>
         <set>
@@ -73,7 +73,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysRoleDO"
+    <select id="listByCondition" parameterType="com.swing.sky.system.module.domain.SysRoleDO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -97,7 +97,7 @@
         </where>
     </select>
 
-    <select id="listByConditionAndUserId" parameterType="com.swing.sky.module.system.domain.SysRoleDO"
+    <select id="listByConditionAndUserId" parameterType="com.swing.sky.system.module.domain.SysRoleDO"
             resultMap="BaseResultMap">
         select
         *

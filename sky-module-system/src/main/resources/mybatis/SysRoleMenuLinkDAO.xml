@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysRoleMenuLinkDAO">
-    <resultMap id="BaseResultMap" type="com.swing.sky.module.system.domain.SysRoleMenuLinkDO">
+<mapper namespace="com.swing.sky.system.module.dao.SysRoleMenuLinkDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.system.module.domain.SysRoleMenuLinkDO">
         <id column="role_id" jdbcType="BIGINT" property="roleId"/>
         <id column="menu_id" jdbcType="BIGINT" property="menuId"/>
     </resultMap>
-    <resultMap id="one_BaseResultMap" extends="com.swing.sky.module.system.dao.SysRoleDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysRoleDO">
+    <resultMap id="one_BaseResultMap" extends="com.swing.sky.system.module.dao.SysRoleDAO.BaseResultMap"
+               type="com.swing.sky.system.module.domain.SysRoleDO">
     </resultMap>
 
-    <resultMap id="two_BaseResultMap" extends="com.swing.sky.module.system.dao.SysMenuDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysMenuDO">
+    <resultMap id="two_BaseResultMap" extends="com.swing.sky.system.module.dao.SysMenuDAO.BaseResultMap"
+               type="com.swing.sky.system.module.domain.SysMenuDO">
     </resultMap>
 
     <sql id="table_name">sys_role_menu</sql>
@@ -24,17 +24,17 @@
     </sql>
 
     <sql id="one_table_name">
-        <include refid="com.swing.sky.module.system.dao.SysRoleDAO.table_name"/>
+        <include refid="com.swing.sky.system.module.dao.SysRoleDAO.table_name"/>
     </sql>
     <sql id="one_Base_Column_List">
-        <include refid="com.swing.sky.module.system.dao.SysRoleDAO.Base_Column_List"/>
+        <include refid="com.swing.sky.system.module.dao.SysRoleDAO.Base_Column_List"/>
     </sql>
 
     <sql id="two_table_name">
-        <include refid="com.swing.sky.module.system.dao.SysMenuDAO.table_name"/>
+        <include refid="com.swing.sky.system.module.dao.SysMenuDAO.table_name"/>
     </sql>
     <sql id="two_Base_Column_List">
-        <include refid="com.swing.sky.module.system.dao.SysMenuDAO.Base_Column_List"/>
+        <include refid="com.swing.sky.system.module.dao.SysMenuDAO.Base_Column_List"/>
     </sql>
 
 

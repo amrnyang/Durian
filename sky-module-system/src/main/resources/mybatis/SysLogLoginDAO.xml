@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysLogLoginDAO">
-    <resultMap id="BaseResultMap" type="com.swing.sky.module.system.domain.SysLogLoginDO">
+<mapper namespace="com.swing.sky.system.module.dao.SysLogLoginDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.system.module.domain.SysLogLoginDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="client_type" jdbcType="CHAR" property="clientType"/>
@@ -35,7 +35,7 @@
         </foreach>
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.swing.sky.module.system.domain.SysLogLoginDO" useGeneratedKeys="true">
+            parameterType="com.swing.sky.system.module.domain.SysLogLoginDO" useGeneratedKeys="true">
         insert into sys_log_login
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null">
@@ -96,7 +96,7 @@
             </if>
         </trim>
     </insert>
-    <update id="update" parameterType="com.swing.sky.module.system.domain.SysLogLoginDO">
+    <update id="update" parameterType="com.swing.sky.system.module.domain.SysLogLoginDO">
         update sys_log_login
         <set>
             <if test="username != null">
@@ -129,7 +129,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysLogLoginDO"
+    <select id="listByCondition" parameterType="com.swing.sky.system.module.domain.SysLogLoginDO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

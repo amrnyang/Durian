@@ -35,7 +35,7 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://127.0.0.1:3306/sky?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+        url: jdbc:mysql://127.0.0.1:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
         username: root
         password: 123456
       # 从库数据源

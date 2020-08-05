@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysNoticeDAO">
+<mapper namespace="com.swing.sky.system.module.dao.SysNoticeDAO">
     <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysNoticeDO">
+               type="com.swing.sky.system.module.domain.SysNoticeDO">
         <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
         <result column="notice_type" jdbcType="CHAR" property="noticeType"/>
         <result column="notice_content" jdbcType="VARCHAR" property="noticeContent"/>
@@ -37,7 +37,7 @@
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.swing.sky.module.system.domain.SysNoticeDO" useGeneratedKeys="true">
+            parameterType="com.swing.sky.system.module.domain.SysNoticeDO" useGeneratedKeys="true">
         insert into <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="noticeTitle != null">
@@ -64,7 +64,7 @@
             <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
         </trim>
     </insert>
-    <update id="update" parameterType="com.swing.sky.module.system.domain.SysNoticeDO">
+    <update id="update" parameterType="com.swing.sky.system.module.domain.SysNoticeDO">
         update <include refid="table_name"/>
         <set>
             <if test="noticeTitle != null">
@@ -80,7 +80,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysNoticeDO" resultMap="BaseResultMap">
+    <select id="listByCondition" parameterType="com.swing.sky.system.module.domain.SysNoticeDO" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from <include refid="table_name"/>

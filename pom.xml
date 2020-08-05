@@ -21,7 +21,9 @@
         <!--通用模块-->
         <module>sky-common</module>
         <!--框架基础结构-->
-        <module>sky-framework</module>
+        <module>sky-framework-system</module>
+        <!--题库框架-->
+        <module>sky-framework-tiku</module>
         <!--权限管理模块-->
         <module>sky-module-system</module>
         <!--题库模块基本类-->
@@ -65,7 +67,12 @@
             </dependency>
             <dependency>
                 <groupId>com.swing</groupId>
-                <artifactId>sky-framework</artifactId>
+                <artifactId>sky-framework-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-framework-tiku</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

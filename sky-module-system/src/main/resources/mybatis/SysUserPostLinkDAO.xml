@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysUserPostLinkDAO">
-    <resultMap id="BaseResultMap" type="com.swing.sky.module.system.domain.SysUserPostLinkDO">
+<mapper namespace="com.swing.sky.system.module.dao.SysUserPostLinkDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.system.module.domain.SysUserPostLinkDO">
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
         <id column="post_id" jdbcType="BIGINT" property="postId"/>
     </resultMap>
 
-    <resultMap id="one_BaseResultMap" extends="com.swing.sky.module.system.dao.SysUserDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysUserDO">
+    <resultMap id="one_BaseResultMap" extends="com.swing.sky.system.module.dao.SysUserDAO.BaseResultMap"
+               type="com.swing.sky.system.module.domain.SysUserDO">
     </resultMap>
 
-    <resultMap id="two_BaseResultMap" extends="com.swing.sky.module.system.dao.SysPostDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysPostDO">
+    <resultMap id="two_BaseResultMap" extends="com.swing.sky.system.module.dao.SysPostDAO.BaseResultMap"
+               type="com.swing.sky.system.module.domain.SysPostDO">
     </resultMap>
 
     <sql id="table_name">sys_user_post</sql>
@@ -25,17 +25,17 @@
     </sql>
 
     <sql id="one_table_name">
-        <include refid="com.swing.sky.module.system.dao.SysUserDAO.table_name"/>
+        <include refid="com.swing.sky.system.module.dao.SysUserDAO.table_name"/>
     </sql>
     <sql id="one_Base_Column_List">
-        <include refid="com.swing.sky.module.system.dao.SysUserDAO.Base_Column_List"/>
+        <include refid="com.swing.sky.system.module.dao.SysUserDAO.Base_Column_List"/>
     </sql>
 
     <sql id="two_table_name">
-        <include refid="com.swing.sky.module.system.dao.SysPostDAO.table_name"/>
+        <include refid="com.swing.sky.system.module.dao.SysPostDAO.table_name"/>
     </sql>
     <sql id="two_Base_Column_List">
-        <include refid="com.swing.sky.module.system.dao.SysPostDAO.Base_Column_List"/>
+        <include refid="com.swing.sky.system.module.dao.SysPostDAO.Base_Column_List"/>
     </sql>
 
 

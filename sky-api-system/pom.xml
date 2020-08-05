@@ -18,7 +18,7 @@
         <!--项目模块-->
         <dependency>
             <groupId>com.swing</groupId>
-            <artifactId>sky-framework</artifactId>
+            <artifactId>sky-framework-system</artifactId>
         </dependency>
     </dependencies>
 

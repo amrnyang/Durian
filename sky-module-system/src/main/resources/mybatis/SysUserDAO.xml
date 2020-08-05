@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.module.system.dao.SysUserDAO">
+<mapper namespace="com.swing.sky.system.module.dao.SysUserDAO">
     <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
-               type="com.swing.sky.module.system.domain.SysUserDO">
+               type="com.swing.sky.system.module.domain.SysUserDO">
         <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -43,7 +43,7 @@
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.swing.sky.module.system.domain.SysUserDO" useGeneratedKeys="true">
+            parameterType="com.swing.sky.system.module.domain.SysUserDO" useGeneratedKeys="true">
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -107,7 +107,7 @@
             <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
         </trim>
     </insert>
-    <update id="update" parameterType="com.swing.sky.module.system.domain.SysUserDO">
+    <update id="update" parameterType="com.swing.sky.system.module.domain.SysUserDO">
         update
         <include refid="table_name"/>
         <set>
@@ -143,7 +143,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysUserDO"
+    <select id="listByCondition" parameterType="com.swing.sky.system.module.domain.SysUserDO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -176,7 +176,7 @@
         </where>
     </select>
 
-    <select id="listByConditionAndUserId" parameterType="com.swing.sky.module.system.domain.SysUserDO"
+    <select id="listByConditionAndUserId" parameterType="com.swing.sky.system.module.domain.SysUserDO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
