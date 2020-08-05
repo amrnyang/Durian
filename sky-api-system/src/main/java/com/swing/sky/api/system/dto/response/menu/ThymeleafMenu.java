@@ -1,4 +1,4 @@
-package com.swing.sky.framework.web.dto.response.router;
+package com.swing.sky.api.system.dto.response.menu;
 
 import com.swing.sky.common.basic.BasicDO;
 import com.swing.sky.module.system.domain.SysMenuDO;

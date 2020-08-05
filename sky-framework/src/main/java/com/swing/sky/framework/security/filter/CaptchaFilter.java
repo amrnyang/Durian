@@ -1,7 +1,7 @@
 package com.swing.sky.framework.security.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.swing.sky.common.constant.SessionConstants;
+import com.swing.sky.common.constant.CaptchaConstants;
 import com.swing.sky.framework.task.AsyncTaskService;
 import com.swing.sky.framework.task.factory.AsyncTaskFactory;
 import com.swing.sky.framework.web.SkyResponse;
@@ -44,8 +44,8 @@ public class CaptchaFilter extends GenericFilterBean {
         if (request.getRequestURL().toString().endsWith(LOGIN_URL) && request.getMethod().equalsIgnoreCase(LOGIN_METHOD)) {
             String captcha = request.getParameter("captcha");
             //从session中获取验证码的uuid，然后删除该值
-            String captchaCodeValue = (String) ServletUtils.getSessionAttribute(SessionConstants.CAPTCHA);
-            ServletUtils.setSessionAttribute(SessionConstants.CAPTCHA, null);
+            String captchaCodeValue = (String) ServletUtils.getSessionAttribute(CaptchaConstants.CAPTCHA);
+            ServletUtils.setSessionAttribute(CaptchaConstants.CAPTCHA, null);
             if (captchaCodeValue == null) {
                 asyncTaskService.execute(asyncTaskFactory.recordLoginLog(false, "验证码失效"));
                 ServletUtils.renderString(JSON.toJSONString(SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "验证码失效")));

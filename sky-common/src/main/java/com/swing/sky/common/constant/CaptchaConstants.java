@@ -5,7 +5,7 @@ package com.swing.sky.common.constant;
  *
  * @author swing
  */
-public class SessionConstants {
+public class CaptchaConstants {
     /**
      * 验证码的uuid在session中的key
      */

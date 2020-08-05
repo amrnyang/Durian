@@ -1,6 +1,6 @@
 //package com.swing.sky.framework.security.service;
 //
-//import com.swing.sky.common.constant.SessionConstants;
+//import com.swing.sky.common.constant.CaptchaConstants;
 //import com.swing.sky.framework.web.utils.ServletUtils;
 //import com.swing.sky.framework.datasource.redis.RedisUtils;
 //import com.swing.sky.framework.task.AsyncTaskService;
@@ -53,8 +53,8 @@
 //     */
 //    public String login(String username, String password, String code) {
 //        //从session中获取验证码的uuid，然后删除session
-//        String uuid = (String) ServletUtils.getSessionAttribute(SessionConstants.CAPTCHA_UUID);
-//        ServletUtils.setSessionAttribute(SessionConstants.CAPTCHA_UUID, null);
+//        String uuid = (String) ServletUtils.getSessionAttribute(CaptchaConstants.CAPTCHA_UUID);
+//        ServletUtils.setSessionAttribute(CaptchaConstants.CAPTCHA_UUID, null);
 //        //检查验证码
 //        String captchaCodeKey = captchaService.getFolderName() + ":" + uuid;
 //        String captchaCodeValue = redisUtils.getObject(captchaCodeKey);

@@ -43,7 +43,7 @@ public class Swagger2Config {
     }
 
     /**
-     * 增加全局的Authorization 请求信息，提高测试效率
+     * 增加全局的Authorization 请求信息，提高测试效率(前后端分离时可用）
      *
      * @return 结果
      */

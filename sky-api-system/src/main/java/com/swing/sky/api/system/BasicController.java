@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.swing.sky.common.constant.PageConstants;
 import com.swing.sky.common.utils.SkySqlUtil;
 import com.swing.sky.common.utils.StringUtils;
-import com.swing.sky.framework.web.dto.response.table.TableDataInfo;
+import com.swing.sky.api.system.dto.response.table.TableDataInfo;
 import com.swing.sky.framework.web.utils.ServletUtils;
 
 import java.util.List;

@@ -1,9 +1,9 @@
-package com.swing.sky.framework.web.dto.response.tree;
+package com.swing.sky.api.system.dto.response.tree;
 
 import java.io.Serializable;
 
 /**
- * Ztree树结构实体类
+ * 树结构实体类(适用于勾选部门，菜单等数据）
  *
  * @author swing
  */

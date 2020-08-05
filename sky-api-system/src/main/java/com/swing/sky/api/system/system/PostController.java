@@ -7,7 +7,7 @@ import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.framework.excel.util.ExcelUtils;
 import com.swing.sky.framework.security.utils.UserDetailsUtil;
 import com.swing.sky.framework.web.SkyResponse;
-import com.swing.sky.framework.web.dto.response.table.TableDataInfo;
+import com.swing.sky.api.system.dto.response.table.TableDataInfo;
 import com.swing.sky.api.system.BasicController;
 import com.swing.sky.module.system.domain.SysPostDO;
 import com.swing.sky.module.system.service.SysPostService;

@@ -26,7 +26,6 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
 
-
 # Spring配置
 spring:
   # 数据源配置

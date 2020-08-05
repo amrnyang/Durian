@@ -1,4 +1,4 @@
-package com.swing.sky.framework.web.dto.response.table;
+package com.swing.sky.api.system.dto.response.table;
 
 import java.io.Serializable;
 import java.util.List;

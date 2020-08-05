@@ -1,6 +1,6 @@
 //package com.swing.sky.framework.security.service;
 //
-//import com.swing.sky.common.constant.SessionConstants;
+//import com.swing.sky.common.constant.CaptchaConstants;
 //import com.swing.sky.framework.web.utils.ServletUtils;
 //import com.swing.sky.common.utils.UUIDUtils;
 //import com.swing.sky.framework.datasource.redis.RedisUtils;
@@ -77,7 +77,7 @@
 //     * @return token中的信息
 //     */
 //    public Map<String, Object> resolverToken() {
-//        String token = (String) ServletUtils.getSessionAttribute(SessionConstants.TOKEN);
+//        String token = (String) ServletUtils.getSessionAttribute(CaptchaConstants.TOKEN);
 //        if (token != null) {
 //            //解析token
 //            return Jwts.parserBuilder()

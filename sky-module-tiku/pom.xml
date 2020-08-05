@@ -9,21 +9,16 @@
         <version>1.0.0-SNAPHOT</version>
     </parent>
 
-    <artifactId>sky-framework</artifactId>
+    <artifactId>sky-module-tiku</artifactId>
     <packaging>jar</packaging>
-    <description>晴空管理系统框架基础结构</description>
+    <description>题库模块基本类</description>
 
 
     <dependencies>
-        <!--项目模块 BEGIN-->
+        <!--通用模块-->
         <dependency>
             <groupId>com.swing</groupId>
-            <artifactId>sky-module-system</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.swing</groupId>
-            <artifactId>sky-module-tiku</artifactId>
+            <artifactId>sky-common</artifactId>
         </dependency>
     </dependencies>
-
 </project>

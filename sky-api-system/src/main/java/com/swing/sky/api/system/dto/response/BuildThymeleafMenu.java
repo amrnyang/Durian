@@ -1,7 +1,7 @@
-package com.swing.sky.framework.web.dto;
+package com.swing.sky.api.system.dto.response;
 
 import com.swing.sky.common.basic.BasicDO;
-import com.swing.sky.framework.web.dto.response.router.ThymeleafMenu;
+import com.swing.sky.api.system.dto.response.menu.ThymeleafMenu;
 import com.swing.sky.module.system.domain.SysMenuDO;
 
 import java.util.ArrayList;

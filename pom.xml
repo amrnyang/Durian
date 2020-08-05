@@ -24,10 +24,12 @@
         <module>sky-framework</module>
         <!--权限管理模块-->
         <module>sky-module-system</module>
+        <!--题库模块基本类-->
+        <module>sky-module-tiku</module>
         <!--接口模块-->
         <module>sky-api-system</module>
-        <!--测试模块-->
-        <module>sky-test</module>
+        <!--题库模块接口-->
+        <module>sky-api-tiku</module>
     </modules>
 
     <properties>
@@ -78,7 +80,12 @@
             </dependency>
             <dependency>
                 <groupId>com.swing</groupId>
-                <artifactId>sky-test</artifactId>
+                <artifactId>sky-module-tiku</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-api-tiku</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--模块版本 END-->

@@ -2,8 +2,8 @@ package com.swing.sky.api.system.common;
 
 import com.swing.sky.common.basic.BasicDO;
 import com.swing.sky.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.framework.web.dto.BuildThymeleafMenu;
-import com.swing.sky.framework.web.dto.response.router.ThymeleafMenu;
+import com.swing.sky.api.system.dto.response.BuildThymeleafMenu;
+import com.swing.sky.api.system.dto.response.menu.ThymeleafMenu;
 import com.swing.sky.module.system.domain.SysMenuDO;
 import com.swing.sky.module.system.domain.SysUserDO;
 import com.swing.sky.module.system.service.SysMenuService;

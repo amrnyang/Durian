@@ -1,4 +1,4 @@
-package com.swing.sky.framework.web.dto.response;
+package com.swing.sky.api.system.dto.response.choice;
 
 import com.swing.sky.module.system.domain.SysPostDO;
 
