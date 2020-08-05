@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysLogLoginDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.module.system.domain.SysLogLoginDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="client_type" jdbcType="CHAR" property="clientType"/>
+        <result column="is_success" jdbcType="BOOLEAN" property="success"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="os" jdbcType="VARCHAR" property="os"/>
+        <result column="browser" jdbcType="VARCHAR" property="browser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, username, client_type, is_success, message, ip, `location`, os, browser, 
+    create_time
+  </sql>
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_log_login
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+    delete from sys_log_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from sys_log_login
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysLogLoginDO" useGeneratedKeys="true">
+        insert into sys_log_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="clientType != null">
+                client_type,
+            </if>
+            <if test="success != null">
+                is_success,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="location != null">
+                `location`,
+            </if>
+            <if test="os != null">
+                os,
+            </if>
+            <if test="browser != null">
+                browser,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="clientType != null">
+                #{clientType,jdbcType=CHAR},
+            </if>
+            <if test="success != null">
+                #{success,jdbcType=BOOLEAN},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="browser != null">
+                #{browser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysLogLoginDO">
+        update sys_log_login
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="clientType != null">
+                client_type = #{clientType,jdbcType=CHAR},
+            </if>
+            <if test="success != null">
+                is_success = #{success,jdbcType=BOOLEAN},
+            </if>
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                os = #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="browser != null">
+                browser = #{browser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysLogLoginDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_log_login
+        <where>
+            <if test="condition != null">
+                <if test="condition.username != null and condition.username !='' ">
+                    and username like concat("%",#{condition.username,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.clientType != null and condition.clientType != ''">
+                    and client_type = #{condition.clientType,jdbcType=CHAR}
+                </if>
+                <if test="condition.ip != null and condition.ip != ''">
+                    and ip like concat("%",#{condition.ip,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.location != null and condition.location != ''">
+                    and location like concat("%",#{condition.location,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.os != null and condition.os != ''">
+                    and os like concat("%",#{condition.os,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.browser != null and condition.browser != ''">
+                    and browser like concat("%",#{condition.browser,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.success != null">
+                    and is_success = #{condition.success,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+</mapper>

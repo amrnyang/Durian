@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysMenuDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysMenuDO">
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="menu_type" jdbcType="CHAR" property="menuType"/>
+        <result column="authority_sign" jdbcType="VARCHAR" property="authoritySign"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="component" jdbcType="VARCHAR" property="component"/>
+        <result column="open_way" jdbcType="VARCHAR" property="openWay"/>
+        <result column="is_external_link" jdbcType="BOOLEAN" property="externalLink"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    </resultMap>
+
+    <sql id="table_name">sys_menu</sql>
+
+    <sql id="Base_Column_List">
+    sys_menu.id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.menu_type, sys_menu.authority_sign, sys_menu.path,sys_menu.component,sys_menu.open_way, sys_menu.is_external_link,sys_menu.icon, sys_menu.is_use,
+    sys_menu.order_num, sys_menu.create_by, sys_menu.create_time, sys_menu.update_by, sys_menu.update_time, sys_menu.remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysMenuDO" useGeneratedKeys="true">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="menuType != null">
+                menu_type,
+            </if>
+            <if test="authoritySign != null">
+                authority_sign,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="component != null">
+                component,
+            </if>
+            <if test="openWay != null">
+                open_way,
+            </if>
+            <if test="externalLink != null">
+                is_external_link,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuType != null">
+                #{menuType,jdbcType=CHAR},
+            </if>
+            <if test="authoritySign != null">
+                #{authoritySign,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="openWay != null">
+                #{openWay,jdbcType=VARCHAR},
+            </if>
+            <if test="externalLink != null">
+                #{externalLink,jdbcType=BOOLEAN},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysMenuDO">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuType != null">
+                menu_type = #{menuType,jdbcType=CHAR},
+            </if>
+            <if test="authoritySign != null">
+                authority_sign = #{authoritySign,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                component = #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="openWay != null">
+                open_way = #{openWay,jdbcType=VARCHAR},
+            </if>
+            <if test="externalLink != null">
+                is_external_link = #{externalLink,jdbcType=BOOLEAN},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysMenuDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.menuName != null and condition.menuName !='' ">
+                    and menu_name like concat("%",#{condition.menuName,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.parentId != null">
+                    and parent_id = #{condition.parentId,jdbcType=BIGINT}
+                </if>
+                <if test="condition.menuType != null and condition.menuType != ''">
+                    and menu_type = #{condition.menuType,jdbcType=CHAR}
+                </if>
+                <if test="condition.externalLink != null">
+                    and is_external_link = #{condition.externalLink,jdbcType=BOOLEAN}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="listByConditionAndUserId" parameterType="com.swing.sky.module.system.domain.SysMenuDO"
+            resultMap="BaseResultMap">
+        select
+        *
+        from
+        (
+        select distinct
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        sys_role_menu
+        on
+        sys_role_menu.menu_id=sys_menu.id
+        left join
+        sys_user_role
+        on
+        sys_user_role.role_id=sys_role_menu.role_id
+        where
+        sys_user_role.user_id=#{userId}
+        ) as user_role_menu
+        <where>
+            <if test="condition != null">
+                <if test="condition.menuName != null and condition.menuName !='' ">
+                    and menu_name like concat("%",#{condition.menuName,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.parentId != null">
+                    and parent_id = #{condition.parentId,jdbcType=BIGINT}
+                </if>
+                <if test="condition.menuType != null and condition.menuType != ''">
+                    and menu_type = #{condition.menuType,jdbcType=CHAR}
+                </if>
+                <if test="condition.externalLink != null">
+                    and is_external_link = #{condition.externalLink,jdbcType=BOOLEAN}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countChildrenMenuById" resultType="Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where parent_id = #{id}
+    </select>
+    <select id="countByParentIdAndMenuName" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where parent_id = #{parentId} and menu_name = #{menuName} and id != #{id}
+    </select>
+</mapper>

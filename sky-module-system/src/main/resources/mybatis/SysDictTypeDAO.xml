@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysDictTypeDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysDictTypeDO">
+        <result column="type_name" jdbcType="VARCHAR" property="typeName"/>
+        <result column="type_sign" jdbcType="VARCHAR" property="typeSign"/>
+    </resultMap>
+
+    <sql id="table_name">sys_dict_type</sql>
+
+    <sql id="Base_Column_List">
+    id, type_name, type_sign, is_use, order_num, create_by, create_time, update_by,
+    update_time, remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysDictTypeDO" useGeneratedKeys="true">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="typeSign != null">
+                type_sign,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeSign != null">
+                #{typeSign,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysDictTypeDO">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeSign != null">
+                type_sign = #{typeSign,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysDictTypeDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.typeName != null and condition.typeName != ''">
+                    and type_name like concat("%",#{condition.typeName,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.typeSign != null and condition.typeSign != ''">
+                    and type_sign like concat("%",#{condition.typeSign,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="countByTypeName" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where type_name = #{typeName} and id != #{id}
+    </select>
+    <select id="countByTypeSign" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where type_sign = #{typeSign} and id != #{id}
+    </select>
+    <select id="getByTypeSign" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where type_sign = #{typeSign,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

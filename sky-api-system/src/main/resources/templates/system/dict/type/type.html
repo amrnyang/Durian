@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('字典类型列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="type-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            类型名称：<input type="text" name="typeName"/>
+                        </li>
+                        <li>
+                            类型标识：<input type="text" name="typeSign"/>
+                        </li>
+                        <li>
+                            使用状态：<select name="use"
+                                         th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                    th:value="${dict.dataValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()">
+                <i class="fa fa-plus"></i> 新增
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-danger" onclick="clearCache()">
+                <i class="fa fa-refresh"></i> 清理缓存
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    const sys_use_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}]];
+    const prefix = ctx + "system/dict/type";
+
+    $(function () {
+        const options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            sortName: "orderNum",
+            sortOrder: "asc",
+            modalName: "类型",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: 'orderNum',
+                    title: '显示顺序',
+                    sortable: true
+                },
+                {
+                    field: 'typeName',
+                    title: '类型名称'
+                },
+                {
+                    field: 'typeSign',
+                    title: '类型标识',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return '<a href="javascript:void(0)" onclick="detail(\'' + row.id + '\')">' + value + '</a>';
+                    }
+                },
+                {
+                    field: 'use',
+                    title: '使用状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(sys_use_status, item.use);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
+                },
+                {
+                    field: "createBy",
+                    title: "创建者",
+                    visible: false
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: "updateBy",
+                    title: "更新者",
+                    visible: false
+                },
+                {
+                    field: "remark",
+                    title: "备注",
+                    visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        const actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*字典详细数据*/
+    function detail(typeId) {
+        const url = prefix + '/getDictData/' + typeId;
+        $.modal.open("字典数据：" + typeId, url, "1100", "650");
+    }
+
+    /* 清理字典缓存 */
+    function clearCache() {
+        $.operate.get(prefix + "/clearCache");
+    }
+
+
+</script>
+</body>
+</html>

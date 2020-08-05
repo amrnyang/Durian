@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('菜单权限')"/>
+    <th:block th:include="include :: ztree-css"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-role-edit">
+        <input id="roleId" name="roleId" type="hidden" th:value="${roleId}"/>
+        <div class="form-group" id="authDataScope">
+            <label class="col-sm-3 control-label">菜单权限</label>
+            <div class="col-sm-8">
+                <div id="menuTrees" class="ztree"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: ztree-js"/>
+<script type="text/javascript">
+
+    $(function () {
+        const url = ctx + "system/role/menuMultipleTree/" + $("input[name='roleId']").val();
+        const options = {
+            id: "menuTrees",
+            url: url,
+            check: {enable: true},
+            expandLevel: 0
+        };
+        $.tree.init(options);
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            edit();
+        }
+    }
+
+    function edit() {
+        const roleId = $("input[name='roleId']").val();
+        const menuIds = $.tree.getCheckedNodes();
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: ctx + "system/role/updateMenuLink",
+            data: {
+                "roleId": roleId,
+                "menuIds": menuIds
+            },
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

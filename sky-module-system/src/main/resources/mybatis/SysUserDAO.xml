@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysUserDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysUserDO">
+        <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="is_deleted" jdbcType="BOOLEAN" property="deleted"/>
+    </resultMap>
+
+    <sql id="table_name">sys_user</sql>
+
+    <sql id="Base_Column_List">
+    sys_user.id, sys_user.dept_id, sys_user.username, sys_user.`password`, sys_user.nick_name, sys_user.email, sys_user.phone, sys_user.gender, sys_user.avatar, sys_user.is_deleted,
+    sys_user.is_use, sys_user.order_num, sys_user.create_by, sys_user.create_time, sys_user.update_by, sys_user.update_time, sys_user.remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysUserDO" useGeneratedKeys="true">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="deleted != null">
+                is_deleted,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptId != null">
+                #{deptId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=CHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysUserDO">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="deptId !=  null">
+                dept_id = #{deptId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=CHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                is_deleted = #{deleted,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysUserDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.deptId != null">
+                    and dept_id = #{condition.deptId,jdbcType=BIGINT}
+                </if>
+                <if test="condition.username != null and condition.username !='' ">
+                    and username like concat("%",#{condition.username,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.phone != null and condition.phone != ''">
+                    and phone = #{condition.phone,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.gender != null and condition.gender != ''">
+                    and gender = #{condition.gender,jdbcType=CHAR}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="listByConditionAndUserId" parameterType="com.swing.sky.module.system.domain.SysUserDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="userId != null">
+                and dept_id in (
+                select id from sys_dept
+                left join sys_role_dept on sys_role_dept.dept_id=sys_dept.id
+                left join sys_user_role on sys_user_role.role_id=sys_role_dept.role_id
+                where
+                sys_user_role.user_id=#{userId}
+                )
+            </if>
+            <if test="condition != null">
+                <if test="condition.deptId != null">
+                    and dept_id = #{condition.deptId,jdbcType=BIGINT}
+                </if>
+                <if test="condition.username != null and condition.username !='' ">
+                    and username like concat("%",#{condition.username,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.phone != null and condition.phone != ''">
+                    and phone = #{condition.phone,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.gender != null and condition.gender != ''">
+                    and gender = #{condition.gender,jdbcType=CHAR}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getUserByUsername" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countByUserName" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where username = #{userName} and id != #{id}
+    </select>
+    <select id="countByPhone" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where phone = #{phone} and id != #{id}
+    </select>
+    <select id="countByEmail" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where email = #{email} and id != #{id}
+    </select>
+
+    <select id="listIdsByDeptIds" parameterType="long" resultType="long">
+        select id
+        from
+        <include refid="table_name"/>
+        where dept_id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="listByDeptIds" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where dept_id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

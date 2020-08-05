@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.common.basic.BasicDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.common.basic.BasicDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="is_use" jdbcType="BOOLEAN" property="use"/>
+        <result column="order_num" jdbcType="INTEGER" property="orderNum"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="common_insert_up">
+        <if test="use != null">
+            is_use,
+        </if>
+        <if test="orderNum != null">
+            order_num,
+        </if>
+        <if test="createBy != null">
+            create_by,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        <if test="updateBy != null">
+            update_by,
+        </if>
+        <if test="updateTime != null">
+            update_time,
+        </if>
+        <if test="remark != null">
+            remark,
+        </if>
+    </sql>
+
+    <sql id="common_insert_down">
+        <if test="use != null">
+            #{use,jdbcType=BOOLEAN},
+        </if>
+        <if test="orderNum != null">
+            #{orderNum,jdbcType=INTEGER},
+        </if>
+        <if test="createBy != null">
+            #{createBy,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+            #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateBy != null">
+            #{updateBy,jdbcType=VARCHAR},
+        </if>
+        <if test="updateTime != null">
+            #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="remark != null">
+            #{remark,jdbcType=VARCHAR},
+        </if>
+    </sql>
+
+    <sql id="common_update">
+        <if test="use != null">
+            is_use = #{use,jdbcType=BOOLEAN},
+        </if>
+        <if test="orderNum != null">
+            order_num = #{orderNum,jdbcType=INTEGER},
+        </if>
+        <if test="createBy != null">
+            create_by = #{createBy,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateBy != null">
+            update_by = #{updateBy,jdbcType=VARCHAR},
+        </if>
+        <if test="updateTime != null">
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="remark != null">
+            remark = #{remark,jdbcType=VARCHAR},
+        </if>
+    </sql>
+
+    <insert id="insert"></insert>
+    <update id="update"></update>
+    <delete id="deleteById"></delete>
+    <delete id="batchDeleteByIds"></delete>
+    <select id="getById" resultMap="BaseResultMap"></select>
+    <select id="listByCondition" resultMap="BaseResultMap"></select>
+</mapper>

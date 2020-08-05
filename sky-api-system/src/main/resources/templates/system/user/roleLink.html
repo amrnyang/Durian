@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('增加部门岗位关联')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-user-edit">
+        <input id="userId" name="userId" type="hidden" th:value="${userId}"/>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">分配岗位：</label>
+                    <div class="col-xs-10">
+                        <label th:each="role:${roles}" class="check-box">
+                            <input name="role" type="checkbox" th:value="${role.id}" th:text="${role.roleName}"
+                                   th:checked="${role.checked}" th:disabled="${role.use == 'false'}">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            edit();
+        }
+    }
+
+    function edit() {
+        const userId = $("input[name='userId']").val();
+        const roleIds = $.form.selectCheckeds("role")
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: ctx + "system/user/updateRoleLink",
+            data: {
+                "userId": userId,
+                "roleIds": roleIds
+            },
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

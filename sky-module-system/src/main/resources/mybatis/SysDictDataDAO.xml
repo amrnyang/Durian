@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysDictDataDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysDictDataDO">
+        <result column="type_id" jdbcType="BIGINT" property="typeId"/>
+        <result column="data_key" jdbcType="VARCHAR" property="dataKey"/>
+        <result column="data_value" jdbcType="VARCHAR" property="dataValue"/>
+        <result column="css_class" jdbcType="VARCHAR" property="cssClass"/>
+        <result column="list_class" jdbcType="VARCHAR" property="listClass"/>
+        <result column="is_default" jdbcType="BOOLEAN" property="isDefault"/>
+    </resultMap>
+
+    <sql id="table_name">sys_dict_data</sql>
+
+    <sql id="Base_Column_List">
+    id, type_id, data_key, data_value, css_class, list_class, is_default, is_use, 
+    order_num, create_by, create_time, update_by, update_time, remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysDictDataDO" useGeneratedKeys="true">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="dataKey != null">
+                data_key,
+            </if>
+            <if test="dataValue != null">
+                data_value,
+            </if>
+            <if test="cssClass != null">
+                css_class,
+            </if>
+            <if test="listClass != null">
+                list_class,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="dataKey != null">
+                #{dataKey,jdbcType=VARCHAR},
+            </if>
+            <if test="dataValue != null">
+                #{dataValue,jdbcType=VARCHAR},
+            </if>
+            <if test="cssClass != null">
+                #{cssClass,jdbcType=VARCHAR},
+            </if>
+            <if test="listClass != null">
+                #{listClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysDictDataDO">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="dataKey != null">
+                data_key = #{dataKey,jdbcType=VARCHAR},
+            </if>
+            <if test="dataValue != null">
+                data_value = #{dataValue,jdbcType=VARCHAR},
+            </if>
+            <if test="cssClass != null">
+                css_class = #{cssClass,jdbcType=VARCHAR},
+            </if>
+            <if test="listClass != null">
+                list_class = #{listClass,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysDictDataDO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.typeId != null">
+                    and type_id = #{condition.typeId,jdbcType=BIGINT}
+                </if>
+                <if test="condition.dataKey != null and condition.dataKey != ''">
+                    and data_key = #{condition.dataKey,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.dataValue != null and condition.dataValue != ''">
+                    and data_value = #{condition.dataValue,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.isDefault != null">
+                    and is_default = #{condition.isDefault,jdbcType=BOOLEAN}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="countByTypeIdAndDataKey" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where type_id = #{typeId} and data_key = #{dataKey} and id != #{id}
+    </select>
+</mapper>

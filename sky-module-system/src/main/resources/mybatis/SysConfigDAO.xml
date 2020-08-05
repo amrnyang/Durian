@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysConfigDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysConfigDO">
+        <result column="config_name" jdbcType="VARCHAR" property="configName"/>
+        <result column="config_key" jdbcType="VARCHAR" property="configKey"/>
+        <result column="config_value" jdbcType="VARCHAR" property="configValue"/>
+        <result column="is_inner" jdbcType="BOOLEAN" property="inner"/>
+    </resultMap>
+
+    <sql id="table_name">sys_config</sql>
+
+    <sql id="Base_Column_List">
+    id, config_name, config_key, config_value, is_inner, is_use, order_num, create_by, 
+    create_time, update_by, update_time, remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysConfigDO" useGeneratedKeys="true">
+        insert into
+        <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configName != null">
+                config_name,
+            </if>
+            <if test="configKey != null">
+                config_key,
+            </if>
+            <if test="configValue != null">
+                config_value,
+            </if>
+            <if test="inner != null">
+                is_inner,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configName != null">
+                #{configName,jdbcType=VARCHAR},
+            </if>
+            <if test="configKey != null">
+                #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="inner != null">
+                #{inner,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysConfigDO">
+        update
+        <include refid="table_name"/>
+        <set>
+            <if test="configName != null">
+                config_name = #{configName,jdbcType=VARCHAR},
+            </if>
+            <if test="configKey != null">
+                config_key = #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                config_value = #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="inner != null">
+                is_inner = #{inner,jdbcType=BOOLEAN},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysConfigDO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.configName != null and condition.configName !='' ">
+                    and config_name like concat("%",#{condition.configName,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.configKey != null and condition.configKey !='' ">
+                    and config_key like concat("%",#{condition.configKey,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.configValue != null and condition.configValue !='' ">
+                    and config_value like concat("%",#{condition.configValue,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.inner != null">
+                    and is_inner = #{condition.inner,jdbcType=BOOLEAN}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="countByConfigName" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where config_name = #{configName} and id != #{id}
+    </select>
+    <select id="countByConfigKey" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where config_key = #{configKey} and id != #{id}
+    </select>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysNoticeDAO">
+    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysNoticeDO">
+        <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
+        <result column="notice_type" jdbcType="CHAR" property="noticeType"/>
+        <result column="notice_content" jdbcType="VARCHAR" property="noticeContent"/>
+    </resultMap>
+
+    <sql id="table_name">sys_notice</sql>
+
+    <sql id="Base_Column_List">
+    id, notice_title, notice_type, notice_content, is_use, order_num, create_by, 
+    create_time, update_by, update_time, remark
+  </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        <include refid="table_name"/>
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="batchDeleteByIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.swing.sky.module.system.domain.SysNoticeDO" useGeneratedKeys="true">
+        insert into <include refid="table_name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noticeTitle != null">
+                notice_title,
+            </if>
+            <if test="noticeType != null">
+                notice_type,
+            </if>
+            <if test="noticeContent != null">
+                notice_content,
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="noticeTitle != null">
+                #{noticeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeType != null">
+                #{noticeType,jdbcType=CHAR},
+            </if>
+            <if test="noticeContent != null">
+                #{noticeContent,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.swing.sky.module.system.domain.SysNoticeDO">
+        update <include refid="table_name"/>
+        <set>
+            <if test="noticeTitle != null">
+                notice_title = #{noticeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeType != null">
+                notice_type = #{noticeType,jdbcType=CHAR},
+            </if>
+            <if test="noticeContent != null">
+                notice_content = #{noticeContent,jdbcType=VARCHAR},
+            </if>
+            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByCondition" parameterType="com.swing.sky.module.system.domain.SysNoticeDO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="table_name"/>
+        <where>
+            <if test="condition != null">
+                <if test="condition.noticeTitle != null and condition.noticeTitle !='' ">
+                    and notice_title like concat("%",#{condition.noticeTitle,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.noticeContent != null and condition.noticeContent != ''">
+                    and notice_content = #{condition.noticeContent,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.noticeType != null and condition.noticeType != ''">
+                    and notice_type = #{condition.noticeType,jdbcType=CHAR}
+                </if>
+                <if test="condition.use != null">
+                    and is_use = #{condition.use,jdbcType=BOOLEAN}
+                </if>
+            </if>
+            <if test="beginTime != null">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+</mapper>

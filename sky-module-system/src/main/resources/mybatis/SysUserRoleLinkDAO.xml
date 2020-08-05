@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.module.system.dao.SysUserRoleLinkDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.module.system.domain.SysUserRoleLinkDO">
+        <id column="user_id" jdbcType="BIGINT" property="userId"/>
+        <id column="role_id" jdbcType="BIGINT" property="roleId"/>
+    </resultMap>
+    <resultMap id="one_BaseResultMap" extends="com.swing.sky.module.system.dao.SysUserDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysUserDO">
+    </resultMap>
+
+    <resultMap id="two_BaseResultMap" extends="com.swing.sky.module.system.dao.SysRoleDAO.BaseResultMap"
+               type="com.swing.sky.module.system.domain.SysRoleDO">
+    </resultMap>
+
+    <sql id="table_name">sys_user_role</sql>
+    <sql id="one_id">user_id</sql>
+    <sql id="two_id">role_id</sql>
+    <sql id="column_list">(#{item.userId},#{item.roleId})</sql>
+
+
+    <sql id="Base_Column_List"><include refid="table_name"/>.<include refid="one_id"/>,<include refid="table_name"/>.
+        <include refid="two_id"/>
+    </sql>
+
+    <sql id="one_table_name">
+        <include refid="com.swing.sky.module.system.dao.SysUserDAO.table_name"/>
+    </sql>
+    <sql id="one_Base_Column_List">
+        <include refid="com.swing.sky.module.system.dao.SysUserDAO.Base_Column_List"/>
+    </sql>
+
+    <sql id="two_table_name">
+        <include refid="com.swing.sky.module.system.dao.SysRoleDAO.table_name"/>
+    </sql>
+    <sql id="two_Base_Column_List">
+        <include refid="com.swing.sky.module.system.dao.SysRoleDAO.Base_Column_List"/>
+    </sql>
+
+
+    <sql id="one_join"><include refid="table_name"/>.<include refid="one_id"/>=<include refid="one_table_name"/>.id
+    </sql>
+
+    <sql id="two_join"><include refid="table_name"/>.<include refid="two_id"/>=<include refid="two_table_name"/>.id
+    </sql>
+
+
+    <insert id="batchInsert" parameterType="arraylist">
+        insert into
+        <include refid="table_name"/>
+        (
+        <include refid="Base_Column_List"/>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            <include refid="column_list"/>
+        </foreach>
+    </insert>
+
+    <delete id="deleteItemByOneId" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where
+        <include refid="one_id"/>
+        = #{id}
+    </delete>
+
+    <delete id="batchDeleteItemByOneIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where
+        <include refid="one_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteItemByTwoId" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where
+        <include refid="two_id"/>
+        = #{id}
+    </delete>
+
+    <delete id="batchDeleteItemByTwoIds" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where
+        <include refid="two_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countItemByOneId" parameterType="long" resultType="int">
+        select count(*) from
+        <include refid="table_name"/>
+        where
+        <include refid="one_id"/>
+        = #{id}
+    </select>
+
+    <select id="countItemByTwoId" parameterType="long" resultType="int">
+        select count(*) from
+        <include refid="table_name"/>
+        where
+        <include refid="two_id"/>
+        = #{id}
+    </select>
+
+    <select id="listOneByTwoId" parameterType="long" resultMap="one_BaseResultMap">
+        select
+        <include refid="one_Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="one_table_name"/>
+        on
+        <include refid="one_join"/>
+        where
+        <include refid="two_id"/>
+        = #{id}
+    </select>
+
+    <select id="listOneByTwoIds" parameterType="long" resultMap="one_BaseResultMap">
+        select distinct
+        <include refid="one_Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="one_table_name"/>
+        on
+        <include refid="one_join"/>
+        where
+        <include refid="two_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="listOneIdsByTwoId" parameterType="long" resultType="long">
+        select
+        <include refid="one_id"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="one_table_name"/>
+        on
+        <include refid="one_join"/>
+        where
+        <include refid="two_id"/>
+        = #{id}
+    </select>
+
+    <select id="listOneIdsByTwoIds" parameterType="long" resultType="long">
+        select distinct
+        <include refid="one_id"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="one_table_name"/>
+        on
+        <include refid="one_join"/>
+        where
+        <include refid="two_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="listTwoByOneId" parameterType="long" resultMap="two_BaseResultMap">
+        select
+        <include refid="two_Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="two_table_name"/>
+        on
+        <include refid="two_join"/>
+        where
+        <include refid="one_id"/>
+        = #{id}
+    </select>
+
+    <select id="listTwoByOneIds" parameterType="long" resultMap="two_BaseResultMap">
+        select distinct
+        <include refid="two_Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="two_table_name"/>
+        on
+        <include refid="two_join"/>
+        where
+        <include refid="one_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="listTwoIdsByOneId" parameterType="long" resultType="long">
+        select
+        <include refid="two_id"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="two_table_name"/>
+        on
+        <include refid="two_join"/>
+        where
+        <include refid="one_id"/>
+        = #{id}
+    </select>
+
+    <select id="listTwoIdsByOneIds" parameterType="long" resultType="long">
+        select distinct
+        <include refid="two_id"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="two_table_name"/>
+        on
+        <include refid="two_join"/>
+        where
+        <include refid="one_id"/>
+        in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
