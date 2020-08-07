@@ -24,6 +24,7 @@ import java.util.Date;
 
 /**
  * Service层权限范围预处理，判断访问的数据是否在拥有的权限条目中
+ * 同时向新增对象中增加公共字段的值
  *
  * @author swing
  */
@@ -112,7 +113,6 @@ public class SkyServiceAuthorityAspect {
         }
     }
 
-
     /**
      * 获取切点的注解
      */
@@ -161,6 +161,12 @@ public class SkyServiceAuthorityAspect {
         }
     }
 
+    /**
+     * 当遇到新增和跟新的操作时，向对象中增加公共字段的值，避免重复代码
+     *
+     * @param methodName 方法名
+     * @param point      切入点
+     */
     public void addBasicInfo(String methodName, JoinPoint point) {
         if (methodName.equalsIgnoreCase(ModuleConstants.INSERT)) {
             BasicDO basicDO = (BasicDO) point.getArgs()[0];
@@ -293,7 +299,7 @@ public class SkyServiceAuthorityAspect {
     public void checkGetById(Long[] list, JoinPoint point) {
         //获取getById的参数
         Long id = (Long) point.getArgs()[0];
-        if (!ArrayUtils.contains(list, id)) {
+        if (!ArrayUtils.contains(list, id) && !UserDetailsUtil.getUserId().equals(id)) {
             throw new RuntimeException("你操作的数据不在你拥有的权限范围内");
         }
     }

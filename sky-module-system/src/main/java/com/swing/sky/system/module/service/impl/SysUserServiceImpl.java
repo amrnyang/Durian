@@ -83,10 +83,6 @@ public class SysUserServiceImpl implements SysUserService {
         } else if (userDAO.countByEmail(sysUserDO.getEmail(), sysUserDO.getId()) > 0) {
             throw new RuntimeException("更新用户'" + sysUserDO.getUsername() + "'失败，邮箱账号已存在");
         }
-        //密码加密
-        if (sysUserDO.getPassword() != null) {
-            sysUserDO.setPassword(new BCryptPasswordEncoder().encode(sysUserDO.getPassword()));
-        }
         return userDAO.update(sysUserDO);
     }
 

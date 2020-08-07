@@ -247,21 +247,36 @@
         select id
         from
         <include refid="table_name"/>
-        where dept_id in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                dept_id in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
     <select id="listByDeptIds" parameterType="long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from
-        <include refid="table_name"/>
-        where dept_id in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                dept_id in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
 </mapper>

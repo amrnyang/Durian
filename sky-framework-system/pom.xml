@@ -20,10 +20,6 @@
             <groupId>com.swing</groupId>
             <artifactId>sky-module-system</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.swing</groupId>
-            <artifactId>sky-module-tiku</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

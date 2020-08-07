@@ -69,12 +69,19 @@
     <delete id="batchDeleteItemByOneIds" parameterType="long">
         delete from
         <include refid="table_name"/>
-        where
-        <include refid="one_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </delete>
 
     <delete id="deleteItemByTwoId" parameterType="long">
@@ -88,12 +95,19 @@
     <delete id="batchDeleteItemByTwoIds" parameterType="long">
         delete from
         <include refid="table_name"/>
-        where
-        <include refid="two_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </delete>
 
     <select id="countItemByOneId" parameterType="long" resultType="int">
@@ -135,12 +149,19 @@
         <include refid="one_table_name"/>
         on
         <include refid="one_join"/>
-        where
-        <include refid="two_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
     <select id="listOneIdsByTwoId" parameterType="long" resultType="long">
@@ -166,12 +187,19 @@
         <include refid="one_table_name"/>
         on
         <include refid="one_join"/>
-        where
-        <include refid="two_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
     <select id="listTwoByOneId" parameterType="long" resultMap="two_BaseResultMap">
@@ -197,12 +225,19 @@
         <include refid="two_table_name"/>
         on
         <include refid="two_join"/>
-        where
-        <include refid="one_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
     <select id="listTwoIdsByOneId" parameterType="long" resultType="long">
@@ -228,12 +263,19 @@
         <include refid="two_table_name"/>
         on
         <include refid="two_join"/>
-        where
-        <include refid="one_id"/>
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        <where>
+            <if test="array.length>0">
+                and
+                <include refid="one_id"/>
+                in
+                <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="array.length==0">
+                and 1=2
+            </if>
+        </where>
     </select>
 
 </mapper>

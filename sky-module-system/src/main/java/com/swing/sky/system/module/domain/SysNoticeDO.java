@@ -34,7 +34,6 @@ public class SysNoticeDO extends BasicDO implements Serializable {
      * 公告内容
      */
     @NotNull(message = "公告内容不为null")
-    @Size(min = 1, max = 3000, message = "公告内容长度范围在1~3000")
     private String noticeContent;
 
     public SysNoticeDO(@NotNull Boolean use, Integer orderNum, String createBy, Date createTime, String updateBy, Date updateTime, String remark,  @NotNull(message = "公告标题不为null") @Size(min = 1, max = 100, message = "公告标题长度范围在1~100") String noticeTitle, @NotNull(message = "公告类型不为null") @Size(min = 1, max = 1, message = "公告类型为一个字符") String noticeType, @NotNull(message = "公告内容不为null") @Size(min = 1, max = 3000, message = "公告内容长度范围在1~3000") String noticeContent) {

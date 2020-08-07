@@ -64,7 +64,7 @@
     $(function () {
         $('.summernote').summernote({
             placeholder: '请输入公告内容',
-            height: 192,
+            height: 350,
             lang: 'zh-CN',
             followingToolbar: false,
             callbacks: {
@@ -90,8 +90,8 @@
             processData: false,
             dataType: 'json',
             success: function (result) {
-                if (result.code === web_status.SUCCESS) {
-                    $(obj).summernote('editor.insertImage', result.url, result.fileName);
+                if (result.status === web_status.SUCCESS) {
+                    $(obj).summernote('editor.insertImage', result.body.url, result.body.fileName);
                 } else {
                     $.modal.alertError(result.msg);
                 }

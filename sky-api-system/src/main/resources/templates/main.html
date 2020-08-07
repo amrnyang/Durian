@@ -14,7 +14,7 @@
 
 <body class="gray-bg">
 <div class="row  border-bottom white-bg dashboard-header">
-    <div class="col-sm-5">
+    <div class="col-sm-4">
         <h2>Sky后台管理系统</h2>
         <p>
             本项目受若依管理系统的启发，想开发一个属于自己规范的开源项目，若依是个很不错的开源系列项目，有很多流行的技术组合，奈何编码和技术选型与我需要的有些出入，还有些在接口鉴权方面的不足，于是便自行重构出一个定制的版本，从数据库字段到接口，依据阿里巴巴规范，而视图层依然采用若依对thymeleaf的封装，在此鸣谢！
@@ -32,8 +32,17 @@
             </a>
         </p>
     </div>
-    <div class="col-sm-4">
-        <h4>技术选型：</h4>
+    <!--管理员公告-->
+    <div class="col-sm-5">
+        <h3>公告：</h3>
+        <button type="button" class="list-group-item" th:each="notice : ${notices}"
+                th:onclick="|javascript:noticeDetail(${notice.id})|">
+            <span class="fa fa-bullhorn" aria-hidden="true"></span> [[${notice.noticeTitle}]]
+        </button>
+    </div>
+
+    <div class="col-sm-3">
+        <h3>技术选型：</h3>
         <ol>
             <li>核心框架：Spring Boot</li>
             <li>安全框架：Spring Security</li>
@@ -52,11 +61,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>联系信息</h5>
-
                 </div>
                 <div class="ibox-content">
                     <p><i class="fa fa-qq"></i> QQ群：1142502439</a>
-                        <img th:src="@{/img/qq1.jpg}" width="100%">
+                        <img src="https://gitee.com/qiu-qian/sky/raw/master/img/qq1.jpg" width="200px" height="280px"/>
                     </p>
                 </div>
             </div>
@@ -71,7 +79,8 @@
                         请作者喝瓶哇哈哈
                     </div>
                     <p id="pay-qrcode">
-                        <a href="javascript:;"><img th:src="@{/img/pay.png}" width="100%" alt="请使用手机支付宝或者微信扫码支付">
+                        <a href="javascript:;"><img src="https://gitee.com/qiu-qian/sky/raw/master/img/pay.png"
+                                                    width="200px" height="200px"/>
                         </a>
                     </p>
 
@@ -83,7 +92,10 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
-<script type="text/javascript">
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: layout-latest-js"/>
+<th:block th:include="include :: ztree-js"/>
+<script th:inline="javascript">
     $('#pay-qrcode').click(function () {
         var html = $(this).html();
         parent.layer.open({
@@ -95,6 +107,12 @@
             content: html
         });
     });
+
+    /* 详细公告 */
+    function noticeDetail(noticeId) {
+        const url = 'notice/' + noticeId;
+        $.modal.open("公告详情", url, '800', '400');
+    }
 </script>
 </body>
 </html>

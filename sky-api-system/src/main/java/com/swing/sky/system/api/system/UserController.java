@@ -5,23 +5,24 @@ import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.system.api.BasicController;
-import com.swing.sky.system.api.dto.response.BuildUtils;
-import com.swing.sky.system.api.dto.response.table.TableDataInfo;
+import com.swing.sky.system.dto.response.BuildUtils;
+import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
 import com.swing.sky.system.framework.web.SkyResponse;
-import com.swing.sky.system.module.service.SysDeptService;
-import com.swing.sky.system.module.service.SysPostService;
-import com.swing.sky.system.module.service.SysRoleService;
-import com.swing.sky.system.module.service.SysUserService;
 import com.swing.sky.system.module.dao.SysUserPostLinkDAO;
 import com.swing.sky.system.module.dao.SysUserRoleLinkDAO;
 import com.swing.sky.system.module.domain.SysPostDO;
 import com.swing.sky.system.module.domain.SysRoleDO;
 import com.swing.sky.system.module.domain.SysUserDO;
+import com.swing.sky.system.module.service.SysDeptService;
+import com.swing.sky.system.module.service.SysPostService;
+import com.swing.sky.system.module.service.SysRoleService;
+import com.swing.sky.system.module.service.SysUserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -223,6 +224,8 @@ public class UserController extends BasicController {
     @PreAuthorize("@sca.needAuthoritySign('system:user:resetPassword')")
     @OperateLog(module = ModuleConstants.USER, businessType = BusinessTypeConstants.UPDATE)
     public SkyResponse resetPasswordSave(SysUserDO user) {
+        //密码加密保存
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.update(user);
         return SkyResponse.success("密码重置成功！");
     }

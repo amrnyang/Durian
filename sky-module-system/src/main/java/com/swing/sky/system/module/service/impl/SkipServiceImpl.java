@@ -30,12 +30,12 @@ public class SkipServiceImpl implements SkipService {
 
     @Override
     public List<SysUserDO> getUserListByUserId(Long userId) {
-        return userDAO.listByDeptIds(postDeptLinkDAO.listOneIdsByTwoIds(roleDeptLinkDAO.listTwoIdsByOneIds(userRoleLinkDAO.listTwoIdsByOneId(userId))));
+        return userDAO.listByDeptIds(roleDeptLinkDAO.listTwoIdsByOneIds(userRoleLinkDAO.listTwoIdsByOneId(userId)));
     }
 
     @Override
     public Long[] getUserIdsByUserId(Long userId) {
-        return userDAO.listIdsByDeptIds(postDeptLinkDAO.listOneIdsByTwoIds(roleDeptLinkDAO.listTwoIdsByOneIds(userRoleLinkDAO.listTwoIdsByOneId(userId))));
+        return userDAO.listIdsByDeptIds(roleDeptLinkDAO.listTwoIdsByOneIds(userRoleLinkDAO.listTwoIdsByOneId(userId)));
     }
 
     @Override

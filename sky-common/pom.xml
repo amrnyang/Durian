@@ -15,6 +15,14 @@
 
 
     <dependencies>
+        <!--..........................阿里云OSS SDK............................-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.10.2</version>
+        </dependency>
+        <!--..........................阿里云OSS SDK............................-->
+
 
         <!--..........................视图............................-->
         <dependency>

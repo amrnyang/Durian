@@ -1,4 +1,4 @@
-package com.swing.sky.system.api.dto.response.tree;
+package com.swing.sky.system.dto.response.tree;
 
 import java.io.Serializable;
 

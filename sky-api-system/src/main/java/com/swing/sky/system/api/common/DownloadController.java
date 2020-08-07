@@ -2,12 +2,18 @@ package com.swing.sky.system.api.common;
 
 import com.swing.sky.common.utils.FileUtils;
 import com.swing.sky.common.utils.StringUtils;
+import com.swing.sky.common.utils.aliyun.oss.AliyunUploadUtils;
 import com.swing.sky.system.framework.SkyConfig;
+import com.swing.sky.system.framework.web.SkyResponse;
 import com.swing.sky.system.framework.web.utils.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,26 +55,28 @@ public class DownloadController {
         }
     }
 
-//    /**
-//     * 通用上传请求
-//     */
-//    @PostMapping("/common/upload")
-//    @ResponseBody
-//    public SkyResponse uploadFile(MultipartFile file) throws Exception {
-//        try {
-//            // 上传文件路径
-//            String filePath = SkyConfig.getUploadPath();
-//            // 上传并返回新文件名称
-//            String fileName = FileUploadUtils.upload(filePath, file);
-//            //将文件的下载路径返回到前端，供前端请求下载
-//            String url = getUrl() + fileName;
-//            return SkyResponse.success(2)
-//                    .put("fileName", fileName)
-//                    .put("url", url);
-//        } catch (Exception e) {
-//            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-//        }
-//    }
+    /**
+     * 通用上传请求,将文件上传至阿里云，文件将url路径存储在数据库
+     */
+    @PostMapping("/common/upload")
+    @ResponseBody
+    public SkyResponse uploadFile(MultipartFile file) throws Exception {
+        try {
+            if (!file.isEmpty()) {
+                //上传文件到阿里云
+                String contentType = file.getContentType();
+                assert contentType != null;
+                String extName = contentType.split("/")[1];
+                String url = AliyunUploadUtils.uploadFile(file.getBytes(), extName);
+                return SkyResponse.success(2)
+                        .put("fileName", file.getOriginalFilename())
+                        .put("url", url);
+            }
+            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "图像为空");
+        } catch (Exception e) {
+            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "图像上传失败");
+        }
+    }
 
     /**
      * 本地资源通用下载

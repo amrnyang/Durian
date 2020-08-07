@@ -1,9 +1,9 @@
-package com.swing.sky.system.api.dto.response;
+package com.swing.sky.system.dto.response;
 
 import com.swing.sky.common.utils.ArrayUtils;
-import com.swing.sky.system.api.dto.response.choice.PostSelectedDTO;
-import com.swing.sky.system.api.dto.response.choice.RoleSelectedDTO;
-import com.swing.sky.system.api.dto.response.tree.TreeDTO;
+import com.swing.sky.system.dto.response.choice.PostSelectedDTO;
+import com.swing.sky.system.dto.response.choice.RoleSelectedDTO;
+import com.swing.sky.system.dto.response.tree.TreeDTO;
 import com.swing.sky.system.module.domain.SysDeptDO;
 import com.swing.sky.system.module.domain.SysMenuDO;
 import com.swing.sky.system.module.domain.SysPostDO;

@@ -1,13 +1,13 @@
-package com.swing.sky.system.api.dto.response.choice;
+package com.swing.sky.system.dto.response.choice;
 
-import com.swing.sky.system.module.domain.SysRoleDO;
+import com.swing.sky.system.module.domain.SysPostDO;
 
 /**
- * 角色选择信息传输对象
+ * 岗位选择信息传输对象
  *
  * @author swing
  */
-public class RoleSelectedDTO extends SysRoleDO {
+public class PostSelectedDTO extends SysPostDO {
     /**
      * 该岗位是否被选中
      */
@@ -21,17 +21,17 @@ public class RoleSelectedDTO extends SysRoleDO {
         this.checked = checked;
     }
 
-    public RoleSelectedDTO(SysRoleDO role) {
-        super(role.getUse(), role.getOrderNum(), role.getCreateBy(), role.getCreateTime(), role.getUpdateBy(), role.getUpdateTime(), role.getRemark(), role.getRoleName(), role.getDeleted());
-        this.id = role.getId();
+    public PostSelectedDTO(SysPostDO post) {
+        super(post.getUse(), post.getOrderNum(), post.getCreateBy(), post.getCreateTime(), post.getUpdateBy(), post.getUpdateTime(), post.getRemark(), post.getPostName());
+        this.id = post.getId();
     }
 
-    public RoleSelectedDTO() {
+    public PostSelectedDTO() {
     }
 
     @Override
     public String toString() {
-        return "RoleSelectedDTO{" +
+        return "PostSelectedDTO{" +
                 "checked=" + checked +
                 ", id=" + id +
                 ", use=" + use +

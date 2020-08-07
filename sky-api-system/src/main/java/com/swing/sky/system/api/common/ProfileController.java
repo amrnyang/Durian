@@ -3,6 +3,7 @@ package com.swing.sky.system.api.common;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.utils.aliyun.oss.AliyunUploadUtils;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
 import com.swing.sky.system.framework.web.SkyResponse;
@@ -14,13 +15,12 @@ import com.swing.sky.system.module.domain.SysUserDO;
 import com.swing.sky.system.module.service.SysUserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -54,7 +54,8 @@ public class ProfileController extends BasicController {
      */
     @GetMapping()
     public String profile(Model model) {
-        SysUserDO user = UserDetailsUtil.getUserDO();
+        //从数据库中获取最新的用户信息
+        SysUserDO user = userService.getById(UserDetailsUtil.getUserId());
         model.addAttribute("user", user);
         List<SysRoleDO> roleList = userRoleLinkDAO.listTwoByOneId(user.getId());
         StringBuilder roles = new StringBuilder();
@@ -102,15 +103,53 @@ public class ProfileController extends BasicController {
     @ResponseBody
     @OperateLog(module = ModuleConstants.PROFILE, businessType = BusinessTypeConstants.UPDATE)
     public SkyResponse resetPassword(String oldPassword, String newPassword) {
-        SysUserDO userDO = UserDetailsUtil.getUserDO();
+        //从数据库中获取最新的用户信息
+        SysUserDO userDO = userService.getById(UserDetailsUtil.getUserId());
         //校验原密码是否正确
         String password = userDO.getPassword();
         if (!new BCryptPasswordEncoder().matches(oldPassword, password)) {
             throw new RuntimeException("原密码不正确，请重新输入");
         }
-        userDO.setPassword(newPassword);
+        //密码加密保存
+        userDO.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userService.update(userDO);
         return SkyResponse.success("密码修改成功！");
+    }
+
+
+    /**
+     * 获取头像修改界面
+     */
+    @GetMapping("/avatar")
+    public String avatar(Model model) {
+        SysUserDO userDO = UserDetailsUtil.getUserDO();
+        model.addAttribute("user", userDO);
+        return "system/user/profile/avatar";
+    }
+
+    /**
+     * 保存用户头像
+     */
+    @PostMapping("/updateAvatar")
+    @ResponseBody
+    public SkyResponse updateAvatar(@RequestParam("image") MultipartFile file) {
+        //从数据库中获取最新的用户信息
+        SysUserDO userDO = userService.getById(UserDetailsUtil.getUserId());
+        try {
+            if (!file.isEmpty()) {
+                String contentType = file.getContentType();
+                assert contentType != null;
+                String extName = contentType.split("/")[1];
+                //上传用户头像
+                String url = AliyunUploadUtils.uploadFile(file.getBytes(), extName);
+                userDO.setAvatar(url);
+                userService.update(userDO);
+                return SkyResponse.success();
+            }
+            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "图像为空");
+        } catch (Exception e) {
+            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "头像信息更新失败");
+        }
     }
 }
 
