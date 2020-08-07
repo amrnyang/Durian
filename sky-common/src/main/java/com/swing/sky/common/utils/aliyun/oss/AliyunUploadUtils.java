@@ -24,7 +24,7 @@ public class AliyunUploadUtils {
         String endpoint = "https://oss-cn-beijing.aliyuncs.com";
         String accessKeyId = "LTAI4GCsZtSL5d52af57pDDb";
         String accessKeySecret = "396h5gsL5Drg61zZLfuZbf9LB0CuEM";
-        String bucketName = "swing-sky";
+        String bucketName = "swing-durian";
         String objectName = getObjectName(extName);
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         // 上传文件到指定的存储空间（bucketName）并将其保存为指定的文件名称（objectName）。

@@ -16,7 +16,8 @@ import javax.sql.DataSource;
  */
 @MapperScan(basePackages = {
         "com.swing.sky.common.basic",
-        "com.swing.sky.system.module.dao"
+        "com.swing.sky.system.module.dao",
+        "com.swing.sky.tiku.module.dao"
 })
 @Configuration
 public class MybatisConfig {
