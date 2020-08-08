@@ -1,9 +1,12 @@
 package com.swing.sky.tiku.module.service.impl;
 
 
+import com.swing.sky.common.annotation.SkyServiceAuthority;
+import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.tiku.module.dao.TiAnswerDAO;
 import com.swing.sky.tiku.module.domain.TiAnswerDO;
 import com.swing.sky.tiku.module.service.TiAnswerService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -13,12 +16,14 @@ import java.util.List;
  *
  * @author swing
  */
+@Service
 public class TiAnswerServiceImpl implements TiAnswerService {
 
     @Resource
     private TiAnswerDAO tiAnswerDAO;
 
     @Override
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER)
     public int insert(TiAnswerDO tiAnswerDO) {
         return tiAnswerDAO.insert(tiAnswerDO);
     }
@@ -34,6 +39,7 @@ public class TiAnswerServiceImpl implements TiAnswerService {
     }
 
     @Override
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER)
     public int update(TiAnswerDO tiAnswerDO) {
         return tiAnswerDAO.update(tiAnswerDO);
     }

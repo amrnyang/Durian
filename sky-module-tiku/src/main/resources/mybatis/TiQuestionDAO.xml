@@ -159,6 +159,21 @@
         <include refid="table_name"/>
         <where>
             <if test="condition != null">
+                <if test="condition.content != null and condition.content !=''">
+                    and content like concat("%",#{condition.content,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.reviewPoint != null and condition.reviewPoint !=''">
+                    and review_point like concat("%",#{condition.reviewPoint,jdbcType=VARCHAR},"%")
+                </if>
+                <if test="condition.createBy != null and condition.createBy !=''">
+                    and create_by = #{condition.createBy,jdbcType=VARCHAR}
+                </if>
+                <if test="condition.questionType != null and condition.questionType !=''">
+                    and question_type = #{condition.questionType,jdbcType=CHAR}
+                </if>
+                <if test="condition.auditStatus != null and condition.auditStatus !=''">
+                    and audit_status = #{condition.auditStatus,jdbcType=CHAR}
+                </if>
                 <if test="condition.use != null">
                     and is_use = #{condition.use,jdbcType=BOOLEAN}
                 </if>

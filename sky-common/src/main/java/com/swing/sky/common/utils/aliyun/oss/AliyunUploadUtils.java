@@ -32,9 +32,12 @@ public class AliyunUploadUtils {
         ossClient.putObject(putObjectRequest);
         // 关闭OSSClient。
         ossClient.shutdown();
-        return "https://swing-sky.oss-cn-beijing.aliyuncs.com/" + objectName;
+        return "https://swing-durian.oss-cn-beijing.aliyuncs.com/" + objectName;
     }
 
+    public static void main(String[] args) {
+        System.out.println(uploadFile("hello world swing".getBytes(), "txt"));
+    }
 
     /**
      * 获取文件的唯一ObjectName

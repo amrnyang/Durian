@@ -63,6 +63,21 @@ public class ModuleConstants {
      */
     public static final String PROFILE = "profile";
 
+    /**
+     * tiku-question 题库问题模块
+     */
+    public static final String TIKU_QUESTION = "tikuQuestion";
+
+    /**
+     * tiku-answer 题库答案模块
+     */
+    public static final String TIKU_ANSWER = "tikuAnswer";
+
+    /**
+     * tiku-course 题库课程模块
+     */
+    public static final String TIKU_COURSE = "tikuCourse";
+
 
     /**
      * 模块通用方法名

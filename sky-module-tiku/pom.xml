@@ -20,5 +20,10 @@
             <groupId>com.swing</groupId>
             <artifactId>sky-common</artifactId>
         </dependency>
+        <!--系统模块-->
+        <dependency>
+            <groupId>com.swing</groupId>
+            <artifactId>sky-module-system</artifactId>
+        </dependency>
     </dependencies>
 </project>

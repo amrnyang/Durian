@@ -34,7 +34,7 @@ function login() {
             } else {
                 $.modal.closeLoading();
                 $('.captchaCode').click();
-                $(".code").val("");
+                $(".captcha").val("");
                 $.modal.msg(result.msg);
             }
         }

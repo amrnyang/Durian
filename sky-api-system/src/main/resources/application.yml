@@ -130,7 +130,7 @@ spring:
 # MyBatis配置
 mybatis:
   # 搜索指定包别名
-  typeAliasesPackage: com.swing.sky.web.**.dao
+  typeAliasesPackage: com.swing.sky.**.module.dao
   # 配置mapper的扫描，找到所有的DAO.xml映射文件
   mapperLocations: classpath*:mybatis/*DAO.xml
 

@@ -20,6 +20,17 @@
             <groupId>com.swing</groupId>
             <artifactId>sky-module-system</artifactId>
         </dependency>
+        <!--题库模块-->
+        <dependency>
+            <groupId>com.swing</groupId>
+            <artifactId>sky-module-tiku</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.swing</groupId>
+                    <artifactId>sky-module-system</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
 </project>

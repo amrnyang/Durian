@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    font-family: 'JetBrains Mono Medium';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #675ad8;
+    /* background-image: url("../img/back.jpg"); */
+}
+
+.form-wrapper {
+    background-color: rgb(41, 45, 62);
+    color: #fff;
+    border-radius: 25px;
+    padding: 50px;
+}
+
+.form-wrapper .header {
+    text-align: center;
+    font-size: 35px;
+    text-transform: uppercase;
+    line-height: 100px;
+}
+
+.form-wrapper .input-wrapper input {
+    background-color: rgb(41, 45, 62);
+    border: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    color: #fff;
+    outline: none;
+}
+
+.form-wrapper .input-wrapper input::placeholder {
+    text-transform: lowercase;
+}
+
+.form-wrapper .input-wrapper .border-wrapper {
+    background-image: linear-gradient(to right, #e8198b, #0eb4dd);
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-wrapper .input-wrapper .border-wrapper .border-item {
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
+    border-radius: 30px;
+}
+
+.captcha {
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    border-radius: 30px;
+}
+
+.form-wrapper .action {
+    display: flex;
+    justify-content: center;
+}
+
+.form-wrapper .action .btn {
+    background-color: rgb(41, 45, 62);
+    width: 60%;
+    text-transform: uppercase;
+    border: 2px solid #0e92b3;
+    text-align: center;
+    border-radius: 30px;
+    line-height: 50px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.form-wrapper .action .btn:hover {
+    background-color: #0e92b3;
+}
+
+.form-wrapper .action .btn:active {
+    background-color: #156887;
+}
+
+.pull-left {
+    text-align: center;
+    justify-content: center;
+}
+
+.captchaCode {
+    border-radius: 20px;
+}
+
+button:focus {
+    outline: 0;
+}

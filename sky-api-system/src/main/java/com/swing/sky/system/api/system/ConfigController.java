@@ -27,8 +27,12 @@ import java.util.List;
 @Controller
 @RequestMapping("system/config")
 public class ConfigController extends BasicController {
-    @Autowired
     private SysConfigService configService;
+
+    @Autowired
+    public void setConfigService(SysConfigService configService) {
+        this.configService = configService;
+    }
 
     /**
      * 主界面（视图）
