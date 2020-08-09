@@ -35,6 +35,8 @@ public class TiCourseController extends BasicController {
     private TiCourseService courseService;
     private SysDeptService deptService;
 
+    private static final Long DEPT_ID = 100L;
+
     @Autowired
     public void setCourseService(TiCourseService courseService) {
         this.courseService = courseService;
@@ -62,6 +64,11 @@ public class TiCourseController extends BasicController {
     @PreAuthorize("@sca.needAuthoritySign('tiku:course:list')")
     public TableDataInfo list(TiCourseDO course) {
         startPage();
+        if (course.getDeptId() != null) {
+            if (course.getDeptId().equals(DEPT_ID)) {
+                course.setDeptId(null);
+            }
+        }
         List<TiCourseDO> list = courseService.listByCondition(course, null, null);
         return buildDataTable(list);
     }

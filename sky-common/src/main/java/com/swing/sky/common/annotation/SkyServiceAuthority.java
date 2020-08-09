@@ -15,4 +15,9 @@ public @interface SkyServiceAuthority {
      * 模块名
      */
     String moduleName() default "";
+
+    /**
+     * 是否鉴权，默认为true，为false标识只添加公共字段，不鉴权
+     */
+    boolean isAuth() default true;
 }

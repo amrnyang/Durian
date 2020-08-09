@@ -8,6 +8,7 @@ import com.swing.sky.system.module.domain.SysDeptDO;
 import com.swing.sky.system.module.domain.SysMenuDO;
 import com.swing.sky.system.module.domain.SysPostDO;
 import com.swing.sky.system.module.domain.SysRoleDO;
+import com.swing.sky.tiku.module.domain.TiCourseDO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,37 @@ public class BuildUtils {
                 tree.setpId(deptDO.getParentId());
                 tree.setName(deptDO.getDeptName());
                 tree.setTitle(deptDO.getDeptName());
+                trees.add(tree);
+            }
+            return trees;
+        }
+        return null;
+    }
+
+    /**
+     * 构建课程选择树
+     *
+     * @param deptDOList 部门列表
+     * @param courseList 课程列表
+     * @return 结果
+     */
+    public static List<TreeDTO> buildCourseSelectTree(List<SysDeptDO> deptDOList, List<TiCourseDO> courseList) {
+        if (deptDOList != null && courseList != null) {
+            List<TreeDTO> trees = new ArrayList<>();
+            for (SysDeptDO deptDO : deptDOList) {
+                TreeDTO tree = new TreeDTO();
+                tree.setId(deptDO.getId());
+                tree.setpId(deptDO.getParentId());
+                tree.setName(deptDO.getDeptName());
+                tree.setTitle(deptDO.getDeptName());
+                trees.add(tree);
+            }
+            for (TiCourseDO course : courseList) {
+                TreeDTO tree = new TreeDTO();
+                tree.setId(course.getId());
+                tree.setpId(course.getDeptId());
+                tree.setName(course.getCourseName());
+                tree.setTitle(course.getCourseName());
                 trees.add(tree);
             }
             return trees;

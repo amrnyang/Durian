@@ -187,6 +187,18 @@
         </where>
     </select>
 
+    <select id="listQuestionByCourseIdsAndAuditStatue" resultMap="BaseResultMap">
+        SELECT
+        ti_question.*
+        FROM
+        ti_question
+        INNER JOIN ti_course ON ti_question.course_id = ti_course.id
+        WHERE ti_course.id in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>
 
 

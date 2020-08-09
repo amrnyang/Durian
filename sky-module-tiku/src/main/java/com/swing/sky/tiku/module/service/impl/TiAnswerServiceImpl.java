@@ -23,7 +23,7 @@ public class TiAnswerServiceImpl implements TiAnswerService {
     private TiAnswerDAO tiAnswerDAO;
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER,isAuth = false)
     public int insert(TiAnswerDO tiAnswerDO) {
         return tiAnswerDAO.insert(tiAnswerDO);
     }
@@ -39,7 +39,7 @@ public class TiAnswerServiceImpl implements TiAnswerService {
     }
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_ANSWER,isAuth = false)
     public int update(TiAnswerDO tiAnswerDO) {
         return tiAnswerDAO.update(tiAnswerDO);
     }

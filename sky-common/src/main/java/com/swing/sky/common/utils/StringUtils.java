@@ -23,6 +23,18 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static final char SEPARATOR = '_';
 
     /**
+     * 获取一定数量的空格
+     */
+    public static String getEmptyStr(int count) {
+        StringBuilder result = new StringBuilder();
+        while (count > 0) {
+            result.append(" ");
+            count--;
+        }
+        return result.toString();
+    }
+
+    /**
      * 获取参数不为空值
      *
      * @param value defaultValue 要判断的value

@@ -55,13 +55,16 @@ public class SkyServiceAuthorityAspect {
             //获取该模块可访问的数据id列表和该注解方法名
             String moduleName = skyServiceAuthority.moduleName();
             String methodName = getMethodName(point);
-            //如果不为管理员的话，校验权限范围
-            if (!AdminUtils.isAdminUser(UserDetailsUtil.getUserId())) {
-                Long[] list = listByUserId(moduleName, UserDetailsUtil.getUserId());
-                handleAuthority(moduleName, list, methodName, point);
+            //如果需要鉴权的话
+            if (skyServiceAuthority.isAuth()) {
+                //如果不为管理员的话，校验权限范围
+                if (!AdminUtils.isAdminUser(UserDetailsUtil.getUserId())) {
+                    Long[] list = listByUserId(moduleName, UserDetailsUtil.getUserId());
+                    handleAuthority(moduleName, list, methodName, point);
+                }
+                //所有用户都不能删除管理员用户和管理员角色（包括啊管理员本人）
+                handleAdminCheck(moduleName, methodName, point);
             }
-            //所有用户都不能删除管理员用户和管理员角色（包括啊管理员本人）
-            handleAdminCheck(moduleName, methodName, point);
             //为新增和更新内容添加公共字段
             addBasicInfo(methodName, point);
         }

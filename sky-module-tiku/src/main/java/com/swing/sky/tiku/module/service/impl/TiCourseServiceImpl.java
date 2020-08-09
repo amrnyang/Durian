@@ -22,7 +22,7 @@ public class TiCourseServiceImpl implements TiCourseService {
     private TiCourseDAO tiCourseDAO;
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE,isAuth = false)
     public int insert(TiCourseDO tiCourseDO) {
         return tiCourseDAO.insert(tiCourseDO);
     }
@@ -38,7 +38,7 @@ public class TiCourseServiceImpl implements TiCourseService {
     }
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE,isAuth = false)
     public int update(TiCourseDO tiCourseDO) {
         return tiCourseDAO.update(tiCourseDO);
     }

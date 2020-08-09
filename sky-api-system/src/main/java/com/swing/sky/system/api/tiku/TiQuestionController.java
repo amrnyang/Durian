@@ -4,11 +4,18 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.common.utils.html.HtmlUtils;
 import com.swing.sky.system.api.BasicController;
+import com.swing.sky.system.dto.response.BuildUtils;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
+import com.swing.sky.system.dto.response.tree.TreeDTO;
 import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.system.module.domain.SysDeptDO;
+import com.swing.sky.system.module.service.SysDeptService;
+import com.swing.sky.tiku.module.domain.TiCourseDO;
 import com.swing.sky.tiku.module.domain.TiQuestionDO;
+import com.swing.sky.tiku.module.service.TiCourseService;
 import com.swing.sky.tiku.module.service.TiQuestionService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,10 +38,22 @@ import java.util.List;
 @RequestMapping("tiku/question")
 public class TiQuestionController extends BasicController {
     private TiQuestionService questionService;
+    private SysDeptService deptService;
+    private TiCourseService courseService;
 
     @Autowired
     public void setQuestionService(TiQuestionService questionService) {
         this.questionService = questionService;
+    }
+
+    @Autowired
+    public void setDeptService(SysDeptService deptService) {
+        this.deptService = deptService;
+    }
+
+    @Autowired
+    public void setCourseService(TiCourseService courseService) {
+        this.courseService = courseService;
     }
 
     /**
@@ -56,7 +76,7 @@ public class TiQuestionController extends BasicController {
         List<TiQuestionDO> list = questionService.listByCondition(question, null, null);
         /*精简数据，便于传输*/
         list.forEach(a -> a.setFullContent(""));
-        list.forEach(a -> a.setContent(a.getContent().substring(0, 20)));
+        list.forEach(a -> a.setContent((a.getContent() + StringUtils.getEmptyStr(22)).substring(0, 20)));
         return buildDataTable(list);
     }
 
@@ -91,7 +111,14 @@ public class TiQuestionController extends BasicController {
     @GetMapping("/edit/{questionId}")
     @PreAuthorize("@sca.needAuthoritySign('tiku:question:edit')")
     public String edit(@PathVariable("questionId") Long questionId, Model model) {
-        model.addAttribute("question", questionService.getById(questionId));
+        TiQuestionDO question = questionService.getById(questionId);
+        model.addAttribute("question", question);
+        //获取课程名
+        if (question.getCourseId() != null) {
+            model.addAttribute("courseName", courseService.getById(question.getCourseId()).getCourseName());
+        } else {
+            model.addAttribute("courseName", null);
+        }
         return "tiku/question/edit";
     }
 
@@ -132,5 +159,57 @@ public class TiQuestionController extends BasicController {
         TiQuestionDO questionDO = questionService.getById(id);
         model.addAttribute("question", questionDO);
         return "tiku/question/questionDetail";
+    }
+
+    /**
+     * 获取课程选择树，用来为专业添加课程（视图）（大学-学院-课程）三层树结构
+     */
+    @GetMapping({"/courseRadioTreeView"})
+    @PreAuthorize("@sca.needAuthoritySign('tiku:course:list')")
+    public String courseRadioTreeView() {
+        return "tiku/question/tree";
+    }
+
+    /**
+     * 获取课程选择树，用来为专业添加课程
+     */
+    @GetMapping("/courseRadioTree")
+    @ResponseBody
+    public List<TreeDTO> courseRadioTree() {
+        //只查询到学院级别,然后再追加课程(没有课程的学院不显示,防止误选）
+        //学院列表
+        List<SysDeptDO> colleges = new ArrayList<>();
+        //课程列表
+        List<TiCourseDO> courses = new ArrayList<>();
+        SysDeptDO sysDeptDO = new SysDeptDO();
+        sysDeptDO.setParentId(100L);
+        List<SysDeptDO> collegeList = deptService.listByCondition(sysDeptDO, null, null);
+        //课程列表
+        for (SysDeptDO deptDO : collegeList) {
+            //查询该学院所有开设的课程
+            TiCourseDO course = new TiCourseDO();
+            course.setDeptId(deptDO.getId());
+            List<TiCourseDO> courseList = courseService.listByCondition(course, null, null);
+            if (courseList.size() > 0) {
+                colleges.add(deptDO);
+                courses.addAll(courseList);
+            }
+        }
+        colleges.add(deptService.getById(100L));
+        return BuildUtils.buildCourseSelectTree(colleges, courses);
+    }
+
+    /**
+     * 复审
+     */
+    @PostMapping("reAudit/{id}")
+    @ResponseBody
+    @PreAuthorize("@sca.needAuthoritySign('tiku:question:reAudit')")
+    public SkyResponse reAudit(@PathVariable("id") Long id) {
+        TiQuestionDO question = new TiQuestionDO();
+        question.setId(id);
+        question.setAuditStatus("A");
+        questionService.update(question);
+        return SkyResponse.success("操作成功！！");
     }
 }

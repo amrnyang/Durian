@@ -11,33 +11,11 @@
                 <div class="select-list">
                     <ul>
                         <li>
-                            发布者：<input type="text" name="createBy"/>
-                        </li>
-                        <li>
-                            知识点：<input type="text" name="reviewPoint"/>
-                        </li>
-                        <li>
                             内容：<input type="text" name="content"/>
                         </li>
                         <li>
                             题型：<select name="questionType"
                                        th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_type')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
-                                    th:value="${dict.dataValue}"></option>
-                        </select>
-                        </li>
-                        <li>
-                            审核状态：<select name="auditStatus"
-                                         th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_audit_status')}">
-                            <option value="">所有</option>
-                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
-                                    th:value="${dict.dataValue}"></option>
-                        </select>
-                        </li>
-                        <li>
-                            使用状态：<select name="use"
-                                         th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
                                     th:value="${dict.dataValue}"></option>
@@ -56,15 +34,9 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.addFull()">
-                <i class="fa fa-plus"></i> 新增
-            </a>
             <a class="btn btn-primary single disabled" onclick="$.operate.editFull()">
                 <i class="fa fa-edit"></i> 修改
             </a>
-            <!--<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
-                <i class="fa fa-remove"></i> 删除
-            </a>-->
         </div>
 
         <div class="col-sm-12 select-table table-striped">
@@ -78,15 +50,13 @@
     const tiku_question_type = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_type')}]];
     const tiku_question_audit_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_audit_status')}]];
     const tiku_question_year = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_year')}]];
-    const prefix = ctx + "tiku/question";
+    const prefix = ctx + "tiku/question/audit";
 
     $(function () {
         const options = {
             url: prefix + "/list",
-            createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove",
-            modalName: "题目",
+            modalName: "题目审核",
             sortName: "createTime",
             sortOrder: "desc",
             pageSize: 30,
@@ -96,7 +66,8 @@
                 {
                     field: 'id',
                     title: 'ID',
-                    sortable: true
+                    sortable: true,
+                    visible: false
                 },
                 {
                     field: 'orderNum',
@@ -128,6 +99,7 @@
                     field: 'use',
                     title: '使用状态',
                     align: "left",
+                    visible: false,
                     formatter: function (value, item, index) {
                         return $.table.selectDictLabel(sys_use_status, item.use);
                     }
@@ -177,10 +149,10 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         const actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="questionDetail(\'' + row.id + '\')"><i class="fa fa-chevron-circle-right"></i>详情</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + '" href="javascript:void(0)" onclick="questionDetail(\'' + row.id + '\')"><i class="fa fa-chevron-circle-right"></i>详情</a> ');
                         actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-warning btn-xs ' + '" href="javascript:void(0)" onclick="reAudit(\'' + row.id + '\')"><i class="fa fa-eye"></i>复审</a>');
-                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-primary btn-xs ' + '" href="javascript:void(0)" onclick="pass(\'' + row.id + '\')"><i class="fa fa-chevron-circle-right"></i>通过</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="unPass(\'' + row.id + '\')"><i class="fa fa-remove"></i>未通过</a>');
                         return actions.join('');
                     }
                 }]
@@ -194,12 +166,29 @@
         $.modal.open("题目详情", url);
     }
 
-    /*复审*/
-    function reAudit(id) {
+
+    /*审核通过*/
+    function pass(id) {
         $.ajax({
             cache: true,
             type: "POST",
-            url: prefix + "/reAudit/" + id,
+            url: prefix + "/pass/" + id,
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            }
+        });
+    }
+
+    /*审核未通过*/
+    function unPass(id) {
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: prefix + "/unPass/" + id,
             async: false,
             error: function (request) {
                 $.modal.alertError("系统错误");

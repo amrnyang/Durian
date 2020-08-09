@@ -7,6 +7,17 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-question-add">
+        <input id="treeId" name="courseId" type="hidden"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">所属课程：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" onclick="courseRadioTree()" id="treeName" readonly="true"
+                           placeholder="点击选择课程">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">题型：</label>
             <div class="col-sm-10">
@@ -24,9 +35,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-6 control-label ">知识点（使用空格分开，例如"微分方程 线性代数 空间解析几何")：</label>
+            <label class="col-sm-2 control-label ">知识点：</label>
             <div class="col-sm-6">
-                <input id="reviewPoint" name="reviewPoint" class="form-control" type="text">
+                <input id="reviewPoint" name="reviewPoint" class="form-control" placeholder="使用空格分开，例如:微分方程 线性代数 空间解析几何"
+                       type="text">
             </div>
         </div>
         <div class="form-group">
@@ -105,6 +117,24 @@
                 $.modal.alertWarning("图片上传失败。");
             }
         });
+    }
+
+    /*所有课程列表*/
+    function courseRadioTree() {
+        var options = {
+            title: '课程选择',
+            width: "380",
+            url: prefix + "/courseRadioTreeView",
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmit(index, layero) {
+        var body = layer.getChildFrame('body', index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        layer.close(index);
     }
 
     $("#form-question-add").validate({

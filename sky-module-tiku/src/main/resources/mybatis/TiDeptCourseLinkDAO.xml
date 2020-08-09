@@ -57,6 +57,14 @@
             <include refid="column_list"/>
         </foreach>
     </insert>
+    <insert id="insert" parameterType="long">
+        insert into
+        <include refid="table_name"/>
+        (
+        <include refid="Base_Column_List"/>
+        )
+        values (#{deptId},#{courseId})
+    </insert>
 
     <delete id="deleteItemByOneId" parameterType="long">
         delete from
@@ -108,6 +116,16 @@
                 and 1=2
             </if>
         </where>
+    </delete>
+    <delete id="delete" parameterType="long">
+        delete from
+        <include refid="table_name"/>
+        where
+        <include refid="one_id"/>
+        = #{deptId}
+        and
+        <include refid="two_id"/>
+        = #{courseId}
     </delete>
 
     <select id="countItemByOneId" parameterType="long" resultType="int">
@@ -212,7 +230,7 @@
         on
         <include refid="two_join"/>
         where
-        <include refid="one_id"/>
+        ti_dept_course.dept_id
         = #{id}
     </select>
 
@@ -250,7 +268,7 @@
         on
         <include refid="two_join"/>
         where
-        <include refid="one_id"/>
+        ti_dept_course.dept_id
         = #{id}
     </select>
 
