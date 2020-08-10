@@ -140,6 +140,11 @@
             </if>
         </where>
     </select>
+    <select id="countByCourseCode" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where course_code = #{courseCode} and id != #{id}
+    </select>
 
 </mapper>
 

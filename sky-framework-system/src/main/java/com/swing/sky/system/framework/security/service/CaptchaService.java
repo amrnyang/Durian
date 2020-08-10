@@ -17,9 +17,6 @@ import java.io.IOException;
  */
 @Service
 public class CaptchaService {
-
-    @Value("${captcha.folderName}")
-    private String folderName;
     @Value("${captcha.captchaExpiration}")
     private Integer captchaExpiration;
 
@@ -35,9 +32,5 @@ public class CaptchaService {
         //验证码有效时间设置
         ServletUtils.getRequest().getSession().setMaxInactiveInterval(captchaExpiration*60);
         return specCaptcha;
-    }
-
-    public String getFolderName() {
-        return folderName;
     }
 }

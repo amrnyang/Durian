@@ -22,8 +22,11 @@ public class TiCourseServiceImpl implements TiCourseService {
     private TiCourseDAO tiCourseDAO;
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE,isAuth = false)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE, isAuth = false)
     public int insert(TiCourseDO tiCourseDO) {
+        if (tiCourseDAO.countByCourseCode(tiCourseDO.getCourseCode(), -1L) > 0) {
+            throw new RuntimeException("课程编码已存在");
+        }
         return tiCourseDAO.insert(tiCourseDO);
     }
 
@@ -38,8 +41,11 @@ public class TiCourseServiceImpl implements TiCourseService {
     }
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE,isAuth = false)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_COURSE, isAuth = false)
     public int update(TiCourseDO tiCourseDO) {
+        if (tiCourseDAO.countByCourseCode(tiCourseDO.getCourseCode(), tiCourseDO.getId()) > 0) {
+            throw new RuntimeException("课程编码已存在");
+        }
         return tiCourseDAO.update(tiCourseDO);
     }
 

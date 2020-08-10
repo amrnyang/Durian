@@ -54,10 +54,10 @@ function validateRule() {
         },
         messages: {
             username: {
-                required: icon + "请输入您的用户名",
+                required: icon + "账号为空",
             },
             password: {
-                required: icon + "请输入您的密码",
+                required: icon + "密码为空",
             }
         }
     })
