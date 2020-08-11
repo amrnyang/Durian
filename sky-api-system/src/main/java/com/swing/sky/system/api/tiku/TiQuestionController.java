@@ -223,7 +223,7 @@ public class TiQuestionController extends BasicController {
      * 获取该题目的答案列表视图（视图）
      */
     @GetMapping("/getQuestionAnswer/{questionId}")
-    @PreAuthorize("@sca.needAuthoritySign('system:answer:view')")
+    @PreAuthorize("@sca.needAuthoritySign('tiku:answer:view')")
     public String getDictData(@PathVariable("questionId") Long questionId, Model model) {
         model.addAttribute("questionId", questionId);
         return "tiku/answer/answer";
