@@ -187,7 +187,7 @@
         </where>
     </select>
 
-    <select id="listQuestionByCourseIdsAndAuditStatue" resultMap="BaseResultMap">
+    <select id="listQuestionByCourseIds" resultMap="BaseResultMap">
         SELECT
         ti_question.*
         FROM

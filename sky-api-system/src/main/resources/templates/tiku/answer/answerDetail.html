@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('题目详情')"/>
+    <th:block th:include="include :: header('答案详情')"/>
 </head>
 <body class="white-bg">
-<label> 所属课程：[[${courseName}]]</label>
+<h3>- - - 答案 - - -</h3>
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    [(${question.fullContent})]
+    [(${answer.answer})]
+</div>
+<br/>
+<h3>- - - 解析 - - -</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${answer.analysis})]
 </div>
 <th:block th:include="include :: footer"/>
 <script type="text/javascript">

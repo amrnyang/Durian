@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('问题审核列表')"/>
+    <th:block th:include="include :: header('修改答案')"/>
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -20,16 +20,14 @@
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
     const sys_use_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}]];
-    const tiku_question_type = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_type')}]];
     const tiku_question_audit_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_audit_status')}]];
-    const tiku_question_year = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_year')}]];
-    const  prefix = ctx + "tiku/question/audit";
+    const prefix = ctx + "tiku/answer/audit";
 
     $(function () {
         const options = {
             url: prefix + "/list",
             updateUrl: prefix + "/edit/{id}",
-            modalName: "题目审核",
+            modalName: "答案审核",
             sortName: "createTime",
             sortOrder: "desc",
             pageSize: 30,
@@ -39,26 +37,31 @@
                 {
                     field: 'id',
                     title: 'ID',
-                    sortable: true,
-                    visible: false
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: "createBy",
+                    title: "发布者"
+                },
+                {
+                    field: 'createTime',
+                    title: '发布时间',
+                    sortable: true
+                },
+                {
+                    field: "updateBy",
+                    title: "最近更新"
+                },
+                {
+                    field: "likeCount",
+                    title: "点赞数"
                 },
                 {
                     field: 'orderNum',
                     title: '显示顺序',
                     visible: false,
                     sortable: true
-                },
-                {
-                    field: 'content',
-                    title: '内容摘要'
-                },
-                {
-                    field: 'questionType',
-                    title: '题型',
-                    align: 'center',
-                    formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(tiku_question_type, item.questionType);
-                    }
                 },
                 {
                     field: 'auditStatus',
@@ -72,45 +75,15 @@
                     field: 'use',
                     title: '使用状态',
                     align: "left",
-                    visible: false,
                     formatter: function (value, item, index) {
                         return $.table.selectDictLabel(sys_use_status, item.use);
                     }
-                },
-                {
-                    field: 'year',
-                    title: '年份',
-                    visible: false
-                },
-                {
-                    field: "term",
-                    title: "学期",
-                    visible: false,
-                    align: "left",
-                    formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(tiku_question_year, item.term);
-                    }
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间',
-                    sortable: true
-                },
-                {
-                    field: "createBy",
-                    title: "创建者",
-                    visible: false
                 },
                 {
                     field: 'updateTime',
                     title: '更新时间',
                     visible: false,
                     sortable: true
-                },
-                {
-                    field: "updateBy",
-                    title: "更新者",
-                    visible: false
                 },
                 {
                     field: "remark",

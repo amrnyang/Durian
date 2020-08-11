@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CenterExceptionHandler {
     /**
-     * 所有的自行抛出的异常
+     * 所有的自行抛出的异常（默认错误状态500)
      */
     @ExceptionHandler(RuntimeException.class)
     SkyResponse exception(RuntimeException e) {
         System.out.println("捕捉到一个错误");
-        e.printStackTrace();
         return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 

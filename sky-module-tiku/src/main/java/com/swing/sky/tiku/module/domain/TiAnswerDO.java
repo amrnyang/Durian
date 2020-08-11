@@ -23,11 +23,14 @@ public class TiAnswerDO extends BasicDO implements Serializable {
      * 解析
      */
     private String analysis;
-
     /**
-     * 答案审核状态（A 审核中,B 通过，C 未通过）
+     * 答案审核状态
      */
     private String auditStatus;
+    /**
+     * 点赞数（靠前显示的依据）
+     */
+    private Integer likeCount;
 
     /**
      * 无参构造函数
@@ -38,11 +41,12 @@ public class TiAnswerDO extends BasicDO implements Serializable {
     /**
      * 全参构造函数
      */
-    public TiAnswerDO(Long questionId, String answer, String analysis, String auditStatus) {
+    public TiAnswerDO(Long questionId, String answer, String analysis, String auditStatus, Integer likeCount) {
         this.questionId = questionId;
         this.answer = answer;
         this.analysis = analysis;
         this.auditStatus = auditStatus;
+        this.likeCount = likeCount;
     }
 
     public Long getQuestionId() {
@@ -69,21 +73,31 @@ public class TiAnswerDO extends BasicDO implements Serializable {
         this.analysis = analysis;
     }
 
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
     }
 
-    public String getAuditStatus() {
-        return auditStatus;
+    public Integer getLikeCount() {
+        return likeCount;
     }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
 
     @Override
     public String toString() {
         return "TiAnswerDO{" +
                 "questionId=" + questionId + ',' +
                 "answer=" + answer + ',' +
+                "analysis=" + analysis + ',' +
                 "auditStatus=" + auditStatus + ',' +
-                "analysis=" + analysis +
+                "likeCount=" + likeCount +
                 '}' + super.toString();
     }
 }

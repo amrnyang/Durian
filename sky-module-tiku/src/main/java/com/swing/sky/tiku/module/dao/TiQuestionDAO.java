@@ -18,5 +18,5 @@ public interface TiQuestionDAO extends BasicDAO<TiQuestionDO> {
      * @param courseIds 课程id集合
      * @return 问题集合
      */
-    List<TiQuestionDO> listQuestionByCourseIdsAndAuditStatue(Long[] courseIds);
+    List<TiQuestionDO> listQuestionByCourseIds(Long[] courseIds);
 }

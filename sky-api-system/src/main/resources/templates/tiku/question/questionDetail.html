@@ -4,10 +4,10 @@
     <th:block th:include="include :: header('题目详情')"/>
 </head>
 <body class="white-bg">
+<label> 所属课程：[[${course.courseName}]]</label><br/>
+<label> 任课老师：[[${course.teacher}]]</label>
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-user-edit">
-        [(${question.fullContent})]
-    </form>
+    [(${question.fullContent})]
 </div>
 <th:block th:include="include :: footer"/>
 <script type="text/javascript">

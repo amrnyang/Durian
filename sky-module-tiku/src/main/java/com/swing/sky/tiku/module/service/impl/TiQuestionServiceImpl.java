@@ -23,7 +23,7 @@ public class TiQuestionServiceImpl implements TiQuestionService {
     private TiQuestionDAO tiQuestionDAO;
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_QUESTION,isAuth = false)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_QUESTION, isAuth = false)
     public int insert(TiQuestionDO tiQuestionDO) {
         return tiQuestionDAO.insert(tiQuestionDO);
     }
@@ -39,7 +39,7 @@ public class TiQuestionServiceImpl implements TiQuestionService {
     }
 
     @Override
-    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_QUESTION,isAuth = false)
+    @SkyServiceAuthority(moduleName = ModuleConstants.TIKU_QUESTION, isAuth = false)
     public int update(TiQuestionDO tiQuestionDO) {
         return tiQuestionDAO.update(tiQuestionDO);
     }
@@ -55,7 +55,7 @@ public class TiQuestionServiceImpl implements TiQuestionService {
     }
 
     @Override
-    public List<TiQuestionDO> listQuestionByCourseIdsAndAuditStatue(Long[] courseIds) {
-        return tiQuestionDAO.listQuestionByCourseIdsAndAuditStatue(courseIds);
+    public List<TiQuestionDO> listQuestionByCourseIds(Long[] courseIds) {
+        return tiQuestionDAO.listQuestionByCourseIds(courseIds);
     }
 }

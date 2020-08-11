@@ -28,9 +28,12 @@ import java.util.List;
 @RequestMapping("system/dict/data")
 public class DictDataController extends BasicController {
 
-    @Autowired
     private SysDictDataService dictDataService;
 
+    @Autowired
+    public void setDictDataService(SysDictDataService dictDataService) {
+        this.dictDataService = dictDataService;
+    }
 
     /**
      * 获取信息列表

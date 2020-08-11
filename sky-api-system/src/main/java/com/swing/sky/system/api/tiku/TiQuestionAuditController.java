@@ -71,7 +71,7 @@ public class TiQuestionAuditController extends BasicController {
         //获取该专业所有的课程id
         Long[] courseIds = deptCourseLinkDAO.listTwoIdsByOneId(majorId);
         //获取所有课程的题目
-        List<TiQuestionDO> list = questionService.listQuestionByCourseIdsAndAuditStatue(courseIds);
+        List<TiQuestionDO> list = questionService.listQuestionByCourseIds(courseIds);
         //指向该用户展示审核中的题目
         list = list.stream().filter(a -> ("A".equals(a.getAuditStatus()))).collect(Collectors.toList());
         /*精简数据，便于传输*/
@@ -112,23 +112,6 @@ public class TiQuestionAuditController extends BasicController {
         question.setContent(HtmlUtils.tagsFilter(question.getFullContent()));
         questionService.update(question);
         return SkyResponse.success("题目信息更新成功！");
-    }
-
-
-    /**
-     * 显示题目详情
-     */
-    @GetMapping("/detail/{id}")
-    @PreAuthorize("@sca.needAuthoritySign('tiku:question:audit:edit')")
-    public String noticeDetail(@PathVariable("id") Long id, Model model) {
-        TiQuestionDO questionDO = questionService.getById(id);
-        model.addAttribute("question", questionDO);
-        if (questionDO.getCourseId() != null) {
-            model.addAttribute("courseName", courseService.getById(questionDO.getCourseId()).getCourseName());
-        } else {
-            model.addAttribute("courseName", null);
-        }
-        return "tiku/question/audit/questionDetail";
     }
 
     /**

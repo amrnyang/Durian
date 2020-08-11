@@ -158,23 +158,29 @@ public class TiQuestionController extends BasicController {
     public String noticeDetail(@PathVariable("id") Long id, Model model) {
         TiQuestionDO questionDO = questionService.getById(id);
         model.addAttribute("question", questionDO);
+        if (questionDO.getCourseId() != null) {
+            model.addAttribute("course", courseService.getById(questionDO.getCourseId()));
+        } else {
+            model.addAttribute("course", null);
+        }
         return "tiku/question/questionDetail";
     }
 
     /**
-     * 获取课程选择树，用来为专业添加课程（视图）（大学-学院-课程）三层树结构
+     * 获取课程选择树，用来为题目指定所属课程
      */
     @GetMapping({"/courseRadioTreeView"})
-    @PreAuthorize("@sca.needAuthoritySign('tiku:course:list')")
+    @PreAuthorize("@sca.needAuthoritySign('tiku:question:add')")
     public String courseRadioTreeView() {
         return "tiku/question/tree";
     }
 
     /**
-     * 获取课程选择树，用来为专业添加课程
+     * 获取课程选择树，用来为题目指定所属课程
      */
     @GetMapping("/courseRadioTree")
     @ResponseBody
+    @PreAuthorize("@sca.needAuthoritySign('tiku:question:add')")
     public List<TreeDTO> courseRadioTree() {
         //只查询到学院级别,然后再追加课程(没有课程的学院不显示,防止误选）
         //学院列表
@@ -211,5 +217,15 @@ public class TiQuestionController extends BasicController {
         question.setAuditStatus("A");
         questionService.update(question);
         return SkyResponse.success("操作成功！！");
+    }
+
+    /**
+     * 获取该题目的答案列表视图（视图）
+     */
+    @GetMapping("/getQuestionAnswer/{questionId}")
+    @PreAuthorize("@sca.needAuthoritySign('system:answer:view')")
+    public String getDictData(@PathVariable("questionId") Long questionId, Model model) {
+        model.addAttribute("questionId", questionId);
+        return "tiku/answer/answer";
     }
 }
