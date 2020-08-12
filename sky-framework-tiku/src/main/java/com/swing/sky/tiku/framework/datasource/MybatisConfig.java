@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @MapperScan(basePackages = {
         "com.swing.sky.common.basic",
-        "com.swing.sky.tiku.module.dao"
+        "com.swing.sky.tiku.module.dao",
+        "com.swing.sky.tiku.framework.solr.dao"
 })
 @Configuration
 public class MybatisConfig {

@@ -28,6 +28,12 @@ server:
 
 # Spring配置
 spring:
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
   # 数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -76,12 +82,28 @@ spring:
           config:
             multi-statement-allow: true
 
+  #静态资源文件缓存(在浏览器中）
+  resources:
+    add-mappings: true
+    cache:
+      period: 2592000
+      cachecontrol:
+        max-age: 2592000
+        no-cache: false
+        no-store: false
+    chain:
+      cache: true
+      enabled: true
+      html-application-cache: true
+      compressed: true
+    static-locations: classpath:/static
+
+
   # 资源信息
   messages:
     # 国际化资源文件路径
     basename: i18n/messages
-  profiles:
-    active: druid
+
   # 文件上传
   servlet:
     multipart:
