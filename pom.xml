@@ -24,14 +24,20 @@
         <module>sky-framework-system</module>
         <!--题库框架-->
         <module>sky-framework-tiku</module>
+        <!--solr框架-->
+        <module>sky-framework-solr</module>
         <!--权限管理模块-->
         <module>sky-module-system</module>
         <!--题库模块基本类-->
         <module>sky-module-tiku</module>
+        <!--solr模块基本类-->
+        <module>sky-module-solr</module>
         <!--接口模块-->
         <module>sky-api-system</module>
         <!--题库模块接口-->
         <module>sky-api-tiku</module>
+        <!--solr模块接口-->
+        <module>sky-api-solr</module>
     </modules>
 
     <properties>
@@ -77,7 +83,17 @@
             </dependency>
             <dependency>
                 <groupId>com.swing</groupId>
+                <artifactId>sky-framework-solr</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
                 <artifactId>sky-module-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-module-solr</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -93,6 +109,11 @@
             <dependency>
                 <groupId>com.swing</groupId>
                 <artifactId>sky-api-tiku</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-api-solr</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--模块版本 END-->

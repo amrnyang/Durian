@@ -3,7 +3,7 @@ package com.swing.sky.system.framework.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swing.sky.system.framework.task.AsyncTaskService;
 import com.swing.sky.system.framework.task.factory.AsyncTaskFactory;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

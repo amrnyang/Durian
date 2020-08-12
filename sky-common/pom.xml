@@ -23,18 +23,6 @@
         </dependency>
         <!--..........................阿里云OSS SDK............................-->
 
-
-        <!--..........................视图............................-->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-        </dependency>
-        <!--..........................视图............................-->
-
         <!--..........................数据库............................-->
         <!-- Mysql驱动包 -->
         <dependency>
@@ -91,12 +79,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <!-- spring security 安全认证 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!--springBoot配置处理程序-->

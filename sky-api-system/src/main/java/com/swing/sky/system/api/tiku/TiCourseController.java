@@ -8,7 +8,7 @@ import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.BuildUtils;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.dto.response.tree.TreeDTO;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysDeptDO;
 import com.swing.sky.system.module.service.SysDeptService;
 import com.swing.sky.tiku.module.domain.TiCourseDO;

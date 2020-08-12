@@ -6,7 +6,7 @@ import com.swing.sky.common.utils.ConvertUtils;
 import com.swing.sky.common.utils.ReflectUtils;
 import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.system.framework.SkyConfig;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.*;

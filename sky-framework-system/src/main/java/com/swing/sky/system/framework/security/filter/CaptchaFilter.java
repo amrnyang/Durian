@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.swing.sky.common.constant.CaptchaConstants;
 import com.swing.sky.system.framework.task.AsyncTaskService;
 import com.swing.sky.system.framework.task.factory.AsyncTaskFactory;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.framework.web.utils.ServletUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

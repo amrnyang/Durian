@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.swing</groupId>
+        <artifactId>sky</artifactId>
+        <version>1.0.0-SNAPHOT</version>
+    </parent>
+
+    <artifactId>sky-module-solr</artifactId>
+    <packaging>jar</packaging>
+    <description>solr服务模块（为其他模块提供全文搜素引擎支持）</description>
+
+
+    <dependencies>
+        <!--通用模块-->
+        <dependency>
+            <groupId>com.swing</groupId>
+            <artifactId>sky-common</artifactId>
+        </dependency>
+
+        <!--springboot 整合Solr-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-solr</artifactId>
+        </dependency>
+
+        <!--快速序列化-->
+        <dependency>
+            <groupId>de.javakaffee</groupId>
+            <artifactId>kryo-serializers</artifactId>
+            <version>0.45</version>
+        </dependency>
+    </dependencies>
+</project>

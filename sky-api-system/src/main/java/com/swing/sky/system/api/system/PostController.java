@@ -8,7 +8,7 @@ import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysPostDO;
 import com.swing.sky.system.module.service.SysPostService;
 import io.swagger.annotations.Api;

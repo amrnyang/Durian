@@ -7,7 +7,7 @@ import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysDictDataDO;
 import com.swing.sky.system.module.service.SysDictDataService;
 import io.swagger.annotations.Api;

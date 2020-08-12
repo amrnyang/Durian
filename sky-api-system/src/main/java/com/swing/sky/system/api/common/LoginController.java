@@ -2,7 +2,7 @@ package com.swing.sky.system.api.common;
 
 
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysUserDO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

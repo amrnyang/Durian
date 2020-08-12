@@ -20,19 +20,6 @@
             <groupId>com.swing</groupId>
             <artifactId>sky-module-tiku</artifactId>
         </dependency>
-
-        <!--springboot 整合Solr-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-solr</artifactId>
-        </dependency>
-
-        <!--快速序列化-->
-        <dependency>
-            <groupId>de.javakaffee</groupId>
-            <artifactId>kryo-serializers</artifactId>
-            <version>0.45</version>
-        </dependency>
     </dependencies>
 
 

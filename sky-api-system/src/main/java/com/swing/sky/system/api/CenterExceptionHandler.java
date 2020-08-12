@@ -1,7 +1,7 @@
 package com.swing.sky.system.api;
 
 
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import io.lettuce.core.RedisConnectionException;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,8 +25,18 @@ public class CenterExceptionHandler {
      */
     @ExceptionHandler(RuntimeException.class)
     SkyResponse exception(RuntimeException e) {
-        System.out.println("捕捉到一个错误");
         return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    /**
+     * 拦截未通过 @Validated 所产生的异常
+     *
+     * @param e 异常
+     * @return 响应
+     */
+    @ExceptionHandler(BindException.class)
+    SkyResponse exception(BindException e) {
+        return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 
 

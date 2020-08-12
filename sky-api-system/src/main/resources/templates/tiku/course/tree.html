@@ -41,7 +41,7 @@
         const url = $.common.isEmpty(excludeId) ? prefix + "/collegeRadioTree" : prefix + "/collegeRadioTree/" + excludeId;
         const options = {
             url: url,
-            expandLevel: 2,
+            expandLevel: 1,
             onClick: zOnClick
         };
         $.tree.init(options);

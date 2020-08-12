@@ -6,7 +6,7 @@ import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.common.utils.aliyun.oss.AliyunUploadUtils;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.system.framework.web.SkyResponse;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.dao.SysUserPostLinkDAO;
 import com.swing.sky.system.module.dao.SysUserRoleLinkDAO;
 import com.swing.sky.system.module.domain.SysPostDO;
