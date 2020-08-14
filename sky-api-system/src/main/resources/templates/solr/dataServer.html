@@ -22,7 +22,7 @@
                     </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" style="align-self: center">
                                 <button class="btn btn-success" onclick="updateQuestionData()">更新引擎数据</button>
                             </div>
                             <div class="col-sm-6">
@@ -33,8 +33,18 @@
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control">
+                            <div class="col-sm-6">
+                                <form class="form-horizontal m" id="question-search">
+                                    <input type="text" class="form-control" name="condition"
+                                           placeholder="condition"><br/>
+                                    <input type="text" class="form-control" name="pageStart" width="50px"
+                                           placeholder="pageStart"><br/>
+                                    <input type="text" class="form-control" name="pageRows" width="50px"
+                                           placeholder="pageRows">
+                                </form>
+                            </div>
+                            <div class="col-sm-1">
+                                <button class="btn btn-primary" onclick="searchQuestion()">搜索</button>
                             </div>
                         </div>
                     </div>
@@ -73,6 +83,28 @@
                 },
                 success: function (data) {
                     $.operate.successCallback(data);
+                }
+            });
+        }
+    }
+
+    function searchQuestion() {
+        if ($.validate.form()) {
+            const key = $("input[name='key']").val();
+            const condition = $("input[name='condition']").val();
+            const pageStart = $("input[name='pageStart']").val();
+            const pageRows = $("input[name='pageRows']").val();
+            $.ajax({
+                cache: true,
+                type: "GET",
+                url: "http://39.97.185.37:8088/solr/tiku/question/search?key=" + key + "&condition=" + condition + "&pageStart=" + pageStart + "&pageRows=" + pageRows,
+                async: true,
+                error: function (request) {
+                    $.modal.alertError("系统错误");
+                },
+                success: function (data) {
+                    console.log(data)
+                    console.log(data.body)
                 }
             });
         }
