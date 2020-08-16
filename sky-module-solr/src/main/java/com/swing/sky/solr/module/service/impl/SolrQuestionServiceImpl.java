@@ -75,8 +75,8 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
         // 设置高亮显示
         query.setHighlight(true);
         query.addHighlightField("ti_question_content");
-        query.setHighlightSimplePre("<text style='color:rgb(253, 174, 100)'>");
-        query.setHighlightSimplePost("</text>");
+        query.setHighlightSimplePre("<strong style=\"color: rgb(253, 174, 100);\">");
+        query.setHighlightSimplePost("</strong>");
 
         List<QuestionDO> questions = new ArrayList<>();
         try {
