@@ -30,12 +30,10 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
         </dependency>
-        <!--..........................视图............................-->
-
-        <!-- spring security 安全认证 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
+        <!--..........................视图............................-->
     </dependencies>
 </project>

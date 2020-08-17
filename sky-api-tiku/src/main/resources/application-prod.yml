@@ -23,7 +23,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://rm-bp196o08411u2nh020o.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://rm-bp196o08411u2nh02.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: swing
       password: LQqhzn18845124018
       # 初始连接数

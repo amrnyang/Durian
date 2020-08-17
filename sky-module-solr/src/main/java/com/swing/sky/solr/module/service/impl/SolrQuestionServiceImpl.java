@@ -55,6 +55,9 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
         }
     }
 
+    /**
+     * 清除solr的数据
+     */
     public void cleanSolr() {
         try {
             solrClient.deleteByQuery("*:*");
@@ -114,38 +117,3 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
         return questions;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
