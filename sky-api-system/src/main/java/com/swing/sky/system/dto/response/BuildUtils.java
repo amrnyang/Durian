@@ -69,7 +69,8 @@ public class BuildUtils {
             List<TreeDTO> trees = new ArrayList<>();
             for (SysDeptDO deptDO : deptDOList) {
                 TreeDTO tree = new TreeDTO();
-                tree.setId(deptDO.getId());
+                //加入100000L解决专业表和课程表的id冲突bug
+                tree.setId(deptDO.getId()+100000L);
                 tree.setpId(deptDO.getParentId());
                 tree.setName(deptDO.getDeptName());
                 tree.setTitle(deptDO.getDeptName());
@@ -78,7 +79,7 @@ public class BuildUtils {
             for (TiCourseDO course : courseList) {
                 TreeDTO tree = new TreeDTO();
                 tree.setId(course.getId());
-                tree.setpId(course.getDeptId());
+                tree.setpId(course.getDeptId()+100000L);
                 tree.setName(course.getCourseName());
                 tree.setTitle(course.getCourseName());
                 trees.add(tree);

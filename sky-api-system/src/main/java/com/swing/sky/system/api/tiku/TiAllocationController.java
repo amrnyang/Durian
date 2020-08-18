@@ -135,7 +135,6 @@ public class TiAllocationController extends BasicController {
                 courses.addAll(courseList);
             }
         }
-        colleges.add(deptService.getById(100L));
         return BuildUtils.buildCourseSelectTree(colleges, courses);
     }
 

@@ -43,7 +43,7 @@
         const url = $.common.isEmpty(majorId) ? prefix + "/courseRadioTree" : prefix + "/courseRadioTree/" + majorId;
         const options = {
             url: url,
-            expandLevel: 1,
+            expandLevel: 0,
             onClick: zOnClick
         };
         $.tree.init(options);
