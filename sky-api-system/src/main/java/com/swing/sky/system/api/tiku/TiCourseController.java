@@ -52,7 +52,7 @@ public class TiCourseController extends BasicController {
      */
     @GetMapping()
     @PreAuthorize("@sca.needAuthoritySign('tiku:course:view')")
-    public String config() {
+    public String course() {
         return "tiku/course/course";
     }
 

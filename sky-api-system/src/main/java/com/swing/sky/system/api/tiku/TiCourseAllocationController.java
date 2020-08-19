@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 @Api
 @Controller
 @RequestMapping("tiku/allocation")
-public class TiAllocationController extends BasicController {
+public class TiCourseAllocationController extends BasicController {
     @Resource
     private TiDeptCourseLinkDAO deptCourseLinkDAO;
 
