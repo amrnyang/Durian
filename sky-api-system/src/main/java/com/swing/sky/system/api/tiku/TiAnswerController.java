@@ -4,9 +4,10 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.utils.wx.RichTextUtils;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.tiku.module.domain.TiAnswerDO;
 import com.swing.sky.tiku.module.service.TiAnswerService;
 import com.swing.sky.tiku.module.service.TiQuestionService;
@@ -77,6 +78,9 @@ public class TiAnswerController extends BasicController {
     public SkyResponse addSave(@Validated TiAnswerDO answer) {
         //新增答案默认进入审核中
         answer.setAuditStatus("A");
+        //对图片的格式进行筛选，宽度不大于350px，适应手机大小
+        answer.setAnswer(RichTextUtils.resizePicture(answer.getAnswer()));
+        answer.setAnalysis(RichTextUtils.resizePicture(answer.getAnalysis()));
         answerService.insert(answer);
         return SkyResponse.success("新增成功！");
     }
@@ -102,6 +106,9 @@ public class TiAnswerController extends BasicController {
     @OperateLog(module = ModuleConstants.TIKU_ANSWER, businessType = BusinessTypeConstants.UPDATE)
     public SkyResponse editSave(@Validated TiAnswerDO answer) {
         answer.setAuditStatus("A");
+        //对图片的格式进行筛选，宽度不大于350px，适应手机大小
+        answer.setAnswer(RichTextUtils.resizePicture(answer.getAnswer()));
+        answer.setAnalysis(RichTextUtils.resizePicture(answer.getAnalysis()));
         answerService.update(answer);
         return SkyResponse.success("更新成功！");
     }

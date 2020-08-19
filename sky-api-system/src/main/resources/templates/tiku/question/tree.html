@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('课程分配')"/>
+    <th:block th:include="include :: header('所属课程')"/>
     <th:block th:include="include :: ztree-css"/>
 </head>
 <style>
@@ -40,7 +40,7 @@
         const url = prefix + "/courseRadioTree";
         const options = {
             url: url,
-            expandLevel: 1,
+            expandLevel: 0,
             onClick: zOnClick
         };
         $.tree.init(options);

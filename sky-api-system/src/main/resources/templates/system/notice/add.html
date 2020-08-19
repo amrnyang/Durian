@@ -73,6 +73,11 @@
         callbacks: {
             onImageUpload: function (files) {
                 sendFile(files[0], this);
+            },
+            onPaste: function (ne) {
+                const bufferText = ((ne.originalEvent || ne).clipboardData || window.clipboardData).getData('Text/plain');
+                ne.preventDefault ? ne.preventDefault() : (ne.returnValue = false);
+                document.execCommand("insertText", false, bufferText);
             }
         }
     });

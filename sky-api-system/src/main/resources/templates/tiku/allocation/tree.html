@@ -37,7 +37,6 @@
 <th:block th:include="include :: ztree-js"/>
 <script th:inline="javascript">
     var prefix = ctx + "tiku/allocation"
-    var excludeId = [[${excludeId}]];
     const majorId = $("#majorId").val();
     $(function () {
         const url = $.common.isEmpty(majorId) ? prefix + "/courseRadioTree" : prefix + "/courseRadioTree/" + majorId;

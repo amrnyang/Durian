@@ -6,6 +6,7 @@ import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.common.utils.html.HtmlUtils;
+import com.swing.sky.common.utils.wx.RichTextUtils;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.BuildUtils;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
@@ -101,6 +102,8 @@ public class TiQuestionController extends BasicController {
         question.setAuditStatus("A");
         //从完整内容中提取摘要，供搜索引擎搜索
         question.setContent(HtmlUtils.tagsFilter(question.getFullContent()));
+        //对图片的格式进行筛选，宽度不大于350px，适应手机大小
+        question.setFullContent(RichTextUtils.resizePicture(question.getFullContent()));
         questionService.insert(question);
         return SkyResponse.success("配置信息插入成功！");
     }
@@ -134,6 +137,8 @@ public class TiQuestionController extends BasicController {
         question.setAuditStatus("A");
         //从完整内容中提取摘要，供搜索引擎搜索
         question.setContent(HtmlUtils.tagsFilter(question.getFullContent()));
+        //对图片的格式进行筛选，宽度不大于350px，适应手机大小
+        question.setFullContent(RichTextUtils.resizePicture(question.getFullContent()));
         questionService.update(question);
         return SkyResponse.success("题目信息更新成功！");
     }
@@ -201,7 +206,6 @@ public class TiQuestionController extends BasicController {
                 courses.addAll(courseList);
             }
         }
-        colleges.add(deptService.getById(100L));
         return BuildUtils.buildCourseSelectTree(colleges, courses);
     }
 

@@ -145,7 +145,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //配置令牌的存储方式（存储在数据库中）
                 .tokenRepository(persistentTokenRepository())
                 //记住我的有效期
-                .tokenValiditySeconds(60 * 30)
+                .tokenValiditySeconds(60 * 60 * 24)
                 .userDetailsService(userDetailsService);
     }
 

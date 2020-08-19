@@ -5,10 +5,11 @@ import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
 import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.common.utils.html.HtmlUtils;
+import com.swing.sky.common.utils.wx.RichTextUtils;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.tiku.module.dao.TiDeptCourseLinkDAO;
 import com.swing.sky.tiku.module.domain.TiQuestionDO;
 import com.swing.sky.tiku.module.service.TiCourseService;
@@ -110,6 +111,8 @@ public class TiQuestionAuditController extends BasicController {
         question.setAuditStatus("A");
         //从完整内容中提取摘要，供搜索引擎搜索
         question.setContent(HtmlUtils.tagsFilter(question.getFullContent()));
+        //对图片的格式进行筛选，宽度不大于350px，适应手机大小
+        question.setFullContent(RichTextUtils.resizePicture(question.getFullContent()));
         questionService.update(question);
         return SkyResponse.success("题目信息更新成功！");
     }
