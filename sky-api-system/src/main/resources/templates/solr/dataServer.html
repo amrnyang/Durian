@@ -73,7 +73,7 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: "http://39.97.185.37:8088/solr/tiku/question/update",
+                url: "https://duriantiku.top:8088/solr/tiku/question/update",
                 data: {
                     "key": key
                 },
@@ -97,7 +97,7 @@
             $.ajax({
                 cache: true,
                 type: "GET",
-                url: "http://39.97.185.37:8088/solr/tiku/question/search?key=" + key + "&condition=" + condition + "&pageStart=" + pageStart + "&pageRows=" + pageRows,
+                url: "https://duriantiku.top:8088/solr/tiku/question/search?key=" + key + "&condition=" + condition + "&pageStart=" + pageStart + "&pageRows=" + pageRows,
                 async: true,
                 error: function (request) {
                     $.modal.alertError("系统错误");
