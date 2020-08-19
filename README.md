@@ -22,15 +22,29 @@
 
 文档地址：
 
+## 预览 <img img align="center" src="doc/imgs/preview.png" width=25/>
+
 ## 项目结构 <img img align="center" src="doc/imgs/structure.png"/>
-本项目采用模块化的设计，遵循低耦合高内聚的设计思想，可单独部署，一个独立的项目模块（例如榴莲题库模块）是由如下三个模块组成：
-* sky-module-tiku    (module:持久层和Service接口，此处代码可完全由生成器生成)
-* sky-framework-tiku (framewrod:相关框架，例如spring，mybatis等配置)
-* sky-api-tiku       (api：对外提供api服务)
+项目采用模块化的设计，遵循低耦合高内聚的设计思想，可单独部署，一个独立的项目模块（例如榴莲题库模块）是由如下三个子模块组成：
+<table align="center">
+<tr>
+<td>sky-module-tiku</td>
+<td>持久层和Service接口，此处代码可完全由生成器生成</td>
+</tr>
+<tr>
+<td>sky-framework-tiku</td>
+<td>相关框架，例如spring，mybatis等配置</td>
+</tr
+><tr>
+<td>sky-api-tiku</td>
+<td>对外提供api服务</td>
+</tr>
+</table>
 
 <p align="center">
 <img align="center" src="doc/imgs/durian-module.png" width=900>
 <p>
+
 
 ## 捐赠 <img img align="center" src="doc/imgs/reward.png" width=25/>
 多多支持多多star<img img align="center" src="doc/imgs/star.png" width=20/>!!!
@@ -39,5 +53,5 @@
 开源不易，演示服务器每个月还要缴费，可以请作者喝一瓶哇哈哈：
 
 <div align="center">
-<img src="https://gitee.com/qiu-qian/sky/raw/master/img/pay.png"  width="200px" height="200px" />
+<img src="doc/imgs/pay.png"  width="200px" height="200px" />
 </div>
