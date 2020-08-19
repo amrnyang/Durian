@@ -16,7 +16,7 @@
 
 特别声明：本项目可用于学习或毕设，禁止商用！
 
-后台演示地址：
+后台演示地址：[https://duriantiku.top](https://duriantiku.top:8085/)
 
 题库小程序演示地址：
 
@@ -31,3 +31,11 @@
 <p align="center">
 <img align="center" src="doc/imgs/durian-module.png" width=900>
 <p>
+
+## 捐赠
+多多支持多多star!!!😁
+开源不易，演示服务器每个月要定期交费，可以请作者喝一瓶哇哈哈：
+
+<div align="center">
+<img src="https://gitee.com/qiu-qian/sky/raw/master/img/pay.png"  width="200px" height="200px" />
+</div>
