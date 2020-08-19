@@ -1,10 +1,20 @@
-sky-security:
-  #更新操作的安全密钥
-  updateKey: ainimemeda
+# 项目相关配置
+sky:
+  # 名称
+  name: Sky
+  # 版本
+  version: 1.0.0
+  # 版权年份
+  copyrightYear: 2020
+  # 项目二进制文件存储路径
+  profile: D:/temp/sky
+  # 获取ip地址开关
+  addressEnabled: true
+
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8088
+  port: 8085
   servlet:
     # 应用的访问路径
     context-path: /
@@ -15,20 +25,23 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
-  ssl:
-    key-store: classpath:4376382_www.duriantiku.top.pfx
-    key-store-password: aok8de3Q
 
 # Spring配置
 spring:
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
   # 数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
       url: jdbc:mysql://rm-bp196o08411u2nh020o.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-      username: swing
-      password: LQqhzn18845124018
+      username: root
+      password: 123456
       # 初始连接数
       initialSize: 5
       # 最小连接池数量
@@ -68,12 +81,76 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-  data:
-    #solr搜索引擎
-    solr:
-      host: http://39.97.185.37:8089/solr/durian_core
+
+  #静态资源文件缓存(在浏览器中）
+  resources:
+    add-mappings: true
+    cache:
+      period: 2592000
+      cachecontrol:
+        max-age: 2592000
+        no-cache: false
+        no-store: false
+    chain:
+      cache: true
+      enabled: true
+      html-application-cache: true
+      compressed: true
+    static-locations: classpath:/static
+
+
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
 
 # MyBatis配置
 mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.swing.sky.**.module.dao
   # 配置mapper的扫描，找到所有的DAO.xml映射文件
   mapperLocations: classpath*:mybatis/*DAO.xml
+
+#验证码配置
+captcha:
+  #验证码的有效期 (分钟）
+  captchaExpiration: 1
+
+#其他的配置
+other:
+  #异步任务的执行的延迟时间（毫秒）
+  asyncTaskDelayTime: 10
+  responseType: JSON
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice/*
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+#线程池配置
+thread:
+  #核心线程池大小
+  corePoolSize: 50
+  #最大可创建线程数
+  maxPoolSize: 200
+  #队列最大长度
+  queueCapacity: 1000
+  #线程池维护线程所允许的空闲时间
+  keepAliveSeconds: 300

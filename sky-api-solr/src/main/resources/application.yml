@@ -15,9 +15,6 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
-  ssl:
-    key-store: classpath:4376382_www.duriantiku.top.pfx
-    key-store-password: aok8de3Q
 
 # Spring配置
 spring:
@@ -26,9 +23,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://rm-bp196o08411u2nh020o.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-      username: swing
-      password: LQqhzn18845124018
+      url: jdbc:mysql://localhost:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
       # 初始连接数
       initialSize: 5
       # 最小连接池数量
@@ -71,7 +68,7 @@ spring:
   data:
     #solr搜索引擎
     solr:
-      host: http://39.97.185.37:8089/solr/durian_core
+      host: http://localhost:8089/solr/durian_core
 
 # MyBatis配置
 mybatis:

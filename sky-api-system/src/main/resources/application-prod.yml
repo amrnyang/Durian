@@ -25,6 +25,9 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
+  ssl:
+    key-store: classpath:4376382_www.duriantiku.top.pfx
+    key-store-password: aok8de3Q
 
 # Spring配置
 spring:
@@ -39,7 +42,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://rm-bp196o08411u2nh02.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://rm-bp196o08411u2nh020o.mysql.rds.aliyuncs.com:3306/durian?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 123456
       # 初始连接数
@@ -128,16 +131,6 @@ mybatis:
 captcha:
   #验证码的有效期 (分钟）
   captchaExpiration: 1
-
-jwt:
-  # token的请求头
-  header: Authorization
-  #token的前缀
-  tokenPrefix: Bearer
-  # 令牌有效期（默认30分钟,测试1000分钟）
-  expireTime: 30
-  #在redis中存储令牌的文件夹名
-  folderName: user_online_info
 
 #其他的配置
 other:

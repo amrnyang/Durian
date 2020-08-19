@@ -1,10 +1,10 @@
 sky-security:
-  #更新操作的安全密钥
-  updateKey: ainimemeda
+  #访问的安全密钥
+  accessKey: ainimemeda
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8088
+  port: 8086
   servlet:
     # 应用的访问路径
     context-path: /
@@ -15,9 +15,6 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
-  ssl:
-    key-store: classpath:4376382_www.duriantiku.top.pfx
-    key-store-password: aok8de3Q
 
 # Spring配置
 spring:
