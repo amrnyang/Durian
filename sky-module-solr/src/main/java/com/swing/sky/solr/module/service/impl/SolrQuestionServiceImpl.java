@@ -2,6 +2,7 @@ package com.swing.sky.solr.module.service.impl;
 
 import com.swing.sky.solr.module.dao.QuestionDAO;
 import com.swing.sky.solr.module.domain.QuestionDO;
+import com.swing.sky.solr.module.entity.QuestionQueryResult;
 import com.swing.sky.solr.module.service.SolrQuestionService;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -68,10 +69,25 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
     }
 
     @Override
-    public List<QuestionDO> searchQuestion(String condition, String df, Integer pageStart, Integer pageRows) {
+    public QuestionQueryResult searchQuestion(String condition, Long courseId, String questionType, String df, Integer pageStart, Integer pageRows) {
+        QuestionQueryResult queryResult = new QuestionQueryResult();
         // 创建查询对象
         SolrQuery query = new SolrQuery();
-        query.setQuery(condition);
+        StringBuilder stringBuilder = new StringBuilder();
+        if (condition != null) {
+            stringBuilder.append(condition);
+        } else {
+            stringBuilder.append("*:*");
+        }
+        //如果需要课程条件，加上
+        if (courseId != null) {
+            stringBuilder.append(" AND ti_question_course_id:").append(courseId);
+        }
+        //如果需要题型条件，加上(此处存在一个未解决的bug：当题型的搜索条件为A时，貌似值无效，暂时方案是不去使用字符A)
+        if (questionType != null) {
+            stringBuilder.append(" AND ti_question_question_type:").append(questionType);
+        }
+        query.setQuery(stringBuilder.toString());
         query.set("df", df);
         query.setStart(pageStart);
         query.setRows(pageRows);
@@ -88,6 +104,12 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
 
             // 获取查询结果集
             SolrDocumentList results = response.getResults();
+
+            //设置总共结果数
+            queryResult.setNumFound(results.getNumFound());
+
+            //设置搜索时长
+            queryResult.setQueryTime(response.getQTime());
 
             // 获取高亮显示
             Map<String, Map<String, List<String>>> highlighting = response.getHighlighting();
@@ -112,8 +134,10 @@ public class SolrQuestionServiceImpl implements SolrQuestionService {
                 questions.add(question);
             }
         } catch (SolrServerException | IOException e) {
+            e.printStackTrace();
             throw new RuntimeException("搜索出错");
         }
-        return questions;
+        queryResult.setQuestions(questions);
+        return queryResult;
     }
 }

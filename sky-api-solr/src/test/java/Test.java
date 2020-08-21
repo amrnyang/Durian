@@ -30,6 +30,6 @@ public class Test {
 
     @org.junit.Test
     public void name4() {
-        solrQuestionService.searchQuestion("电流", "ti_keywords", 0, 10).forEach(System.out::println);
+//        solrQuestionService.searchQuestion("电流", null, null, "ti_keywords", 0, 10).forEach(System.out::println);
     }
 }
