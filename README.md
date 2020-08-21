@@ -42,12 +42,17 @@
 </table>
 
 <p align="center">
-<img align="center" src="doc/imgs/durian-module.png" width=900>
+<img align="center" src="doc/imgs/durian-module.png" width=700>
+<p>
+
+### Solr引擎搜索模型
+<p align="center">
+<img align="center" src="doc/imgs/solr.png" width=700>
 <p>
 
 ## 功能介绍
 <p align="center">
-<img align="center" src="https://images.gitee.com/uploads/images/2020/0819/200454_29833d6b_5114883.png" width=500>
+<img align="center" src="doc/imgs/function.png" width=500>
 <p>
 
 
