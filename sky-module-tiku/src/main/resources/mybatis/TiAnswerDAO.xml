@@ -3,6 +3,7 @@
 <mapper namespace="com.swing.sky.tiku.module.dao.TiAnswerDAO">
     <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
                type="com.swing.sky.tiku.module.domain.TiAnswerDO">
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
         <result column="question_id" jdbcType="BIGINT" property="questionId"/>
         <result column="answer" jdbcType="VARCHAR" property="answer"/>
         <result column="analysis" jdbcType="VARCHAR" property="analysis"/>
@@ -13,7 +14,7 @@
     <sql id="table_name">ti_answer</sql>
 
     <sql id="Base_Column_List">
-    ti_answer.id, ti_answer.question_id, ti_answer.answer, ti_answer.analysis,ti_answer.audit_status, ti_answer.like_count, ti_answer.is_use, ti_answer.order_num, ti_answer.create_by, ti_answer.create_time, ti_answer.update_by, ti_answer.update_time, ti_answer.remark    </sql>
+    ti_answer.id, ti_answer.creator_id,ti_answer.question_id, ti_answer.answer, ti_answer.analysis,ti_answer.audit_status, ti_answer.like_count, ti_answer.is_use, ti_answer.order_num, ti_answer.create_by, ti_answer.create_time, ti_answer.update_by, ti_answer.update_time, ti_answer.remark    </sql>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -43,6 +44,9 @@
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="creatorId != null">
+                creator_id,
+            </if>
             <if test="questionId != null">
                 question_id,
             </if>
@@ -61,6 +65,9 @@
             <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
             <if test="questionId != null">
                 #{questionId,jdbcType=BIGINT},
             </if>
@@ -84,6 +91,9 @@
         update
         <include refid="table_name"/>
         <set>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
             <if test="questionId != null">
                 question_id = #{questionId,jdbcType=BIGINT},
             </if>

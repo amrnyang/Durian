@@ -3,6 +3,7 @@
 <mapper namespace="com.swing.sky.tiku.module.dao.TiQuestionDAO">
     <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
                type="com.swing.sky.tiku.module.domain.TiQuestionDO">
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
         <result column="question_type" jdbcType="CHAR" property="questionType"/>
         <result column="year" jdbcType="VARCHAR" property="year"/>
         <result column="term" jdbcType="BOOLEAN" property="term"/>
@@ -18,7 +19,7 @@
     <sql id="table_name">ti_question</sql>
 
     <sql id="Base_Column_List">
-    ti_question.id, ti_question.question_type, ti_question.year, ti_question.term, ti_question.course_id, ti_question.chapter_id, ti_question.review_point, ti_question.content, ti_question.full_content, ti_question.score, ti_question.audit_status, ti_question.is_use, ti_question.order_num, ti_question.create_by, ti_question.create_time, ti_question.update_by, ti_question.update_time, ti_question.remark    </sql>
+    ti_question.id,ti_question.creator_id,ti_question.question_type, ti_question.year, ti_question.term, ti_question.course_id, ti_question.chapter_id, ti_question.review_point, ti_question.content, ti_question.full_content, ti_question.score, ti_question.audit_status, ti_question.is_use, ti_question.order_num, ti_question.create_by, ti_question.create_time, ti_question.update_by, ti_question.update_time, ti_question.remark    </sql>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -46,6 +47,9 @@
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="creatorId != null">
+                creator_id,
+            </if>
             <if test="questionType != null">
                 question_type,
             </if>
@@ -79,6 +83,9 @@
             <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
             <if test="questionType != null">
                 #{questionType,jdbcType=CHAR},
             </if>
@@ -116,6 +123,9 @@
         update
         <include refid="table_name"/>
         <set>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
             <if test="questionType != null">
                 question_type = #{questionType,jdbcType=CHAR},
             </if>

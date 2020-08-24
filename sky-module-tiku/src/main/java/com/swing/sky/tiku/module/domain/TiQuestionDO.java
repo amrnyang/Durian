@@ -3,13 +3,18 @@ package com.swing.sky.tiku.module.domain;
 import com.swing.sky.common.basic.BasicDO;
 
 import java.io.Serializable;
+
 /**
  * 用户信息表:对象 ti_question
  *
  * @author swing
  */
-public class TiQuestionDO extends BasicDO implements Serializable{
-    private static final long serialVersionUID=1L;
+public class TiQuestionDO extends BasicDO implements Serializable {
+    private static final long serialVersionUID = 1L;
+    /**
+     * 发布者id
+     */
+    private Long creatorId;
     /**
      * 题型（A 选择题，B 填空题 ,C 计算题）
      */
@@ -60,7 +65,8 @@ public class TiQuestionDO extends BasicDO implements Serializable{
     /**
      * 全参构造函数
      */
-    public TiQuestionDO(String questionType, String year, Boolean term, Long courseId, Long chapterId, String reviewPoint, String content, String fullContent, Integer score, String auditStatus) {
+    public TiQuestionDO(String questionType, Long creatorId, String year, Boolean term, Long courseId, Long chapterId, String reviewPoint, String content, String fullContent, Integer score, String auditStatus) {
+        this.creatorId = creatorId;
         this.questionType = questionType;
         this.year = year;
         this.term = term;
@@ -153,20 +159,36 @@ public class TiQuestionDO extends BasicDO implements Serializable{
         this.auditStatus = auditStatus;
     }
 
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
 
     @Override
     public String toString() {
         return "TiQuestionDO{" +
-                "questionType=" + questionType + ',' +
-                "year=" + year + ',' +
-                "term=" + term + ',' +
-                "courseId=" + courseId + ',' +
-                "chapterId=" + chapterId + ',' +
-                "reviewPoint=" + reviewPoint + ',' +
-                "content=" + content + ',' +
-                "fullContent=" + fullContent + ',' +
-                "score=" + score + ',' +
-                "auditStatus=" + auditStatus  +
-                '}'+super.toString();
+                "creatorId=" + creatorId +
+                ", questionType='" + questionType + '\'' +
+                ", year='" + year + '\'' +
+                ", term=" + term +
+                ", courseId=" + courseId +
+                ", chapterId=" + chapterId +
+                ", reviewPoint='" + reviewPoint + '\'' +
+                ", content='" + content + '\'' +
+                ", fullContent='" + fullContent + '\'' +
+                ", score=" + score +
+                ", auditStatus='" + auditStatus + '\'' +
+                ", id=" + id +
+                ", use=" + use +
+                ", orderNum=" + orderNum +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

@@ -12,6 +12,10 @@ import java.io.Serializable;
 public class TiAnswerDO extends BasicDO implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
+     * 发布者id
+     */
+    private Long creatorId;
+    /**
      * 题目id
      */
     private Long questionId;
@@ -41,7 +45,8 @@ public class TiAnswerDO extends BasicDO implements Serializable {
     /**
      * 全参构造函数
      */
-    public TiAnswerDO(Long questionId, String answer, String analysis, String auditStatus, Integer likeCount) {
+    public TiAnswerDO(Long questionId, Long creatorId, String answer, String analysis, String auditStatus, Integer likeCount) {
+        this.creatorId=creatorId;
         this.questionId = questionId;
         this.answer = answer;
         this.analysis = analysis;
@@ -89,15 +94,31 @@ public class TiAnswerDO extends BasicDO implements Serializable {
         this.likeCount = likeCount;
     }
 
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
 
     @Override
     public String toString() {
         return "TiAnswerDO{" +
-                "questionId=" + questionId + ',' +
-                "answer=" + answer + ',' +
-                "analysis=" + analysis + ',' +
-                "auditStatus=" + auditStatus + ',' +
-                "likeCount=" + likeCount +
-                '}' + super.toString();
+                "creatorId=" + creatorId +
+                ", questionId=" + questionId +
+                ", answer='" + answer + '\'' +
+                ", analysis='" + analysis + '\'' +
+                ", auditStatus='" + auditStatus + '\'' +
+                ", likeCount=" + likeCount +
+                ", id=" + id +
+                ", use=" + use +
+                ", orderNum=" + orderNum +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }
