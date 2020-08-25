@@ -16,8 +16,8 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
   ssl:
-    key-store: classpath:4376382_www.duriantiku.top.pfx
-    key-store-password: aok8de3Q
+    key-store: classpath:4376598_www.qiu-qian.top.pfx
+    key-store-password: 6aV3JvJv
 
 # Spring配置
 spring:
