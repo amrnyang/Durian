@@ -2,7 +2,6 @@
 <p align="center">
 <img align="center" src="doc/imgs/logo.png">
 <p>
-
 --------------------------------------------------------------------------------
 [English](./README.en.md) | 简体中文
 
@@ -16,7 +15,7 @@
 
 <b>特别声明：本项目可用于学习或毕设，禁止商用!!!</b>
 
-后台演示地址：[https://duriantiku.top](https://duriantiku.top:8085/)
+后台演示地址：[https://qiu-qian.top](https://qiu-qian.top:8085/)
 
 题库小程序演示地址：
 
