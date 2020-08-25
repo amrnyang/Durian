@@ -3,6 +3,7 @@
 <img align="center" src="doc/imgs/logo.png">
 <p>
 --------------------------------------------------------------------------------
+
 [English](./README.en.md) | 简体中文
 
 [![Documentation Status](https://img.shields.io/badge/中文文档-最新-brightgreen.svg)](http://www.paddlepaddle.org.cn/documentation/docs/zh/1.8/beginners_guide/index_cn.html)
