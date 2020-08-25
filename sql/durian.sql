@@ -11,11 +11,44 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 20/08/2020 09:32:42
+ Date: 25/08/2020 10:53:06
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for durian_user
+-- ----------------------------
+DROP TABLE IF EXISTS `durian_user`;
+CREATE TABLE `durian_user`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户账号（这里使用学生的学号）',
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户昵称',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户校内地址',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户邮箱',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '手机号码',
+  `gender` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '用户性别（M男 W女 N未知）',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '头像地址',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除 (1 删除，0 未删除）',
+  `is_use` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否使用（1 使用，0 停用）',
+  `order_num` int(4) NULL DEFAULT NULL COMMENT '显示顺序',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uk_username`(`username`) USING BTREE,
+  UNIQUE INDEX `uk_email`(`email`) USING BTREE,
+  UNIQUE INDEX `uk_phone`(`phone`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of durian_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for persistent_logins
@@ -32,9 +65,10 @@ CREATE TABLE `persistent_logins`  (
 -- ----------------------------
 -- Records of persistent_logins
 -- ----------------------------
+INSERT INTO `persistent_logins` VALUES ('friend1', '24Tu22pu/clOqtI3YEzd4w==', 'xYRkjwXNQJS3EAOIfHUXMw==', '2020-08-25 10:52:04');
+INSERT INTO `persistent_logins` VALUES ('friend', '6C5UofyN8dZOLmBFPVJetA==', 'gJM2cV+NZuFELw9aQOEbDQ==', '2020-08-25 10:52:23');
 INSERT INTO `persistent_logins` VALUES ('qian', 'eVV86NDai8sT/Z9g/8tz1w==', 'GxGXff1y15Wy0aceoDKNPw==', '2020-08-11 13:15:48');
-INSERT INTO `persistent_logins` VALUES ('guest', 'J487OYqDSlRyl5wSURUtQw==', '6k6lw0yABZQQm6APo21gfQ==', '2020-08-20 08:49:49');
-INSERT INTO `persistent_logins` VALUES ('swing', 'KTaxmv16qawZg+eEvrwOWg==', 'D0/XcqcOoJybvG+/+EtUtQ==', '2020-08-19 21:44:32');
+INSERT INTO `persistent_logins` VALUES ('Jiang', 'MJb/P614kl8av/zLA3g/AQ==', 'ztP0l8IUFHcXlEp2YMzVXg==', '2020-08-23 13:21:03');
 INSERT INTO `persistent_logins` VALUES ('qian', 'uvyEyGvyrkI44f5GrmzJQQ==', 'Oqo+wmQuLlHf+U5yEvE23g==', '2020-08-11 12:42:42');
 
 -- ----------------------------
@@ -284,7 +318,7 @@ CREATE TABLE `sys_dict_data`  (
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_type_id_data_key`(`type_id`, `data_key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -292,14 +326,14 @@ CREATE TABLE `sys_dict_data`  (
 INSERT INTO `sys_dict_data` VALUES (1, 1, '男', 'M', '', 'success', 0, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-11 20:30:47', '测试');
 INSERT INTO `sys_dict_data` VALUES (2, 1, '女', 'W', '', 'primary', 1, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-11 20:30:41', '测试');
 INSERT INTO `sys_dict_data` VALUES (3, 1, '未知', 'N', '', 'warning', 0, 1, 3, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-11 20:30:41', '测试');
-INSERT INTO `sys_dict_data` VALUES (4, 2, '审核中', 'A', '', 'warning', 0, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:42:16', '审核中');
+INSERT INTO `sys_dict_data` VALUES (4, 2, '审核中', 'A', '', 'warning', 0, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-24 12:14:04', '审核中');
 INSERT INTO `sys_dict_data` VALUES (5, 2, '未通过', 'C', '', 'danger', 0, 1, 3, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:42:16', '未通过');
 INSERT INTO `sys_dict_data` VALUES (6, 3, '使用', 'true', '', 'primary', 1, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-07-14 19:26:56', '测试');
 INSERT INTO `sys_dict_data` VALUES (7, 3, '停用', 'false', '', 'danger', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-07-14 19:26:56', '测试');
 INSERT INTO `sys_dict_data` VALUES (8, 4, '上学期', 'true', '', 'primary', 1, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:54:23', '上学期');
 INSERT INTO `sys_dict_data` VALUES (9, 4, '下学期', 'false', '', 'success', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:54:23', '下学期');
-INSERT INTO `sys_dict_data` VALUES (10, 5, '选择题', 'A', '', 'info', 1, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:38:48', '选择题');
-INSERT INTO `sys_dict_data` VALUES (11, 5, '填空题', 'B', '', 'primary', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-08 12:38:48', '填空题');
+INSERT INTO `sys_dict_data` VALUES (10, 5, '选择题', 'D', '', 'info', 1, 1, 4, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-21 21:45:06', '选择题');
+INSERT INTO `sys_dict_data` VALUES (11, 5, '填空题', 'B', '', 'primary', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-08-21 21:45:06', '填空题');
 INSERT INTO `sys_dict_data` VALUES (12, 6, '是', 'true', '', 'primary', 1, 1, 1, 'swing', '2018-03-16 11:33:00', 'swing', '2020-07-14 19:45:21', '测试');
 INSERT INTO `sys_dict_data` VALUES (13, 6, '否', 'false', '', 'danger', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-07-14 19:45:21', '测试');
 INSERT INTO `sys_dict_data` VALUES (14, 7, '通知', '1', '', 'info', 0, 1, 2, 'swing', '2018-03-16 11:33:00', 'swing', '2020-07-14 19:57:49', '测试');
@@ -325,7 +359,7 @@ INSERT INTO `sys_dict_data` VALUES (41, 40, 'success', 'success', ' ', 'success'
 INSERT INTO `sys_dict_data` VALUES (42, 40, 'info', 'info', ' ', 'info', 0, 1, 0, 'swing', '2020-07-14 11:32:05', 'swing', '2020-07-14 19:05:17', 'info');
 INSERT INTO `sys_dict_data` VALUES (43, 41, '成功', 'true', NULL, 'primary', 1, 1, 1, 'swing', '2020-07-15 11:11:46', 'swing', '2020-07-15 11:12:35', '');
 INSERT INTO `sys_dict_data` VALUES (44, 41, '失败', 'false', NULL, 'danger', 0, 1, 2, 'swing', '2020-07-15 11:12:31', 'swing', '2020-07-15 11:12:35', '失败');
-INSERT INTO `sys_dict_data` VALUES (45, 5, '计算题', 'C', NULL, 'success', 0, 1, 3, 'swing', '2020-08-08 12:38:39', 'swing', '2020-08-08 12:38:48', '计算题');
+INSERT INTO `sys_dict_data` VALUES (45, 5, '计算题', 'C', NULL, 'success', 0, 1, 3, 'swing', '2020-08-08 12:38:39', 'swing', '2020-08-21 21:45:06', '计算题');
 INSERT INTO `sys_dict_data` VALUES (46, 2, '审核通过', 'B', NULL, 'primary', 1, 1, 2, 'swing', '2020-08-08 12:41:59', 'swing', '2020-08-08 12:42:16', '审核通过');
 INSERT INTO `sys_dict_data` VALUES (47, 8, '专业必修', 'C', NULL, 'primary', 0, 1, 3, 'swing', '2020-08-08 18:23:13', 'swing', '2020-08-08 18:23:55', '专业必修');
 INSERT INTO `sys_dict_data` VALUES (48, 8, '专业选修', 'D', NULL, 'success', 0, 1, 4, 'swing', '2020-08-08 18:23:43', 'swing', '2020-08-08 18:23:55', '专业选修');
@@ -382,7 +416,7 @@ CREATE TABLE `sys_log_login`  (
   `browser` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '浏览器类型',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 591 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 629 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log_login
@@ -668,6 +702,44 @@ INSERT INTO `sys_log_login` VALUES (587, 'swing', 'A', 0, '验证码错误', '11
 INSERT INTO `sys_log_login` VALUES (588, 'swing', 'A', 1, '登录成功', '117.150.249.177', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-19 17:39:09');
 INSERT INTO `sys_log_login` VALUES (589, 'guest', 'A', 0, '验证码错误', '223.104.3.61', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-20 08:49:43');
 INSERT INTO `sys_log_login` VALUES (590, 'guest', 'A', 1, '登录成功', '223.104.3.61', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-20 08:49:49');
+INSERT INTO `sys_log_login` VALUES (591, 'friend', 'A', 1, '登录成功', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-20 09:49:06');
+INSERT INTO `sys_log_login` VALUES (592, 'swing', 'A', 1, '登录成功', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-20 09:49:45');
+INSERT INTO `sys_log_login` VALUES (593, 'friend', 'A', 1, '登录成功', '223.104.3.61', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-20 09:51:02');
+INSERT INTO `sys_log_login` VALUES (594, 'guest', 'A', 1, '登录成功', '223.104.3.61', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-20 09:51:33');
+INSERT INTO `sys_log_login` VALUES (595, 'friend', 'A', 1, '登录成功', '223.104.3.61', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-20 09:52:37');
+INSERT INTO `sys_log_login` VALUES (596, 'guest', 'A', 1, '登录成功', '58.33.82.115', '亚洲-中国-上海', 'Windows 10', 'Chrome', '2020-08-20 11:20:16');
+INSERT INTO `sys_log_login` VALUES (597, 'guest', 'A', 1, '登录成功', '36.112.170.222', '亚洲-中国-浙江', 'Windows 10', 'Chrome 8', '2020-08-20 18:43:55');
+INSERT INTO `sys_log_login` VALUES (598, 'guest', 'A', 1, '登录成功', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 07:47:03');
+INSERT INTO `sys_log_login` VALUES (599, 'swing', 'A', 1, '登录成功', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 08:55:56');
+INSERT INTO `sys_log_login` VALUES (600, 'swign', 'A', 0, '认证失败', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:17:19');
+INSERT INTO `sys_log_login` VALUES (601, 'swing', 'A', 1, '登录成功', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:17:27');
+INSERT INTO `sys_log_login` VALUES (602, 'guest', 'A', 0, '验证码错误', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 19:55:38');
+INSERT INTO `sys_log_login` VALUES (603, 'guest', 'A', 1, '登录成功', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 19:55:43');
+INSERT INTO `sys_log_login` VALUES (604, 'hello', 'A', 1, '登录成功', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 19:59:49');
+INSERT INTO `sys_log_login` VALUES (605, 'hello', 'A', 1, '登录成功', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 20:00:01');
+INSERT INTO `sys_log_login` VALUES (606, 'swing', 'A', 1, '登录成功', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:01:22');
+INSERT INTO `sys_log_login` VALUES (607, 'hello', 'A', 0, '认证失败', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:08:23');
+INSERT INTO `sys_log_login` VALUES (608, 'hello', 'A', 0, '验证码错误', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:08:29');
+INSERT INTO `sys_log_login` VALUES (609, 'swing', 'A', 0, '认证失败', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:08:36');
+INSERT INTO `sys_log_login` VALUES (610, 'swing', 'A', 1, '登录成功', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:08:45');
+INSERT INTO `sys_log_login` VALUES (611, 'swing', 'A', 0, '验证码错误', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-23 10:16:45');
+INSERT INTO `sys_log_login` VALUES (612, 'swing', 'A', 1, '登录成功', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-23 10:16:49');
+INSERT INTO `sys_log_login` VALUES (613, 'hello', 'A', 0, '验证码错误', '223.73.10.184', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-23 13:16:51');
+INSERT INTO `sys_log_login` VALUES (614, 'Jiang', 'A', 1, '登录成功', '223.73.10.184', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-23 13:16:59');
+INSERT INTO `sys_log_login` VALUES (615, 'swing', 'A', 1, '登录成功', '127.0.0.1', '-保留-', 'Windows 10', 'Microsoft Edge', '2020-08-23 17:51:11');
+INSERT INTO `sys_log_login` VALUES (616, 'swing', 'A', 1, '登录成功', '59.172.75.146', '亚洲-中国-湖北', 'Windows 10', 'Microsoft Edge', '2020-08-23 17:54:14');
+INSERT INTO `sys_log_login` VALUES (617, 'guest', 'A', 1, '登录成功', '120.244.146.118', '亚洲-中国-北京市', 'Windows 10', 'Microsoft Edge', '2020-08-23 19:57:30');
+INSERT INTO `sys_log_login` VALUES (618, 'guest', 'A', 0, '验证码错误', '117.176.130.160', '亚洲-中国-四川', 'Windows 10', 'Chrome 8', '2020-08-23 23:13:33');
+INSERT INTO `sys_log_login` VALUES (619, 'guest', 'A', 1, '登录成功', '117.176.130.160', '亚洲-中国-四川', 'Windows 10', 'Chrome 8', '2020-08-23 23:13:41');
+INSERT INTO `sys_log_login` VALUES (620, 'swing', 'A', 1, '登录成功', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 11:47:50');
+INSERT INTO `sys_log_login` VALUES (621, 'guest', 'A', 1, '登录成功', '36.112.170.222', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-24 16:00:20');
+INSERT INTO `sys_log_login` VALUES (622, 'guest', 'A', 0, '验证码错误', '113.14.6.46', '亚洲-中国-广西壮族自治区', 'Windows 10', 'Chrome 8', '2020-08-25 10:02:19');
+INSERT INTO `sys_log_login` VALUES (623, 'guest', 'A', 1, '登录成功', '113.14.6.46', '亚洲-中国-广西壮族自治区', 'Windows 10', 'Chrome 8', '2020-08-25 10:02:26');
+INSERT INTO `sys_log_login` VALUES (624, 'guest', 'A', 0, '验证码错误', '36.148.103.76', '亚洲-中国-湖南', 'Mac OS X (iPhone)', 'Apple WebKit', '2020-08-25 10:40:30');
+INSERT INTO `sys_log_login` VALUES (625, 'guest', 'A', 0, '验证码错误', '36.148.103.76', '亚洲-中国-湖南', 'Mac OS X (iPhone)', 'Apple WebKit', '2020-08-25 10:40:40');
+INSERT INTO `sys_log_login` VALUES (626, 'guest', 'A', 1, '登录成功', '36.148.103.76', '亚洲-中国-湖南', 'Mac OS X (iPhone)', 'Apple WebKit', '2020-08-25 10:40:51');
+INSERT INTO `sys_log_login` VALUES (627, 'friend1', 'A', 1, '登录成功', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-25 10:50:07');
+INSERT INTO `sys_log_login` VALUES (628, 'friend', 'A', 1, '登录成功', '117.136.38.129', '亚洲-中国-北京', 'Windows 10', 'Chrome 8', '2020-08-25 10:52:24');
 
 -- ----------------------------
 -- Table structure for sys_log_operate
@@ -692,7 +764,7 @@ CREATE TABLE `sys_log_operate`  (
   `browser` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 487 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 526 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log_operate
@@ -1149,6 +1221,45 @@ INSERT INTO `sys_log_operate` VALUES (483, 'swing', 'tikuQuestion', 'B', 'POST',
 INSERT INTO `sys_log_operate` VALUES (484, 'swing', 'tikuAnswer', 'B', 'POST', 'http://localhost:8085/tiku/answer/edit', '{\"questionId\":118,\"use\":true,\"remark\":\"\",\"updateTime\":1597805220189,\"analysis\":\"<p>无</p>\",\"answer\":\"<p>加热炉采用电加热方式运行，加热器所产生的热量与调压器电压cu的平方成正比，cu增高，炉温就上升，cu的高低由调压器滑动触点的位置所控制，该触点由可逆转的直流电动机驱动。炉子的实际温度用热电偶测量，输出电压fu。fu作为系统的反馈电压与给定电压ru进行比较，得出偏差电压eu，经电压放大器、功率放大器放大成au后，作为控制电动机的电枢电压。     </p><p>在正常情况下，炉温等于某个期望值T°C，热电偶的输出电压fu正好等于给定电压ru。此时，0freuuu，故01auu，可逆电动机不转动，调压器的滑动触点停留在某个合适的位置上，使cu保持一定的数值。这时，炉子散失的热量正好等于从加热器吸取的热量，形成稳定的热平衡状态，温度保持恒定。 </p><p>当炉膛温度T°C由于某种原因突然下降(例如炉门打开造成的热量流失)，则出现以下的控制过程： </p><p>控制的结果是使炉膛温度回升，直至T°C的实际值等于期望值为止</p><p><img src=\\\"https://swing-durian.oss-cn-beijing.aliyuncs.com/81/53/8153f85149c4451691cc371c2797d6d5.png\\\" data-filename=\\\"image.png\\\" style=\\\"width: 350px; height: 35px;\\\"></p><p>系统中，加热炉是被控对象，炉温是被控量，给定量是由给定电位器设定的电压ru（表征炉温的希望值）</p><p><img src=\\\"https://swing-durian.oss-cn-beijing.aliyuncs.com/65/3e/653e930496e74b25b47c71e8b2363721.png\\\" data-filename=\\\"image.png\\\" style=\\\"width: 350px; height: 73px;\\\"></p><p><br></p>\",\"updateBy\":\"swing\",\"auditStatus\":\"A\",\"id\":109}', '{\"msg\":\"更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.tiku.TiAnswerController.editSave()', 'A', '127.0.0.1', '-保留-', 'Windows 10', 'Chrome 8', '2020-08-19 10:47:01');
 INSERT INTO `sys_log_operate` VALUES (485, 'swing', 'notice', 'B', 'POST', 'https://www.duriantiku.top:8085/system/notice/edit', '{\"noticeContent\":\"<p><img src=\\\"https://swing-durian.oss-cn-beijing.aliyuncs.com/98/43/98439042dff84df5a157c67683f6c596.jpeg\\\" data-filename=\\\"ChMkJlfJWE2IAkSEAAx6j83YEXYAAU-JAOBpn0ADHqn718.jpg\\\" style=\\\"width: 215.076px; height: 382px;\\\"><br></p>\",\"updateBy\":\"swing\",\"use\":true,\"orderNum\":5,\"noticeType\":\"2\",\"remark\":\"\",\"updateTime\":1597815133381,\"id\":1,\"noticeTitle\":\"测试公告\"}', '{\"msg\":\"公告信息更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.NoticeController.editSave()', 'A', '117.150.249.177', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-19 13:32:14');
 INSERT INTO `sys_log_operate` VALUES (486, 'swing', 'tikuAnswer', 'B', 'POST', 'https://duriantiku.top:8085/tiku/answer/edit', '{\"questionId\":118,\"use\":true,\"remark\":\"\",\"updateTime\":1597839445622,\"analysis\":\"<p>无</p>\",\"answer\":\"<p>加热炉采用电加热方式运行，加热器所产生的热量与调压器电压cu的平方成正比，cu增高，炉温就上升，cu的高低由调压器滑动触点的位置所控制，该触点由可逆转的直流电动机驱动。炉子的实际温度用热电偶测量，输出电压fu。fu作为系统的反馈电压与给定电压ru进行比较，得出偏差电压eu，经电压放大器、功率放大器放大成au后，作为控制电动机的电枢电压。     </p><p>当炉膛温度T°C由于某种原因突然下降(例如炉门打开造成的热量流失)，则出现以下的控制过程： </p><p>控制的结果是使炉膛温度回升，直至T°C的实际值等于期望值为止</p><p><img src=\\\"https://swing-durian.oss-cn-beijing.aliyuncs.com/81/53/8153f85149c4451691cc371c2797d6d5.png\\\" data-filename=\\\"image.png\\\" style=\\\"width: 350px; height: 35px;\\\"></p><p>系统中，加热炉是被控对象，炉温是被控量，给定量是由给定电位器设定的电压ru（表征炉温的希望值）</p><p><img src=\\\"https://swing-durian.oss-cn-beijing.aliyuncs.com/65/3e/653e930496e74b25b47c71e8b2363721.png\\\" data-filename=\\\"image.png\\\" style=\\\"width: 350px; height: 73px;\\\"></p><p><br></p>\",\"updateBy\":\"swing\",\"auditStatus\":\"A\",\"id\":109}', '{\"msg\":\"更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.tiku.TiAnswerController.editSave()', 'A', '117.150.249.177', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-19 20:17:26');
+INSERT INTO `sys_log_operate` VALUES (487, 'swing', 'user', 'A', 'POST', 'https://duriantiku.top:8085/system/user/add', '{\"gender\":\"M\",\"nickName\":\"friend\",\"use\":true,\"deptId\":103,\"orderNum\":1,\"remark\":\"\",\"updateTime\":1597888111858,\"createBy\":\"swing\",\"password\":\"$2a$10$4DAF2wg9LelJpKScdMsdOOyiVXcQv01MnD143lP5sQR1wYkb/p2eu\",\"createTime\":1597888111858,\"phone\":\"15567655676\",\"updateBy\":\"swing\",\"id\":106,\"email\":\"15567655676@163.com\",\"username\":\"friend\"}', '{\"msg\":\"用户信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.UserController.addSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-20 09:48:32');
+INSERT INTO `sys_log_operate` VALUES (488, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '133 1,100,1000,101,1007,102,1012,103,1016,104,1020,107,1035,1126,105,1025,106,1030,2,111,112,115,108,500,1039,501,1043,1127,1132,1130,1143,1131,1147,1133,1128,1138,1129,1134,1150,1156,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-20 09:51:17');
+INSERT INTO `sys_log_operate` VALUES (489, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-cubes\",\"orderNum\":1,\"menuName\":\"题库列表\",\"remark\":\"题库列表\",\"updateTime\":1598008680797,\"parentId\":1127,\"authoritySign\":\"tiku:question:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1128}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:18:01');
+INSERT INTO `sys_log_operate` VALUES (490, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-calendar-check-o\",\"orderNum\":2,\"menuName\":\"题目审核\",\"remark\":\"题目审核\",\"updateTime\":1598008701874,\"parentId\":1127,\"authoritySign\":\"tiku:question:audit:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question/audit\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1129}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:18:22');
+INSERT INTO `sys_log_operate` VALUES (491, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-balance-scale\",\"orderNum\":3,\"menuName\":\"答案审核\",\"remark\":\"答案审核\",\"updateTime\":1598008713510,\"parentId\":1127,\"authoritySign\":\"tiku:answer:audit:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/answer/audit\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1150}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:18:34');
+INSERT INTO `sys_log_operate` VALUES (492, 'swing', 'menu', 'C', 'GET', 'https://duriantiku.top:8085/system/menu/remove/1133', '{menuId=1133}', 'null', 0, '菜单已分配,不允许删除', 'com.swing.sky.system.api.system.MenuController.remove()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:18:42');
+INSERT INTO `sys_log_operate` VALUES (493, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '133 1,100,1000,101,1007,102,1012,103,1016,104,1020,107,1035,1126,105,1025,106,1030,2,111,112,115,108,500,1039,501,1043,1127,1128,1138,1129,1134,1132,1130,1143,1131,1147,1150,1156,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:19:40');
+INSERT INTO `sys_log_operate` VALUES (494, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '132 1,100,1000,102,1012,103,1016,1017,1018,104,1020,107,1035,1036,2,109,1047,1048,1049,111,112,115,1127,1128,1138,1139,1140,1141,1142,1151,1152,1153,1154,1155,1129,1134,1135,1136,1137,1132,1130,1143,1144,1145,1146,1131,1147,1148,1149,1150,1156,1157,1158,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:20:11');
+INSERT INTO `sys_log_operate` VALUES (495, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '131 1127,1128,1138,1139,1140,1129,1134,1135,1136,1137', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:21:06');
+INSERT INTO `sys_log_operate` VALUES (496, 'swing', 'menu', 'C', 'GET', 'https://duriantiku.top:8085/system/menu/remove/1133', '{menuId=1133}', '{\"msg\":\"菜单删除成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.remove()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:21:17');
+INSERT INTO `sys_log_operate` VALUES (497, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-cubes\",\"orderNum\":4,\"menuName\":\"题库列表\",\"remark\":\"题库列表\",\"updateTime\":1598008908408,\"parentId\":1127,\"authoritySign\":\"tiku:question:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1128}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:21:49');
+INSERT INTO `sys_log_operate` VALUES (498, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-cubes\",\"orderNum\":4,\"menuName\":\"题库中心\",\"remark\":\"题库列表\",\"updateTime\":1598008948703,\"parentId\":1127,\"authoritySign\":\"tiku:question:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1128}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 19:22:29');
+INSERT INTO `sys_log_operate` VALUES (499, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"#\",\"orderNum\":1,\"menuName\":\"接口文档\",\"remark\":\"系统接口菜单\",\"updateTime\":1598012016319,\"parentId\":2,\"authoritySign\":\"monitor:swagger:view\",\"openWay\":\"menuItem\",\"path\":\"/monitor/swagger\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":115}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 20:13:37');
+INSERT INTO `sys_log_operate` VALUES (500, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"#\",\"orderNum\":14,\"menuName\":\"接口文档\",\"remark\":\"系统接口菜单\",\"updateTime\":1598012068603,\"parentId\":0,\"authoritySign\":\"monitor:swagger:view\",\"openWay\":\"menuItem\",\"path\":\"/monitor/swagger\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":115}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 20:14:29');
+INSERT INTO `sys_log_operate` VALUES (501, 'swing', 'dictData', 'B', 'POST', 'https://duriantiku.top:8085/system/dict/data/edit', '{\"listClass\":\"info\",\"use\":true,\"dataValue\":\"D\",\"orderNum\":1,\"remark\":\"选择题\",\"updateTime\":1598016000665,\"dataKey\":\"选择题\",\"isDefault\":true,\"updateBy\":\"swing\",\"id\":10}', '{\"msg\":\"字典数据更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 21:20:01');
+INSERT INTO `sys_log_operate` VALUES (502, 'swing', 'dictData', 'B', 'POST', 'https://duriantiku.top:8085/system/dict/data/edit', '{\"listClass\":\"info\",\"use\":true,\"dataValue\":\"D\",\"orderNum\":4,\"remark\":\"选择题\",\"updateTime\":1598017505831,\"dataKey\":\"选择题\",\"isDefault\":true,\"updateBy\":\"swing\",\"id\":10}', '{\"msg\":\"字典数据更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.editSave()', 'A', '117.150.244.61', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-21 21:45:06');
+INSERT INTO `sys_log_operate` VALUES (503, 'swing', 'user', 'A', 'POST', 'https://duriantiku.top:8085/system/user/add', '{\"gender\":\"M\",\"nickName\":\"hello\",\"use\":true,\"deptId\":103,\"orderNum\":6,\"remark\":\"\",\"updateTime\":1598097508254,\"createBy\":\"swing\",\"password\":\"$2a$10$qU6LuOCqF1eObDb3p1xztu7oQeWBy1ayqEN4al9k/1cfLoKTZ4cou\",\"createTime\":1598097508254,\"phone\":\"18845124019\",\"updateBy\":\"swing\",\"id\":107,\"email\":\"18845124019@163.com\",\"username\":\"hello\"}', '{\"msg\":\"用户信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.UserController.addSave()', 'A', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 19:58:29');
+INSERT INTO `sys_log_operate` VALUES (504, 'hello', 'profile', 'B', 'POST', 'https://duriantiku.top:8085/profile/resetPwd', '123456 000419', '{\"msg\":\"密码修改成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.common.ProfileController.resetPassword()', 'A', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 20:00:33');
+INSERT INTO `sys_log_operate` VALUES (505, 'hello', 'profile', 'B', 'POST', 'https://duriantiku.top:8085/profile/update', '{\"gender\":\"M\",\"phone\":\"13068913571\",\"email\":\"13068913571@qq.com\",\"username\":\"Jiang\"}', '{\"msg\":\"基本信息更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.common.ProfileController.updateProfile()', 'A', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 20:00:58');
+INSERT INTO `sys_log_operate` VALUES (506, 'hello', 'profile', 'B', 'POST', 'https://duriantiku.top:8085/profile/update', '{\"gender\":\"M\",\"phone\":\"13068913571\",\"email\":\"13068913571@qq.com\",\"username\":\"Jiang\"}', '{\"msg\":\"基本信息更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.common.ProfileController.updateProfile()', 'A', '223.74.126.132', '亚洲-中国-广东', 'Windows 10', 'Chrome 8', '2020-08-22 20:01:47');
+INSERT INTO `sys_log_operate` VALUES (507, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '132 1,100,1000,1001,1002,1003,1004,1005,1006,101,1007,1008,1009,1010,1011,102,1012,1013,1014,1015,103,1016,1017,1018,1019,104,1020,1021,1022,1023,1024,107,1035,1036,1037,1038,1126,105,1025,1026,1027,1028,1029,106,1030,1031,1032,1033,1034,2,109,1047,1048,1049,111,112,3,110,1050,1051,1052,1053,1054,1055,1056,113,114,1057,1058,1059,1060,1061,108,500,1039,1040,1041,1042,501,1043,1044,1045,1046,115,1127,1128,1138,1139,1140,1141,1142,1151,1152,1153,1154,1155,1129,1134,1135,1136,1137,1132,1130,1143,1144,1145,1146,1131,1147,1148,1149,1150,1156,1157,1158,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '219.140.234.234', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-22 20:01:49');
+INSERT INTO `sys_log_operate` VALUES (508, 'swing', 'menu', 'B', 'POST', 'http://localhost:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-cubes\",\"orderNum\":2,\"menuName\":\"题库中心\",\"remark\":\"题库列表\",\"updateTime\":1598176349519,\"parentId\":1127,\"authoritySign\":\"tiku:question:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1128}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '127.0.0.1', '-保留-', 'Windows 10', 'Microsoft Edge', '2020-08-23 17:52:30');
+INSERT INTO `sys_log_operate` VALUES (509, 'swing', 'menu', 'B', 'POST', 'http://localhost:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-calendar-check-o\",\"orderNum\":3,\"menuName\":\"题目审核\",\"remark\":\"题目审核\",\"updateTime\":1598176360154,\"parentId\":1127,\"authoritySign\":\"tiku:question:audit:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/question/audit\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1129}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '127.0.0.1', '-保留-', 'Windows 10', 'Microsoft Edge', '2020-08-23 17:52:40');
+INSERT INTO `sys_log_operate` VALUES (510, 'swing', 'menu', 'B', 'POST', 'http://localhost:8085/system/menu/edit', '{\"use\":true,\"icon\":\"fa fa-balance-scale\",\"orderNum\":4,\"menuName\":\"答案审核\",\"remark\":\"答案审核\",\"updateTime\":1598176371579,\"parentId\":1127,\"authoritySign\":\"tiku:answer:audit:view\",\"openWay\":\"menuItem\",\"path\":\"/tiku/answer/audit\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":1150}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '127.0.0.1', '-保留-', 'Windows 10', 'Microsoft Edge', '2020-08-23 17:52:52');
+INSERT INTO `sys_log_operate` VALUES (511, 'guest', 'loginLog', 'C', 'POST', 'https://duriantiku.top:8085/system/log/login/remove', '618', 'null', 0, '不允许访问', 'com.swing.sky.system.api.system.LoginLogController.remove()', 'A', '117.176.130.160', '亚洲-中国-四川', 'Windows 10', 'Chrome 8', '2020-08-23 23:18:09');
+INSERT INTO `sys_log_operate` VALUES (512, 'guest', 'loginLog', 'C', 'POST', 'https://duriantiku.top:8085/system/log/login/remove', '618,619', 'null', 0, '不允许访问', 'com.swing.sky.system.api.system.LoginLogController.remove()', 'A', '117.176.130.160', '亚洲-中国-四川', 'Windows 10', 'Chrome 8', '2020-08-23 23:18:14');
+INSERT INTO `sys_log_operate` VALUES (513, 'swing', 'dictData', 'A', 'POST', 'https://duriantiku.top:8085/system/dict/data/add', '{\"listClass\":\"warning\",\"use\":true,\"dataValue\":\"D\",\"orderNum\":4,\"remark\":\"\",\"updateTime\":1598242015245,\"dataKey\":\"错误提交\",\"createBy\":\"swing\",\"isDefault\":false,\"createTime\":1598242015245,\"updateBy\":\"swing\",\"typeId\":2,\"id\":49}', '{\"msg\":\"字典数据插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.addSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:06:55');
+INSERT INTO `sys_log_operate` VALUES (514, 'swing', 'dictData', 'B', 'POST', 'https://duriantiku.top:8085/system/dict/data/edit', '{\"listClass\":\"info\",\"use\":true,\"dataValue\":\"A\",\"orderNum\":1,\"remark\":\"审核中\",\"updateTime\":1598242022093,\"dataKey\":\"审核中\",\"isDefault\":false,\"updateBy\":\"swing\",\"id\":4}', '{\"msg\":\"字典数据更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.editSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:07:02');
+INSERT INTO `sys_log_operate` VALUES (515, 'swing', 'dictData', 'C', 'POST', 'https://duriantiku.top:8085/system/dict/data/remove', '49', '{\"msg\":\"字典数据删除成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.remove()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:13:59');
+INSERT INTO `sys_log_operate` VALUES (516, 'swing', 'dictData', 'B', 'POST', 'https://duriantiku.top:8085/system/dict/data/edit', '{\"listClass\":\"warning\",\"use\":true,\"dataValue\":\"A\",\"orderNum\":1,\"remark\":\"审核中\",\"updateTime\":1598242443925,\"dataKey\":\"审核中\",\"isDefault\":false,\"updateBy\":\"swing\",\"id\":4}', '{\"msg\":\"字典数据更新成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.DictDataController.editSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:14:04');
+INSERT INTO `sys_log_operate` VALUES (517, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"#\",\"orderNum\":6,\"menuName\":\"字典管理\",\"remark\":\"字典管理菜单\",\"updateTime\":1598242475578,\"parentId\":1,\"authoritySign\":\"system:dict:view\",\"openWay\":\"menuItem\",\"path\":\"/system/dict/type\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":105}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:14:36');
+INSERT INTO `sys_log_operate` VALUES (518, 'swing', 'menu', 'B', 'POST', 'https://duriantiku.top:8085/system/menu/edit', '{\"use\":true,\"icon\":\"#\",\"orderNum\":7,\"menuName\":\"参数设置\",\"remark\":\"参数设置菜单\",\"updateTime\":1598242499786,\"parentId\":1,\"authoritySign\":\"system:config:view\",\"openWay\":\"menuItem\",\"path\":\"/system/config\",\"updateBy\":\"swing\",\"menuType\":\"M\",\"id\":106}', '{\"msg\":\"更新菜单信息成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.editSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:15:00');
+INSERT INTO `sys_log_operate` VALUES (519, 'swing', 'menu', 'C', 'GET', 'https://duriantiku.top:8085/system/menu/remove/1126', '{menuId=1126}', 'null', 0, '菜单已分配,不允许删除', 'com.swing.sky.system.api.system.MenuController.remove()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:15:12');
+INSERT INTO `sys_log_operate` VALUES (520, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '133 1,100,1000,101,1007,102,1012,103,1016,104,1020,105,1025,106,1030,107,1035,2,111,112,108,500,1039,501,1043,115,1127,1128,1138,1129,1134,1132,1130,1143,1131,1147,1150,1156,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:15:33');
+INSERT INTO `sys_log_operate` VALUES (521, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '132 1,100,1000,1001,1002,1003,1004,1005,1006,101,1007,1008,1009,1010,1011,102,1012,1013,1014,1015,103,1016,1017,1018,1019,104,1020,1021,1022,1023,1024,105,1025,1026,1027,1028,1029,106,1030,1031,1032,1033,1034,107,1035,1036,1037,1038,2,109,1047,1048,1049,111,112,3,110,1050,1051,1052,1053,1054,1055,1056,113,114,1057,1058,1059,1060,1061,108,500,1039,1040,1041,1042,501,1043,1044,1045,1046,115,1127,1128,1138,1139,1140,1141,1142,1151,1152,1153,1154,1155,1129,1134,1135,1136,1137,1132,1130,1143,1144,1145,1146,1131,1147,1148,1149,1150,1156,1157,1158,1159,1160,1161', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:15:40');
+INSERT INTO `sys_log_operate` VALUES (522, 'swing', 'role', 'D', 'POST', 'https://duriantiku.top:8085/system/role/updateMenuLink', '1 1,100,1000,1001,1002,1003,1004,1005,1006,101,1007,1008,1009,1010,1011,102,1012,1013,1014,1015,103,1016,1017,1018,1019,104,1020,1021,1022,1023,1024,105,1025,1026,1027,1028,1029,106,1030,1031,1032,1033,1034,107,1035,1036,1037,1038,2,112,108,500,1039,1040,1041,1042,501,1043,1044,1045,1046', '{\"msg\":\"角色菜单关联信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.RoleController.authMenuSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:15:49');
+INSERT INTO `sys_log_operate` VALUES (523, 'swing', 'menu', 'C', 'GET', 'https://duriantiku.top:8085/system/menu/remove/1126', '{menuId=1126}', '{\"msg\":\"菜单删除成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.MenuController.remove()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-24 12:16:00');
+INSERT INTO `sys_log_operate` VALUES (524, 'swing', 'user', 'A', 'POST', 'https://duriantiku.top:8085/system/user/add', '{\"gender\":\"M\",\"nickName\":\"test\",\"use\":true,\"deptId\":103,\"orderNum\":1,\"remark\":\"\",\"updateTime\":1598323662837,\"createBy\":\"swing\",\"password\":\"$2a$10$UbDw5O/bKeuIS7iiqM1.Te61KmfuDUte4bBCzano7DKULRBX6K.De\",\"createTime\":1598323662837,\"phone\":\"18845125656\",\"updateBy\":\"swing\",\"id\":108,\"email\":\"18845125656@163.com\",\"username\":\"friend1\"}', '{\"msg\":\"用户信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.UserController.addSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-25 10:47:43');
+INSERT INTO `sys_log_operate` VALUES (525, 'swing', 'user', 'A', 'POST', 'https://duriantiku.top:8085/system/user/add', '{\"gender\":\"M\",\"nickName\":\"test\",\"use\":true,\"deptId\":103,\"orderNum\":1,\"remark\":\"\",\"updateTime\":1598323707429,\"createBy\":\"swing\",\"password\":\"$2a$10$.qzfPJEC.mxns5eaY6L8se/7vqzp7v3ZdRa1Wpq3wi4dqT0sOoiUK\",\"createTime\":1598323707429,\"phone\":\"18845124785\",\"updateBy\":\"swing\",\"id\":109,\"email\":\"18845124785@163.com\",\"username\":\"friend2\"}', '{\"msg\":\"用户信息插入成功！\",\"status\":200}', 1, '操作成功', 'com.swing.sky.system.api.system.UserController.addSave()', 'A', '27.18.250.111', '亚洲-中国-湖北', 'Windows 10', 'Chrome 8', '2020-08-25 10:48:28');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1187,8 +1298,8 @@ INSERT INTO `sys_menu` VALUES (101, 1, '角色管理', 'M', 'system:role:view', 
 INSERT INTO `sys_menu` VALUES (102, 1, '菜单管理', 'M', 'system:menu:view', '/system/menu', NULL, 'menuItem', NULL, 'fa fa-location-arrow', 1, 3, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-11 16:45:30', '菜单管理菜单');
 INSERT INTO `sys_menu` VALUES (103, 1, '专业管理', 'M', 'system:dept:view', '/system/dept', NULL, 'menuItem', NULL, 'fa fa-building-o', 1, 4, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-05 12:03:58', '部门管理菜单');
 INSERT INTO `sys_menu` VALUES (104, 1, '岗位管理', 'M', 'system:post:view', '/system/post', NULL, 'menuItem', NULL, 'fa fa-universal-access', 1, 5, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-14 20:33:24', '岗位管理菜单');
-INSERT INTO `sys_menu` VALUES (105, 1126, '字典管理', 'M', 'system:dict:view', '/system/dict/type', NULL, 'menuItem', NULL, '#', 1, 6, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-11 15:28:49', '字典管理菜单');
-INSERT INTO `sys_menu` VALUES (106, 1126, '参数设置', 'M', 'system:config:view', '/system/config', NULL, 'menuItem', NULL, '#', 1, 7, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-11 16:43:00', '参数设置菜单');
+INSERT INTO `sys_menu` VALUES (105, 1, '字典管理', 'M', 'system:dict:view', '/system/dict/type', NULL, 'menuItem', NULL, '#', 1, 6, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-24 12:14:36', '字典管理菜单');
+INSERT INTO `sys_menu` VALUES (106, 1, '参数设置', 'M', 'system:config:view', '/system/config', NULL, 'menuItem', NULL, '#', 1, 7, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-24 12:15:00', '参数设置菜单');
 INSERT INTO `sys_menu` VALUES (107, 1, '通知公告', 'M', 'system:notice:view', '/system/notice', NULL, 'menuItem', NULL, 'fa fa-bullhorn', 1, 12, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-13 10:44:32', '通知公告菜单');
 INSERT INTO `sys_menu` VALUES (108, 0, '日志管理', 'D', '', '#', NULL, 'menuItem', NULL, 'fa fa-thermometer-three-quarters', 1, 13, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-12 14:31:39', '日志管理');
 INSERT INTO `sys_menu` VALUES (109, 2, '在线用户', 'M', 'monitor:online:view', '/monitor/online', NULL, 'menuItem', NULL, '#', 0, 5, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-12 12:39:03', '在线用户菜单');
@@ -1197,7 +1308,7 @@ INSERT INTO `sys_menu` VALUES (111, 2, '数据库监控', 'M', 'monitor:database
 INSERT INTO `sys_menu` VALUES (112, 2, '性能监控', 'M', 'monitor:server:view', '/monitor/server', NULL, 'menuItem', NULL, '#', 1, 3, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-17 22:31:30', '服务监控菜单');
 INSERT INTO `sys_menu` VALUES (113, 3, '表单构建', 'M', 'tool:build:view', '/tool/build', NULL, 'menuItem', NULL, '#', 0, 1, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-18 14:11:41', '表单构建菜单');
 INSERT INTO `sys_menu` VALUES (114, 3, '代码生成', 'M', 'tool:gen:view', '/tool/gen', NULL, 'menuItem', NULL, '#', 0, 2, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-08 17:58:13', '代码生成菜单');
-INSERT INTO `sys_menu` VALUES (115, 2, '系统接口', 'M', 'monitor:swagger:view', '/monitor/swagger', NULL, 'menuItem', NULL, '#', 1, 1, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-16 18:09:02', '系统接口菜单');
+INSERT INTO `sys_menu` VALUES (115, 0, '接口文档', 'M', 'monitor:swagger:view', '/monitor/swagger', NULL, 'menuItem', NULL, '#', 1, 14, 'admin', '2018-03-16 11:33:00', 'swing', '2020-08-21 20:14:29', '系统接口菜单');
 INSERT INTO `sys_menu` VALUES (500, 108, '操作日志', 'M', 'system:log:operate:view', '/system/log/operate', NULL, 'menuItem', NULL, '#', 1, 2, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-16 12:19:12', '操作日志菜单');
 INSERT INTO `sys_menu` VALUES (501, 108, '登录日志', 'M', 'system:log:login:view', '/system/log/login', NULL, 'menuItem', NULL, '#', 1, 1, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-16 12:19:43', '登录日志菜单');
 INSERT INTO `sys_menu` VALUES (1000, 100, '用户查询', 'B', 'system:user:list', '#', NULL, 'menuItem', NULL, '#', 1, 1, 'admin', '2018-03-16 11:33:00', 'swing', '2020-07-11 11:05:42', '');
@@ -1262,14 +1373,12 @@ INSERT INTO `sys_menu` VALUES (1058, 114, '生成修改', 'B', 'tool:gen:edit', 
 INSERT INTO `sys_menu` VALUES (1059, 114, '生成删除', 'B', 'tool:gen:remove', '#', NULL, '', NULL, '#', 0, 3, 'admin', '2018-03-16 11:33:00', 'swing', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1060, 114, '预览代码', 'B', 'tool:gen:preview', '#', NULL, '', NULL, '#', 0, 4, 'admin', '2018-03-16 11:33:00', 'swing', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1061, 114, '生成代码', 'B', 'tool:gen:code', '#', NULL, '', NULL, '#', 0, 5, 'admin', '2018-03-16 11:33:00', 'swing', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu` VALUES (1126, 1, '基本设置', 'D', '', '#', NULL, 'menuItem', NULL, 'fa fa-gear', 1, 6, 'swing', '2020-07-11 14:59:30', 'swing', '2020-07-11 16:53:42', '');
 INSERT INTO `sys_menu` VALUES (1127, 0, '榴莲题库', 'D', '', '', NULL, 'menuItem', NULL, 'fa fa-certificate', 1, 2, 'swing', '2020-08-08 13:13:24', 'swing', '2020-08-12 14:30:47', '榴莲题库');
-INSERT INTO `sys_menu` VALUES (1128, 1133, '题库列表', 'M', 'tiku:question:view', '/tiku/question', NULL, 'menuItem', NULL, 'fa fa-cubes', 1, 1, 'swing', '2020-08-08 13:14:53', 'swing', '2020-08-09 17:52:13', '题库列表');
-INSERT INTO `sys_menu` VALUES (1129, 1133, '题目审核', 'M', 'tiku:question:audit:view', '/tiku/question/audit', NULL, 'menuItem', NULL, 'fa fa-calendar-check-o', 1, 2, 'swing', '2020-08-08 14:51:22', 'swing', '2020-08-09 17:52:27', '题目审核');
+INSERT INTO `sys_menu` VALUES (1128, 1127, '题库中心', 'M', 'tiku:question:view', '/tiku/question', NULL, 'menuItem', NULL, 'fa fa-cubes', 1, 2, 'swing', '2020-08-08 13:14:53', 'swing', '2020-08-23 17:52:30', '题库列表');
+INSERT INTO `sys_menu` VALUES (1129, 1127, '题目审核', 'M', 'tiku:question:audit:view', '/tiku/question/audit', NULL, 'menuItem', NULL, 'fa fa-calendar-check-o', 1, 3, 'swing', '2020-08-08 14:51:22', 'swing', '2020-08-23 17:52:40', '题目审核');
 INSERT INTO `sys_menu` VALUES (1130, 1132, '课程管理', 'M', 'tiku:course:view', '/tiku/course', NULL, 'menuItem', NULL, 'fa fa-bank', 1, 3, 'swing', '2020-08-08 16:05:40', 'swing', '2020-08-09 17:51:09', '全校课程管理');
 INSERT INTO `sys_menu` VALUES (1131, 1132, '课程分配', 'M', 'tiku:allocation:view', '/tiku/allocation', NULL, 'menuItem', NULL, 'fa fa-database', 1, 4, 'swing', '2020-08-08 20:54:15', 'swing', '2020-08-09 17:51:31', '课程分配');
 INSERT INTO `sys_menu` VALUES (1132, 1127, '课程操作', 'D', '', '', NULL, 'menuItem', NULL, 'fa fa-briefcase', 1, 1, 'swing', '2020-08-09 17:50:52', 'swing', '2020-08-09 17:50:52', '课程管理');
-INSERT INTO `sys_menu` VALUES (1133, 1127, '题库管理', 'D', '', '', NULL, 'menuItem', NULL, 'fa fa-barcode', 1, 2, 'swing', '2020-08-09 17:52:03', 'swing', '2020-08-09 17:52:41', '题库管理');
 INSERT INTO `sys_menu` VALUES (1134, 1129, '审核列表', 'B', 'tiku:question:audit:list', '', NULL, 'menuItem', NULL, '', 1, 1, 'swing', '2020-08-09 17:59:03', 'swing', '2020-08-09 17:59:03', '审核列表');
 INSERT INTO `sys_menu` VALUES (1135, 1129, '更新题目', 'B', 'tiku:question:audit:edit', '', NULL, 'menuItem', NULL, '', 1, 2, 'swing', '2020-08-09 18:01:04', 'swing', '2020-08-09 18:01:04', '更新题目');
 INSERT INTO `sys_menu` VALUES (1136, 1129, 'pass权限', 'B', 'tiku:question:audit:pass', '', NULL, 'menuItem', NULL, '', 1, 3, 'swing', '2020-08-09 18:05:43', 'swing', '2020-08-09 18:05:43', 'pass权限');
@@ -1286,7 +1395,7 @@ INSERT INTO `sys_menu` VALUES (1146, 1130, '删除课程', 'B', 'tiku:course:rem
 INSERT INTO `sys_menu` VALUES (1147, 1131, '分配列表', 'B', 'tiku:allocation:list', '', NULL, 'menuItem', NULL, '', 1, 1, 'swing', '2020-08-09 18:15:53', 'swing', '2020-08-09 18:15:53', '分配列表');
 INSERT INTO `sys_menu` VALUES (1148, 1131, '添加关联', 'B', 'tiku:course:updateDeptCourseLink', '', NULL, 'menuItem', NULL, '', 1, 2, 'swing', '2020-08-09 18:17:09', 'swing', '2020-08-09 18:17:09', '添加关联');
 INSERT INTO `sys_menu` VALUES (1149, 1131, '删除关联', 'B', 'tiku:course:removeDeptCourseLink', '', NULL, 'menuItem', NULL, '', 1, 3, 'swing', '2020-08-09 18:17:37', 'swing', '2020-08-09 18:17:37', '删除关联');
-INSERT INTO `sys_menu` VALUES (1150, 1133, '答案审核', 'M', 'tiku:answer:audit:view', '/tiku/answer/audit', NULL, 'menuItem', NULL, 'fa fa-balance-scale', 1, 3, 'swing', '2020-08-11 17:17:39', 'swing', '2020-08-11 17:17:39', '答案审核');
+INSERT INTO `sys_menu` VALUES (1150, 1127, '答案审核', 'M', 'tiku:answer:audit:view', '/tiku/answer/audit', NULL, 'menuItem', NULL, 'fa fa-balance-scale', 1, 4, 'swing', '2020-08-11 17:17:39', 'swing', '2020-08-23 17:52:52', '答案审核');
 INSERT INTO `sys_menu` VALUES (1151, 1128, '答案视图', 'B', 'tiku:answer:view', '', NULL, 'menuItem', NULL, '', 1, 6, 'swing', '2020-08-11 20:41:22', 'swing', '2020-08-11 20:41:22', '答案视图');
 INSERT INTO `sys_menu` VALUES (1152, 1128, '答案列表', 'B', 'tiku:answer:list', '', NULL, 'menuItem', NULL, '', 1, 7, 'swing', '2020-08-11 20:41:54', 'swing', '2020-08-11 20:41:54', '');
 INSERT INTO `sys_menu` VALUES (1153, 1128, '答案新增', 'B', 'tiku:answer:add', '', NULL, 'menuItem', NULL, '', 1, 8, 'swing', '2020-08-11 20:42:21', 'swing', '2020-08-11 20:42:21', '');
@@ -1753,11 +1862,9 @@ INSERT INTO `sys_role_menu` VALUES (1, 1043);
 INSERT INTO `sys_role_menu` VALUES (1, 1044);
 INSERT INTO `sys_role_menu` VALUES (1, 1045);
 INSERT INTO `sys_role_menu` VALUES (1, 1046);
-INSERT INTO `sys_role_menu` VALUES (1, 1126);
 INSERT INTO `sys_role_menu` VALUES (131, 1127);
 INSERT INTO `sys_role_menu` VALUES (131, 1128);
 INSERT INTO `sys_role_menu` VALUES (131, 1129);
-INSERT INTO `sys_role_menu` VALUES (131, 1133);
 INSERT INTO `sys_role_menu` VALUES (131, 1134);
 INSERT INTO `sys_role_menu` VALUES (131, 1135);
 INSERT INTO `sys_role_menu` VALUES (131, 1136);
@@ -1767,33 +1874,93 @@ INSERT INTO `sys_role_menu` VALUES (131, 1139);
 INSERT INTO `sys_role_menu` VALUES (131, 1140);
 INSERT INTO `sys_role_menu` VALUES (132, 1);
 INSERT INTO `sys_role_menu` VALUES (132, 2);
+INSERT INTO `sys_role_menu` VALUES (132, 3);
 INSERT INTO `sys_role_menu` VALUES (132, 100);
+INSERT INTO `sys_role_menu` VALUES (132, 101);
 INSERT INTO `sys_role_menu` VALUES (132, 102);
 INSERT INTO `sys_role_menu` VALUES (132, 103);
 INSERT INTO `sys_role_menu` VALUES (132, 104);
+INSERT INTO `sys_role_menu` VALUES (132, 105);
+INSERT INTO `sys_role_menu` VALUES (132, 106);
 INSERT INTO `sys_role_menu` VALUES (132, 107);
+INSERT INTO `sys_role_menu` VALUES (132, 108);
 INSERT INTO `sys_role_menu` VALUES (132, 109);
+INSERT INTO `sys_role_menu` VALUES (132, 110);
 INSERT INTO `sys_role_menu` VALUES (132, 111);
 INSERT INTO `sys_role_menu` VALUES (132, 112);
+INSERT INTO `sys_role_menu` VALUES (132, 113);
+INSERT INTO `sys_role_menu` VALUES (132, 114);
 INSERT INTO `sys_role_menu` VALUES (132, 115);
+INSERT INTO `sys_role_menu` VALUES (132, 500);
+INSERT INTO `sys_role_menu` VALUES (132, 501);
 INSERT INTO `sys_role_menu` VALUES (132, 1000);
+INSERT INTO `sys_role_menu` VALUES (132, 1001);
+INSERT INTO `sys_role_menu` VALUES (132, 1002);
+INSERT INTO `sys_role_menu` VALUES (132, 1003);
+INSERT INTO `sys_role_menu` VALUES (132, 1004);
+INSERT INTO `sys_role_menu` VALUES (132, 1005);
+INSERT INTO `sys_role_menu` VALUES (132, 1006);
+INSERT INTO `sys_role_menu` VALUES (132, 1007);
+INSERT INTO `sys_role_menu` VALUES (132, 1008);
+INSERT INTO `sys_role_menu` VALUES (132, 1009);
+INSERT INTO `sys_role_menu` VALUES (132, 1010);
+INSERT INTO `sys_role_menu` VALUES (132, 1011);
 INSERT INTO `sys_role_menu` VALUES (132, 1012);
+INSERT INTO `sys_role_menu` VALUES (132, 1013);
+INSERT INTO `sys_role_menu` VALUES (132, 1014);
+INSERT INTO `sys_role_menu` VALUES (132, 1015);
 INSERT INTO `sys_role_menu` VALUES (132, 1016);
 INSERT INTO `sys_role_menu` VALUES (132, 1017);
 INSERT INTO `sys_role_menu` VALUES (132, 1018);
+INSERT INTO `sys_role_menu` VALUES (132, 1019);
 INSERT INTO `sys_role_menu` VALUES (132, 1020);
+INSERT INTO `sys_role_menu` VALUES (132, 1021);
+INSERT INTO `sys_role_menu` VALUES (132, 1022);
+INSERT INTO `sys_role_menu` VALUES (132, 1023);
+INSERT INTO `sys_role_menu` VALUES (132, 1024);
+INSERT INTO `sys_role_menu` VALUES (132, 1025);
+INSERT INTO `sys_role_menu` VALUES (132, 1026);
+INSERT INTO `sys_role_menu` VALUES (132, 1027);
+INSERT INTO `sys_role_menu` VALUES (132, 1028);
+INSERT INTO `sys_role_menu` VALUES (132, 1029);
+INSERT INTO `sys_role_menu` VALUES (132, 1030);
+INSERT INTO `sys_role_menu` VALUES (132, 1031);
+INSERT INTO `sys_role_menu` VALUES (132, 1032);
+INSERT INTO `sys_role_menu` VALUES (132, 1033);
+INSERT INTO `sys_role_menu` VALUES (132, 1034);
 INSERT INTO `sys_role_menu` VALUES (132, 1035);
 INSERT INTO `sys_role_menu` VALUES (132, 1036);
+INSERT INTO `sys_role_menu` VALUES (132, 1037);
+INSERT INTO `sys_role_menu` VALUES (132, 1038);
+INSERT INTO `sys_role_menu` VALUES (132, 1039);
+INSERT INTO `sys_role_menu` VALUES (132, 1040);
+INSERT INTO `sys_role_menu` VALUES (132, 1041);
+INSERT INTO `sys_role_menu` VALUES (132, 1042);
+INSERT INTO `sys_role_menu` VALUES (132, 1043);
+INSERT INTO `sys_role_menu` VALUES (132, 1044);
+INSERT INTO `sys_role_menu` VALUES (132, 1045);
+INSERT INTO `sys_role_menu` VALUES (132, 1046);
 INSERT INTO `sys_role_menu` VALUES (132, 1047);
 INSERT INTO `sys_role_menu` VALUES (132, 1048);
 INSERT INTO `sys_role_menu` VALUES (132, 1049);
+INSERT INTO `sys_role_menu` VALUES (132, 1050);
+INSERT INTO `sys_role_menu` VALUES (132, 1051);
+INSERT INTO `sys_role_menu` VALUES (132, 1052);
+INSERT INTO `sys_role_menu` VALUES (132, 1053);
+INSERT INTO `sys_role_menu` VALUES (132, 1054);
+INSERT INTO `sys_role_menu` VALUES (132, 1055);
+INSERT INTO `sys_role_menu` VALUES (132, 1056);
+INSERT INTO `sys_role_menu` VALUES (132, 1057);
+INSERT INTO `sys_role_menu` VALUES (132, 1058);
+INSERT INTO `sys_role_menu` VALUES (132, 1059);
+INSERT INTO `sys_role_menu` VALUES (132, 1060);
+INSERT INTO `sys_role_menu` VALUES (132, 1061);
 INSERT INTO `sys_role_menu` VALUES (132, 1127);
 INSERT INTO `sys_role_menu` VALUES (132, 1128);
 INSERT INTO `sys_role_menu` VALUES (132, 1129);
 INSERT INTO `sys_role_menu` VALUES (132, 1130);
 INSERT INTO `sys_role_menu` VALUES (132, 1131);
 INSERT INTO `sys_role_menu` VALUES (132, 1132);
-INSERT INTO `sys_role_menu` VALUES (132, 1133);
 INSERT INTO `sys_role_menu` VALUES (132, 1134);
 INSERT INTO `sys_role_menu` VALUES (132, 1135);
 INSERT INTO `sys_role_menu` VALUES (132, 1136);
@@ -1819,6 +1986,9 @@ INSERT INTO `sys_role_menu` VALUES (132, 1155);
 INSERT INTO `sys_role_menu` VALUES (132, 1156);
 INSERT INTO `sys_role_menu` VALUES (132, 1157);
 INSERT INTO `sys_role_menu` VALUES (132, 1158);
+INSERT INTO `sys_role_menu` VALUES (132, 1159);
+INSERT INTO `sys_role_menu` VALUES (132, 1160);
+INSERT INTO `sys_role_menu` VALUES (132, 1161);
 INSERT INTO `sys_role_menu` VALUES (133, 1);
 INSERT INTO `sys_role_menu` VALUES (133, 2);
 INSERT INTO `sys_role_menu` VALUES (133, 100);
@@ -1845,14 +2015,12 @@ INSERT INTO `sys_role_menu` VALUES (133, 1030);
 INSERT INTO `sys_role_menu` VALUES (133, 1035);
 INSERT INTO `sys_role_menu` VALUES (133, 1039);
 INSERT INTO `sys_role_menu` VALUES (133, 1043);
-INSERT INTO `sys_role_menu` VALUES (133, 1126);
 INSERT INTO `sys_role_menu` VALUES (133, 1127);
 INSERT INTO `sys_role_menu` VALUES (133, 1128);
 INSERT INTO `sys_role_menu` VALUES (133, 1129);
 INSERT INTO `sys_role_menu` VALUES (133, 1130);
 INSERT INTO `sys_role_menu` VALUES (133, 1131);
 INSERT INTO `sys_role_menu` VALUES (133, 1132);
-INSERT INTO `sys_role_menu` VALUES (133, 1133);
 INSERT INTO `sys_role_menu` VALUES (133, 1134);
 INSERT INTO `sys_role_menu` VALUES (133, 1138);
 INSERT INTO `sys_role_menu` VALUES (133, 1143);
@@ -1889,7 +2057,7 @@ CREATE TABLE `sys_user`  (
   UNIQUE INDEX `uk_username`(`username`) USING BTREE,
   UNIQUE INDEX `uk_email`(`email`) USING BTREE,
   UNIQUE INDEX `uk_phone`(`phone`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -1898,6 +2066,10 @@ INSERT INTO `sys_user` VALUES (1, 103, 'swing', '$2a$10$.zHLgrdbWWhEeOWQOWRtseNj
 INSERT INTO `sys_user` VALUES (103, 103, 'qian', '$2a$10$.zHLgrdbWWhEeOWQOWRtseNjDuZDftSpo.Dh5nJU9BW/UiDBvKI0S', 'money', '1885622435@173.com', '18845224514', 'W', 'https://swing-durian.oss-cn-beijing.aliyuncs.com/f3/7f/f37f626ed41345b6952751d17704e50b.png', 0, 1, 3, 'swing', '2020-07-11 13:43:16', 'swing', '2020-08-11 20:28:02', '我是money');
 INSERT INTO `sys_user` VALUES (104, 103, 'cenyue', '$2a$10$Y/hEfZ1TcnnZhNPBZKsHjeZ0dljgO4KZPp9DSE54BQ0qxmI1GoYfa', '岑越', '18845123333@163.com', '18845123333', 'M', 'https://swing-durian.oss-cn-beijing.aliyuncs.com/b2/c4/b2c4942f77b84a3983eb136d088bf4c4.png', 0, 1, 3, 'swing', '2020-08-11 20:30:04', 'cenyue', '2020-08-11 20:56:52', '岑越');
 INSERT INTO `sys_user` VALUES (105, 289, 'guest', '$2a$10$/uvvngiio5KbT1qYzVN1zen30GwTVGHKBd5oNKDhk0guwXg4GWBXC', 'guest', '18867124018@163.com', '18845123330', 'M', 'https://swing-durian.oss-cn-beijing.aliyuncs.com/23/da/23dabfaa2f594be088242d7671d57aaf.png', 0, 1, 5, 'swing', '2020-08-13 18:57:06', 'guest', '2020-08-13 18:57:39', '');
+INSERT INTO `sys_user` VALUES (106, 103, 'friend', '$2a$10$4DAF2wg9LelJpKScdMsdOOyiVXcQv01MnD143lP5sQR1wYkb/p2eu', 'friend', '15567655676@163.com', '15567655676', 'M', '', 0, 1, 1, 'swing', '2020-08-20 09:48:32', 'swing', '2020-08-20 09:48:32', '');
+INSERT INTO `sys_user` VALUES (107, 103, 'Jiang', '$2a$10$RCi625NOWgYej4/mvCJIQuqAqb3OGT3wwXygMranUJKw9zaH26B9i', 'hello', '13068913571@qq.com', '13068913571', 'M', '', 0, 1, 6, 'swing', '2020-08-22 19:58:28', 'hello', '2020-08-22 20:01:47', '');
+INSERT INTO `sys_user` VALUES (108, 103, 'friend1', '$2a$10$UbDw5O/bKeuIS7iiqM1.Te61KmfuDUte4bBCzano7DKULRBX6K.De', 'test', '18845125656@163.com', '18845125656', 'M', '', 0, 1, 1, 'swing', '2020-08-25 10:47:43', 'swing', '2020-08-25 10:47:43', '');
+INSERT INTO `sys_user` VALUES (109, 103, 'friend2', '$2a$10$.qzfPJEC.mxns5eaY6L8se/7vqzp7v3ZdRa1Wpq3wi4dqT0sOoiUK', 'test', '18845124785@163.com', '18845124785', 'M', '', 0, 1, 1, 'swing', '2020-08-25 10:48:27', 'swing', '2020-08-25 10:48:27', '');
 
 -- ----------------------------
 -- Table structure for sys_user_online
@@ -1963,6 +2135,10 @@ CREATE TABLE `sys_user_role`  (
 INSERT INTO `sys_user_role` VALUES (103, 131);
 INSERT INTO `sys_user_role` VALUES (104, 132);
 INSERT INTO `sys_user_role` VALUES (105, 133);
+INSERT INTO `sys_user_role` VALUES (106, 132);
+INSERT INTO `sys_user_role` VALUES (107, 132);
+INSERT INTO `sys_user_role` VALUES (108, 132);
+INSERT INTO `sys_user_role` VALUES (109, 132);
 
 -- ----------------------------
 -- Table structure for ti_answer
@@ -1970,6 +2146,7 @@ INSERT INTO `sys_user_role` VALUES (105, 133);
 DROP TABLE IF EXISTS `ti_answer`;
 CREATE TABLE `ti_answer`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '答案id',
+  `creator_id` bigint(20) NULL DEFAULT NULL COMMENT '发布者id',
   `question_id` bigint(20) NULL DEFAULT NULL COMMENT '题目id',
   `answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '答案',
   `analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '解析',
@@ -1988,12 +2165,32 @@ CREATE TABLE `ti_answer`  (
 -- ----------------------------
 -- Records of ti_answer
 -- ----------------------------
-INSERT INTO `ti_answer` VALUES (104, 106, '<p style=\"text-align: left;\">这题选C</p>', '<p>别问我为什么，第六感</p>', 'C', 0, 1, 1, 'swing', '2020-08-11 15:34:15', 'swing', '2020-08-18 11:25:26', '核力量');
-INSERT INTO `ti_answer` VALUES (105, 106, '<p>选A 选D的那兄弟是傻子</p><p style=\"text-align: center; \"><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/66/f6/66f68a3d0ba944f69cbf0ab53f61dc41.png\" data-filename=\"批注 2020-06-06 190026.png\" style=\"width: 264px;\"><br></p>', '<p>选A 选D的那兄弟是傻子<br></p>', 'B', 10, 1, 1, 'swing', '2020-08-11 16:09:50', 'swing', '2020-08-17 10:34:30', '');
-INSERT INTO `ti_answer` VALUES (106, 107, '<p>balabala</p>', '<p>balabala<br></p>', 'C', 0, 1, 1, 'swing', '2020-08-11 17:19:40', 'swing', '2020-08-18 11:25:19', '');
-INSERT INTO `ti_answer` VALUES (107, 116, '<p>(1）负反馈连接方式为：a--&gt;d , b--&gt;c；</p><p><br></p><p>(2）系统方框图如图解1-1 所示</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/06/04/0604c092b57944d18f9f6f4c708db442.png\" data-filename=\"image.png\" style=\"width: 209.578px; height: 102.153px;\"><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:49:33', 'swing', '2020-08-18 11:55:02', '');
-INSERT INTO `ti_answer` VALUES (108, 117, '<p>当合上开门开关时，电桥会测量出开门位置与大门实际位置间对应的偏差电压，偏差电压经放大器放大后，驱动伺服电动机带动绞盘转动，将大门向上提起。与此同时，和大门连在一起的电刷也向上移动，直到桥式测量电路达到平衡，电动机停止转动，大门达到开启位置。反之，当合上关门开关时，电动机带动绞盘使大门关闭，从而可以实现大门远距离开闭自动控制。系统方框图如图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/22/a8/22a8d6d284894a4d9d603d3c702a3d98.png\" data-filename=\"image.png\" style=\"width: 350px; height: 48px;\"><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:51:38', 'swing', '2020-08-19 10:41:05', '');
-INSERT INTO `ti_answer` VALUES (109, 118, '<p>加热炉采用电加热方式运行，加热器所产生的热量与调压器电压cu的平方成正比，cu增高，炉温就上升，cu的高低由调压器滑动触点的位置所控制，该触点由可逆转的直流电动机驱动。炉子的实际温度用热电偶测量，输出电压fu。fu作为系统的反馈电压与给定电压ru进行比较，得出偏差电压eu，经电压放大器、功率放大器放大成au后，作为控制电动机的电枢电压。     </p><p>当炉膛温度T°C由于某种原因突然下降(例如炉门打开造成的热量流失)，则出现以下的控制过程： </p><p>控制的结果是使炉膛温度回升，直至T°C的实际值等于期望值为止</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/81/53/8153f85149c4451691cc371c2797d6d5.png\" data-filename=\"image.png\" style=\"width: 350px; height: 35px;\"></p><p>系统中，加热炉是被控对象，炉温是被控量，给定量是由给定电位器设定的电压ru（表征炉温的希望值）</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/65/3e/653e930496e74b25b47c71e8b2363721.png\" data-filename=\"image.png\" style=\"width: 350px; height: 73px;\"></p><p><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:54:48', 'swing', '2020-08-19 20:17:35', '');
+INSERT INTO `ti_answer` VALUES (104, NULL, 106, '<p style=\"text-align: left;\">这题选C</p>', '<p>别问我为什么，第六感</p>', 'C', 0, 1, 1, 'swing', '2020-08-11 15:34:15', 'swing', '2020-08-18 11:25:26', '核力量');
+INSERT INTO `ti_answer` VALUES (105, NULL, 106, '<p>选A 选D的那兄弟是傻子</p><p style=\"text-align: center; \"><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/66/f6/66f68a3d0ba944f69cbf0ab53f61dc41.png\" data-filename=\"批注 2020-06-06 190026.png\" style=\"width: 264px;\"><br></p>', '<p>选A 选D的那兄弟是傻子<br></p>', 'B', 10, 1, 1, 'swing', '2020-08-11 16:09:50', 'swing', '2020-08-17 10:34:30', '');
+INSERT INTO `ti_answer` VALUES (106, NULL, 107, '<p>balabala</p>', '<p>balabala<br></p>', 'C', 0, 1, 1, 'swing', '2020-08-11 17:19:40', 'swing', '2020-08-18 11:25:19', '');
+INSERT INTO `ti_answer` VALUES (107, NULL, 116, '<p>(1）负反馈连接方式为：a--&gt;d , b--&gt;c；</p><p><br></p><p>(2）系统方框图如图解1-1 所示</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/06/04/0604c092b57944d18f9f6f4c708db442.png\" data-filename=\"image.png\" style=\"width: 209.578px; height: 102.153px;\"><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:49:33', 'swing', '2020-08-18 11:55:02', '');
+INSERT INTO `ti_answer` VALUES (108, NULL, 117, '<p>当合上开门开关时，电桥会测量出开门位置与大门实际位置间对应的偏差电压，偏差电压经放大器放大后，驱动伺服电动机带动绞盘转动，将大门向上提起。与此同时，和大门连在一起的电刷也向上移动，直到桥式测量电路达到平衡，电动机停止转动，大门达到开启位置。反之，当合上关门开关时，电动机带动绞盘使大门关闭，从而可以实现大门远距离开闭自动控制。系统方框图如图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/22/a8/22a8d6d284894a4d9d603d3c702a3d98.png\" data-filename=\"image.png\" style=\"width: 350px; height: 48px;\"><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:51:38', 'swing', '2020-08-19 10:41:05', '');
+INSERT INTO `ti_answer` VALUES (109, NULL, 118, '<p>加热炉采用电加热方式运行，加热器所产生的热量与调压器电压cu的平方成正比，cu增高，炉温就上升，cu的高低由调压器滑动触点的位置所控制，该触点由可逆转的直流电动机驱动。炉子的实际温度用热电偶测量，输出电压fu。fu作为系统的反馈电压与给定电压ru进行比较，得出偏差电压eu，经电压放大器、功率放大器放大成au后，作为控制电动机的电枢电压。     </p><p>当炉膛温度T°C由于某种原因突然下降(例如炉门打开造成的热量流失)，则出现以下的控制过程： </p><p>控制的结果是使炉膛温度回升，直至T°C的实际值等于期望值为止</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/81/53/8153f85149c4451691cc371c2797d6d5.png\" data-filename=\"image.png\" style=\"width: 350px; height: 35px;\"></p><p>系统中，加热炉是被控对象，炉温是被控量，给定量是由给定电位器设定的电压ru（表征炉温的希望值）</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/65/3e/653e930496e74b25b47c71e8b2363721.png\" data-filename=\"image.png\" style=\"width: 350px; height: 73px;\"></p><p><br></p>', '<p>无</p>', 'B', 0, 1, 1, 'swing', '2020-08-18 11:54:48', 'swing', '2020-08-19 20:17:35', '');
+
+-- ----------------------------
+-- Table structure for ti_answer_submit
+-- ----------------------------
+DROP TABLE IF EXISTS `ti_answer_submit`;
+CREATE TABLE `ti_answer_submit`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `creator_id` bigint(20) NOT NULL COMMENT '提交者id',
+  `answer_id` bigint(20) NOT NULL COMMENT '答案id',
+  `answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '答案内容',
+  `analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '分析内容',
+  `submit_status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'A' COMMENT '提交状态（A  审核中,B 通过，C 未通过）',
+  `submit_time` datetime(0) NULL DEFAULT NULL COMMENT '提交时间',
+  `submit_remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提交备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ti_answer_submit
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ti_course
@@ -2065,7 +2262,8 @@ INSERT INTO `ti_dept_course` VALUES (288, 110);
 DROP TABLE IF EXISTS `ti_question`;
 CREATE TABLE `ti_question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '题目ID',
-  `question_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'A' COMMENT '题型（A 选择题，B 填空题 ,C 计算题）',
+  `creator_id` bigint(20) NOT NULL COMMENT '发布者id',
+  `question_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'D' COMMENT '题型（A 选择题，B 填空题 ,C 计算题）',
   `year` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '题目年份',
   `term` tinyint(1) NULL DEFAULT NULL COMMENT '学期（1上学期 0 下学期）',
   `course_id` bigint(20) NULL DEFAULT NULL COMMENT '课程id',
@@ -2088,19 +2286,53 @@ CREATE TABLE `ti_question`  (
 -- ----------------------------
 -- Records of ti_question
 -- ----------------------------
-INSERT INTO `ti_question` VALUES (105, 'A', NULL, NULL, 105, NULL, '', '有一台星形连接的三相交流发电机，额定相电压为660V ，若测得其线电压U AB =1143V ，U BC =660V ，U CA =660V ，则说明 ()。(a) A 相绕组接反(b) B 相绕组接反(c) C 相绕组接反', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">有一台星形连接的三相交流发电机，额定相电压为660V ，若测得其线电压U AB =1143V ，U BC =660V ，U CA =660V ，则说明 (<span style=\"text-indent: 2em;\">)。</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) A 相绕组接反</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(b) B 相绕组接反</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(c) C 相绕组接反</p>', NULL, 'B', 1, 2, 'swing', '2020-08-08 13:46:04', 'swing', '2020-08-16 20:35:23', '这是好题目');
-INSERT INTO `ti_question` VALUES (106, 'A', NULL, NULL, 106, NULL, '坐标系', '在如图所示的电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V', '<p>在如图所示的电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。</p><p>(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V</p><img src=\"http://www.wendangku.net/pic/view?ih=131&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=192&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=0&amp;aimw=192&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\">', NULL, 'B', 1, 5, 'swing', '2020-08-08 14:21:58', 'swing', '2020-08-17 13:11:33', '测试');
-INSERT INTO `ti_question` VALUES (107, 'A', NULL, NULL, 105, NULL, '', '在图示电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V', '<p style=\"text-align: left;\">在图示电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。</p><p style=\"text-align: left;\">(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V</p><img src=\"http://www.wendangku.net/pic/view?ih=131&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=192&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=0&amp;aimw=192&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\">', NULL, 'B', 1, 5, 'swing', '2020-08-09 12:30:00', 'swing', '2020-08-17 12:46:40', '');
-INSERT INTO `ti_question` VALUES (108, 'A', NULL, NULL, 105, NULL, '', '图示正弦电路中，Z = (40 + j30) Ω，X L =10Ω，有效值U 2 =200V ，则总电压有效值U 为 ( )。(a) 178.9 V&nbsp;&nbsp;&nbsp;&nbsp;(b) 226 V&nbsp;&nbsp;&nbsp;&nbsp;(c) 120 V&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">图示正弦电路中，Z = (40 + j30) Ω，X L =10Ω，有效值U 2 =200V ，则总电压有效值U 为 ( )。</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) 178.9 V&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(b) 226 V</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(c) 120 V</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=85&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=106&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=131&amp;aimw=106&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:23:19', 'swing', '2020-08-12 14:32:00', '');
-INSERT INTO `ti_question` VALUES (109, 'A', NULL, NULL, 105, NULL, '', '图示电路在换路前已处于稳定状态，而且电容器C 上已充有图示极性的6V 电压，在t =0瞬间将开关S 闭合，则i (0+)= ( )。(a) -1A&nbsp;&nbsp;&nbsp;&nbsp;(b) 0A&nbsp;&nbsp;&nbsp;&nbsp;(c) 1A&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">图示电路在换路前已处于稳定状态，而且电容器C 上已充有图示极性的6V 电压，在t =0瞬间将开关S 闭合，则i (0+)= ( )。</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) -1A&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(b) 0A</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(c) 1A</span></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=116&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=229&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=252&amp;aimw=229&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:24:13', 'swing', '2020-08-12 14:34:05', '');
-INSERT INTO `ti_question` VALUES (110, 'C', NULL, NULL, 105, NULL, '', '图示电路中，已知：R 1=R 2=R 3=R 4=2Ω。用戴维宁定理求电流I 4。&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\">图示电路中，已知：R 1=R 2=R 3=R 4=2Ω。用戴维宁定理求电流I 4。</i></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\"></i></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;<i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\"><img src=\"http://www.wendangku.net/pic/view?ih=198&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=2&amp;iw=233&amp;ix=0&amp;sign=fd64694f992aa95763df5f19dcc787f4&amp;type=1&amp;iy=170&amp;aimw=233&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></i></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:25:06', 'swing', '2020-08-12 14:32:02', '');
-INSERT INTO `ti_question` VALUES (111, 'C', NULL, NULL, 105, NULL, '', '在图示电路中，已知V 628sin 2100t u =，调节电容C ，使电流i 与电压u 同相，并测得电容电压U C =180V ，电流I =1A 。(1) 求参数R ，L ，C ；(2) 若R ，L ，C 及u 的有效值均不变，但将u 的频率变为f =50Hz ，求电路中的电流i 及有功功率P ，此时电路呈何性质？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"margin: 0px 0px 10px; padding: 0px; text-indent: 2em;\">在图示电路中，已知V 628sin 2100t u =，调节电容C ，使电流i 与电压u 同相，并测得电容电压U C =180V ，电流I =1A 。(1) 求参数R ，L ，C ；(2) 若R ，L ，C 及u 的有效值均不变，但将u 的频率变为f =50Hz ，求电路中的电流i 及有功功率P ，此时电路呈何性质？</p><p><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\" style=\"color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></i></p><p class=\"img\" style=\"margin: 0px 0px 10px; padding: 0px; text-indent: 0px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=78&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=2&amp;iw=184&amp;ix=0&amp;sign=fd64694f992aa95763df5f19dcc787f4&amp;type=1&amp;iy=0&amp;aimw=184&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"border: 0px; min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:25:39', 'swing', '2020-08-12 14:32:04', '');
-INSERT INTO `ti_question` VALUES (112, 'C', NULL, NULL, 105, NULL, '', '一台三相异步电动机的额定数据如下：U N =380V ，I N =2.9A ，f N =50HZ ，ηN =0.82，λN =0.83,n N =1470r/min ， ?形接法。试问：这是一台几极的电动机？在额定工作状态下的转差率，转子电流的频率，输出功率和额定转矩各是多少？若电动机的起动转矩为额定转矩的2.2倍时，采用Y-?降压起动时的起动转矩？', '<p><span style=\"color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px; text-indent: 36px;\">一台三相异步电动机的额定数据如下：U N =380V ，I N =2.9A ，f N =50HZ ，ηN =0.82，λN =0.83,n N =1470r/min ， ?形接法。试问：这是一台几极的电动机？在额定工作状态下的转差率，转子电流的频率，输出功率和额定转矩各是多少？若电动机的起动转矩为额定转矩的2.2倍时，采用Y-?降压起动时的起动转矩？</span><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:26:41', 'swing', '2020-08-12 14:32:06', '');
-INSERT INTO `ti_question` VALUES (113, 'B', NULL, NULL, 105, NULL, '', '某搬运机由三相异步电动机拖动，其控制要求：正转到达预定位置后自动停车，50s 后自动反转；反转到达预定位置后自动停车；具有短路、过载和零压保护。(1KM 控制电动机的正转，2KM 控制电动机的反转) 试：1 画出三相异步电动机的完整控制电路，包括主电路部分和控制电路部分；2 简述电路从1KM 线圈通电换到2KM 线圈通电的操作过程；3 画出由PLC 实现上述功能的外部输入/输出接线图、梯形图。', '<p>某搬运机由三相异步电动机拖动，其控制要求：正转到达预定位置后自动停车，50s 后自动反转；反转到达预定位置后自动停车；具有短路、过载和零压保护。(1KM 控制电动机的正转，2KM 控制电动机的反转) 试：</p><p><br></p><p>1 画出三相异步电动机的完整控制电路，包括主电路部分和控制电路部分；</p><p>2 简述电路从1KM 线圈通电换到2KM 线圈通电的操作过程；</p><p>3 画出由PLC 实现上述功能的外部输入/输出接线图、梯形图。</p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:27:19', 'swing', '2020-08-17 12:05:11', '');
-INSERT INTO `ti_question` VALUES (114, 'B', NULL, NULL, 105, NULL, '', '三相异步电动机的旋转方向决定于( )。(a) 电源电压大小(b) 电源频率高低(c) 定子电流的相序', '<div>三相异步电动机的旋转方向决定于( )。</div><div><br></div><div>(a) 电源电压大小</div><div><br></div><div>(b) 电源频率高低</div><div><br></div><div>(c) 定子电流的相序</div>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:28:02', 'swing', '2020-08-19 10:41:32', '');
-INSERT INTO `ti_question` VALUES (115, 'A', NULL, NULL, 105, NULL, '', '当限定相对测量误差必须小于±2%时，用准确度为1.0级、量程为250V 的电压表所测量的电压值应为 ()。 (a)小于125V(b)不大于250V(c)大于125V', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">当限定相对测量误差必须小于±2%时，用准确度为1.0级、量程为250V 的电压表所测量的电压值应为 (<span style=\"text-indent: 2em;\">)。 </span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><span style=\"text-indent: 2em;\">(a)小于125V</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(b)不大于250V</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(c)大于125V</p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:28:33', 'swing', '2020-08-12 14:32:12', '');
-INSERT INTO `ti_question` VALUES (116, 'C', NULL, NULL, 106, NULL, '', '根据题1-1图所示的电动机速度控制系统工作原理图(1) 将a，b与c，d用线连接成负反馈状态；(2) 画出系统方框图', '<p>根据题1-1图所示的电动机速度控制系统工作原理图</p><p>(1) 将a，b与c，d用线连接成负反馈状态；</p><p>(2) 画出系统方框图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/2f/9d/2f9d4dfde8f147f2ba50edcee1ce57c6.png\" data-filename=\"image.png\" style=\"width: 290.183px; height: 148px;\"><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:46:04', 'swing', '2020-08-19 10:43:00', '');
-INSERT INTO `ti_question` VALUES (117, 'C', NULL, NULL, 106, NULL, '', '题1-2图是仓库大门自动控制系统原理示意图。试说明系统自动控制大门开闭的工作原理，并画出系统方框图', '<p>题1-2图是仓库大门自动控制系统原理示意图。试说明系统自动控制大门开闭的工作原理，并画出系统方框图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/d0/1e/d01e6265cdce4acd8b2d8f47ff66735e.png\" data-filename=\"image.png\" style=\"width: 350px; height: 212px;\"><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:50:29', 'swing', '2020-08-19 10:38:40', '');
-INSERT INTO `ti_question` VALUES (118, 'C', NULL, NULL, 106, NULL, '', '图为工业炉温自动控制系统的工作原理图。分析系统的工作原理，指出被控对象、被控量和给定量，画出系统方框图', '<p>图为工业炉温自动控制系统的工作原理图。分析系统的工作原理，指出被控对象、被控量和给定量，画出系统方框图</p><p><br></p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/e4/02/e40248c9ef7a4c7b9276000ae3c6c136.png\" data-filename=\"image.png\" style=\"width: 355.344px; height: 184.235px;\"><br><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:52:40', 'swing', '2020-08-19 17:39:17', '');
+INSERT INTO `ti_question` VALUES (105, 0, 'D', NULL, NULL, 105, NULL, '', '有一台星形连接的三相交流发电机，额定相电压为660V ，若测得其线电压U AB =1143V ，U BC =660V ，U CA =660V ，则说明 ()。(a) A 相绕组接反(b) B 相绕组接反(c) C 相绕组接反', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">有一台星形连接的三相交流发电机，额定相电压为660V ，若测得其线电压U AB =1143V ，U BC =660V ，U CA =660V ，则说明 (<span style=\"text-indent: 2em;\">)。</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) A 相绕组接反</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(b) B 相绕组接反</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(c) C 相绕组接反</p>', NULL, 'B', 1, 2, 'swing', '2020-08-08 13:46:04', 'swing', '2020-08-16 20:35:23', '这是好题目');
+INSERT INTO `ti_question` VALUES (106, 0, 'D', NULL, NULL, 106, NULL, '坐标系', '在如图所示的电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V', '<p>在如图所示的电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。</p><p>(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V</p><img src=\"http://www.wendangku.net/pic/view?ih=131&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=192&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=0&amp;aimw=192&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\">', NULL, 'B', 1, 5, 'swing', '2020-08-08 14:21:58', 'swing', '2020-08-17 13:11:33', '测试');
+INSERT INTO `ti_question` VALUES (107, 0, 'D', NULL, NULL, 105, NULL, '', '在图示电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V', '<p style=\"text-align: left;\">在图示电路中，已知U S =2V ，I S =2A 。A 、B 两点间的电压U AB 为 ( )。</p><p style=\"text-align: left;\">(a) 1V&nbsp; &nbsp; (b) -1V&nbsp; &nbsp; (c) -2V</p><img src=\"http://www.wendangku.net/pic/view?ih=131&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=192&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=0&amp;aimw=192&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\">', NULL, 'B', 1, 5, 'swing', '2020-08-09 12:30:00', 'swing', '2020-08-17 12:46:40', '');
+INSERT INTO `ti_question` VALUES (108, 0, 'D', NULL, NULL, 105, NULL, '', '图示正弦电路中，Z = (40 + j30) Ω，X L =10Ω，有效值U 2 =200V ，则总电压有效值U 为 ( )。(a) 178.9 V&nbsp;&nbsp;&nbsp;&nbsp;(b) 226 V&nbsp;&nbsp;&nbsp;&nbsp;(c) 120 V&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">图示正弦电路中，Z = (40 + j30) Ω，X L =10Ω，有效值U 2 =200V ，则总电压有效值U 为 ( )。</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) 178.9 V&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(b) 226 V</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(c) 120 V</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=85&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=106&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=131&amp;aimw=106&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:23:19', 'swing', '2020-08-12 14:32:00', '');
+INSERT INTO `ti_question` VALUES (109, 0, 'D', NULL, NULL, 105, NULL, '', '图示电路在换路前已处于稳定状态，而且电容器C 上已充有图示极性的6V 电压，在t =0瞬间将开关S 闭合，则i (0+)= ( )。(a) -1A&nbsp;&nbsp;&nbsp;&nbsp;(b) 0A&nbsp;&nbsp;&nbsp;&nbsp;(c) 1A&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">图示电路在换路前已处于稳定状态，而且电容器C 上已充有图示极性的6V 电压，在t =0瞬间将开关S 闭合，则i (0+)= ( )。</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(a) -1A&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(b) 0A</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"text-indent: 2em;\">(c) 1A</span></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=116&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=1&amp;iw=229&amp;ix=0&amp;sign=2825e7bce4b786bcc9ecb809013ff9e1&amp;type=1&amp;iy=252&amp;aimw=229&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:24:13', 'swing', '2020-08-12 14:34:05', '');
+INSERT INTO `ti_question` VALUES (110, 0, 'C', NULL, NULL, 105, NULL, '', '图示电路中，已知：R 1=R 2=R 3=R 4=2Ω。用戴维宁定理求电流I 4。&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\">图示电路中，已知：R 1=R 2=R 3=R 4=2Ω。用戴维宁定理求电流I 4。</i></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\"></i></p><p class=\"img\" style=\"padding: 0px; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">&nbsp;&nbsp;&nbsp;&nbsp;<i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\"><img src=\"http://www.wendangku.net/pic/view?ih=198&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=2&amp;iw=233&amp;ix=0&amp;sign=fd64694f992aa95763df5f19dcc787f4&amp;type=1&amp;iy=170&amp;aimw=233&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></i></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:25:06', 'swing', '2020-08-12 14:32:02', '');
+INSERT INTO `ti_question` VALUES (111, 0, 'C', NULL, NULL, 105, NULL, '', '在图示电路中，已知V 628sin 2100t u =，调节电容C ，使电流i 与电压u 同相，并测得电容电压U C =180V ，电流I =1A 。(1) 求参数R ，L ，C ；(2) 若R ，L ，C 及u 的有效值均不变，但将u 的频率变为f =50Hz ，求电路中的电流i 及有功功率P ，此时电路呈何性质？&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '<p style=\"margin: 0px 0px 10px; padding: 0px; text-indent: 2em;\">在图示电路中，已知V 628sin 2100t u =，调节电容C ，使电流i 与电压u 同相，并测得电容电压U C =180V ，电流I =1A 。(1) 求参数R ，L ，C ；(2) 若R ，L ，C 及u 的有效值均不变，但将u 的频率变为f =50Hz ，求电路中的电流i 及有功功率P ，此时电路呈何性质？</p><p><i <2.5a=\"\" 的负载，若功率表接法正确，其指针格数为70格，则负载的功率为(=\"\" )。<=\"\" p=\"\" style=\"color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></i></p><p class=\"img\" style=\"margin: 0px 0px 10px; padding: 0px; text-indent: 0px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=\"http://www.wendangku.net/pic/view?ih=78&amp;rn=1&amp;doc_id=95b28bc0cf84b9d529ea7a30&amp;o=jpg_6_0_______&amp;pn=2&amp;iw=184&amp;ix=0&amp;sign=fd64694f992aa95763df5f19dcc787f4&amp;type=1&amp;iy=0&amp;aimw=184&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7\" alt=\"电工学期末模拟试题含答案\" style=\"border: 0px; min-width: 16px; max-width: 720px; text-align: center; margin: 0px auto;\"></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:25:39', 'swing', '2020-08-12 14:32:04', '');
+INSERT INTO `ti_question` VALUES (112, 0, 'C', NULL, NULL, 105, NULL, '', '一台三相异步电动机的额定数据如下：U N =380V ，I N =2.9A ，f N =50HZ ，ηN =0.82，λN =0.83,n N =1470r/min ， ?形接法。试问：这是一台几极的电动机？在额定工作状态下的转差率，转子电流的频率，输出功率和额定转矩各是多少？若电动机的起动转矩为额定转矩的2.2倍时，采用Y-?降压起动时的起动转矩？', '<p><span style=\"color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px; text-indent: 36px;\">一台三相异步电动机的额定数据如下：U N =380V ，I N =2.9A ，f N =50HZ ，ηN =0.82，λN =0.83,n N =1470r/min ， ?形接法。试问：这是一台几极的电动机？在额定工作状态下的转差率，转子电流的频率，输出功率和额定转矩各是多少？若电动机的起动转矩为额定转矩的2.2倍时，采用Y-?降压起动时的起动转矩？</span><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:26:41', 'swing', '2020-08-12 14:32:06', '');
+INSERT INTO `ti_question` VALUES (113, 0, 'B', NULL, NULL, 105, NULL, '', '某搬运机由三相异步电动机拖动，其控制要求：正转到达预定位置后自动停车，50s 后自动反转；反转到达预定位置后自动停车；具有短路、过载和零压保护。(1KM 控制电动机的正转，2KM 控制电动机的反转) 试：1 画出三相异步电动机的完整控制电路，包括主电路部分和控制电路部分；2 简述电路从1KM 线圈通电换到2KM 线圈通电的操作过程；3 画出由PLC 实现上述功能的外部输入/输出接线图、梯形图。', '<p>某搬运机由三相异步电动机拖动，其控制要求：正转到达预定位置后自动停车，50s 后自动反转；反转到达预定位置后自动停车；具有短路、过载和零压保护。(1KM 控制电动机的正转，2KM 控制电动机的反转) 试：</p><p><br></p><p>1 画出三相异步电动机的完整控制电路，包括主电路部分和控制电路部分；</p><p>2 简述电路从1KM 线圈通电换到2KM 线圈通电的操作过程；</p><p>3 画出由PLC 实现上述功能的外部输入/输出接线图、梯形图。</p>', NULL, 'A', 1, 1, 'swing', '2020-08-12 14:27:19', 'swing', '2020-08-24 12:02:04', '');
+INSERT INTO `ti_question` VALUES (114, 0, 'B', NULL, NULL, 105, NULL, '', '三相异步电动机的旋转方向决定于( )。(a) 电源电压大小(b) 电源频率高低(c) 定子电流的相序', '<div>三相异步电动机的旋转方向决定于( )。</div><div><br></div><div>(a) 电源电压大小</div><div><br></div><div>(b) 电源频率高低</div><div><br></div><div>(c) 定子电流的相序</div>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:28:02', 'swing', '2020-08-19 10:41:32', '');
+INSERT INTO `ti_question` VALUES (115, 0, 'D', NULL, NULL, 105, NULL, '', '当限定相对测量误差必须小于±2%时，用准确度为1.0级、量程为250V 的电压表所测量的电压值应为 ()。 (a)小于125V(b)不大于250V(c)大于125V', '<p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">当限定相对测量误差必须小于±2%时，用准确度为1.0级、量程为250V 的电压表所测量的电压值应为 (<span style=\"text-indent: 2em;\">)。 </span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"><span style=\"text-indent: 2em;\">(a)小于125V</span></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(b)不大于250V</p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\"></p><p style=\"padding: 0px; text-indent: 2em; color: rgb(51, 51, 51); font-family: Arial, 宋体; font-size: 18px;\">(c)大于125V</p>', NULL, 'B', 1, 1, 'swing', '2020-08-12 14:28:33', 'swing', '2020-08-12 14:32:12', '');
+INSERT INTO `ti_question` VALUES (116, 0, 'C', NULL, NULL, 106, NULL, '', '根据题1-1图所示的电动机速度控制系统工作原理图(1) 将a，b与c，d用线连接成负反馈状态；(2) 画出系统方框图', '<p>根据题1-1图所示的电动机速度控制系统工作原理图</p><p>(1) 将a，b与c，d用线连接成负反馈状态；</p><p>(2) 画出系统方框图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/2f/9d/2f9d4dfde8f147f2ba50edcee1ce57c6.png\" data-filename=\"image.png\" style=\"width: 290.183px; height: 148px;\"><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:46:04', 'swing', '2020-08-19 10:43:00', '');
+INSERT INTO `ti_question` VALUES (117, 0, 'C', NULL, NULL, 106, NULL, '', '题1-2图是仓库大门自动控制系统原理示意图。试说明系统自动控制大门开闭的工作原理，并画出系统方框图', '<p>题1-2图是仓库大门自动控制系统原理示意图。试说明系统自动控制大门开闭的工作原理，并画出系统方框图</p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/d0/1e/d01e6265cdce4acd8b2d8f47ff66735e.png\" data-filename=\"image.png\" style=\"width: 350px; height: 212px;\"><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:50:29', 'swing', '2020-08-19 10:38:40', '');
+INSERT INTO `ti_question` VALUES (118, 0, 'C', NULL, NULL, 106, NULL, '', '图为工业炉温自动控制系统的工作原理图。分析系统的工作原理，指出被控对象、被控量和给定量，画出系统方框图', '<p>图为工业炉温自动控制系统的工作原理图。分析系统的工作原理，指出被控对象、被控量和给定量，画出系统方框图</p><p><br></p><p><img src=\"https://swing-durian.oss-cn-beijing.aliyuncs.com/e4/02/e40248c9ef7a4c7b9276000ae3c6c136.png\" data-filename=\"image.png\" style=\"width: 355.344px; height: 184.235px;\"><br><br></p>', NULL, 'B', 1, 1, 'swing', '2020-08-18 11:52:40', 'swing', '2020-08-19 17:39:17', '');
+
+-- ----------------------------
+-- Table structure for ti_question_submit
+-- ----------------------------
+DROP TABLE IF EXISTS `ti_question_submit`;
+CREATE TABLE `ti_question_submit`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `creator_id` bigint(20) NOT NULL COMMENT '提交者id',
+  `question_id` bigint(20) NOT NULL COMMENT '题目id',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容精简',
+  `full_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '完整的内容，包含格式标签',
+  `submit_status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'A' COMMENT '提交状态（A  审核中,B 通过，C 未通过）',
+  `submit_time` datetime(0) NULL DEFAULT NULL COMMENT '提交时间',
+  `submit_remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提交备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ti_question_submit
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ti_user_question
+-- ----------------------------
+DROP TABLE IF EXISTS `ti_user_question`;
+CREATE TABLE `ti_user_question`  (
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `question_id` bigint(20) NOT NULL COMMENT '用户收藏的题目id',
+  PRIMARY KEY (`user_id`, `question_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ti_user_question
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
