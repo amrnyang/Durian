@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,8 +80,9 @@ public class TiQuestionAuditController extends BasicController {
             /*精简数据，便于传输*/
             list.forEach(a -> a.setFullContent(""));
             list.forEach(a -> a.setContent((a.getContent() + StringUtils.getEmptyStr(22)).substring(0, 20)));
+            return buildDataTable(list);
         }
-        return buildDataTable(list);
+        return buildDataTable(new ArrayList<>());
     }
 
 

@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,14 +73,17 @@ public class TiAnswerAuditController extends BasicController {
         Long[] courseIds = deptCourseLinkDAO.listTwoIdsByOneId(majorId);
         //获取所有课程的题目
         List<TiQuestionDO> list = questionService.listQuestionByCourseIds(courseIds);
-        //获取这些题目所有的答案
-        List<TiAnswerDO> answerList = answerService.listAnswersByQuestions(list);
-        //指向该用户展示审核中的题目
-        answerList = answerList.stream().filter(a -> ("A".equals(a.getAuditStatus()))).collect(Collectors.toList());
-        /*精简数据，便于传输*/
-        answerList.forEach(a -> a.setAnswer(""));
-        answerList.forEach(a -> a.setAnalysis(""));
-        return buildDataTable(answerList);
+        if (list != null) {
+            //获取这些题目所有的答案
+            List<TiAnswerDO> answerList = answerService.listAnswersByQuestions(list);
+            //指向该用户展示审核中的题目
+            answerList = answerList.stream().filter(a -> ("A".equals(a.getAuditStatus()))).collect(Collectors.toList());
+            /*精简数据，便于传输*/
+            answerList.forEach(a -> a.setAnswer(""));
+            answerList.forEach(a -> a.setAnalysis(""));
+            return buildDataTable(answerList);
+        }
+        return buildDataTable(new ArrayList<>());
     }
 
 
