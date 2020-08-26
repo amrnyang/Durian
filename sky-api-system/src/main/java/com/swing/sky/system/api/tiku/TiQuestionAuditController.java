@@ -73,11 +73,13 @@ public class TiQuestionAuditController extends BasicController {
         Long[] courseIds = deptCourseLinkDAO.listTwoIdsByOneId(majorId);
         //获取所有课程的题目
         List<TiQuestionDO> list = questionService.listQuestionByCourseIds(courseIds);
-        //指向该用户展示审核中的题目
-        list = list.stream().filter(a -> ("A".equals(a.getAuditStatus()))).collect(Collectors.toList());
-        /*精简数据，便于传输*/
-        list.forEach(a -> a.setFullContent(""));
-        list.forEach(a -> a.setContent((a.getContent() + StringUtils.getEmptyStr(22)).substring(0, 20)));
+        if (list != null) {
+            //指向该用户展示审核中的题目
+            list = list.stream().filter(a -> ("A".equals(a.getAuditStatus()))).collect(Collectors.toList());
+            /*精简数据，便于传输*/
+            list.forEach(a -> a.setFullContent(""));
+            list.forEach(a -> a.setContent((a.getContent() + StringUtils.getEmptyStr(22)).substring(0, 20)));
+        }
         return buildDataTable(list);
     }
 

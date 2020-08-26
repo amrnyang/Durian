@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.swing</groupId>
-    <artifactId>Durian</artifactId>
+    <artifactId>durian</artifactId>
     <version>1.0.0-SNAPHOT</version>
     <packaging>pom</packaging>
     <description>晴空管理系统的同意依赖管理及模块管理</description>

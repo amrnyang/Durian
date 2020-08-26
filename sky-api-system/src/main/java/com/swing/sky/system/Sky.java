@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author swing
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@ComponentScan(value = {"com.swing.sky.tiku.module", "com.swing.sky.system.module", "com.swing.sky.system.framework","com.swing.sky.system.api"})
+@ComponentScan(value = {"com.swing.sky.tiku.module", "com.swing.sky.system.module", "com.swing.sky.system.framework", "com.swing.sky.system.api"})
 public class Sky {
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "false");

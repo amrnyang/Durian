@@ -56,6 +56,9 @@ public class TiQuestionServiceImpl implements TiQuestionService {
 
     @Override
     public List<TiQuestionDO> listQuestionByCourseIds(Long[] courseIds) {
-        return tiQuestionDAO.listQuestionByCourseIds(courseIds);
+        assert courseIds != null;
+        if (courseIds.length != 0) {
+            return tiQuestionDAO.listQuestionByCourseIds(courseIds);
+        } else return null;
     }
 }

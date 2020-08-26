@@ -15,7 +15,7 @@ public interface TiQuestionService extends BasicService<TiQuestionDO> {
     /**
      * 获取所有课程中未审核的题目
      *
-     * @param courseIds   课程id集合
+     * @param courseIds 课程id集合
      * @return 问题集合
      */
     List<TiQuestionDO> listQuestionByCourseIds(Long[] courseIds);

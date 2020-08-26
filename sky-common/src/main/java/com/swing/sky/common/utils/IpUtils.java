@@ -5,6 +5,8 @@ import cn.hutool.http.HttpUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 获取IP方法
@@ -25,8 +27,14 @@ public class IpUtils {
     }
 
     public static String getJsonValueByKey(String result, String key) {
-        String s = result.split(key + "\":\"")[1];
-        return s.split("\"")[0];
+        String regex = "\"" + key + "\":[\"]?([^\"]*)[\"]?,";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(result);
+        String string = null;
+        while (matcher.find()) {
+            string = matcher.group(1);
+        }
+        return string;
     }
 
     public static String getIpAddr(HttpServletRequest request) {
