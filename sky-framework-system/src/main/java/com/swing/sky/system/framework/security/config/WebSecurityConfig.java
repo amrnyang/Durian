@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
     /**
-     * 认证过滤器
+     * 验证码过滤器
      */
     @Resource
     private CaptchaFilter captchaFilter;
@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 数据源
      */
     @Resource
-    private DataSource dynamicDataSource;
+    private DataSource dataSource;
 
     /**
      * 退出处理类
@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/captcha", "/test", "/test2").permitAll()
+                .antMatchers("/login", "/captcha").permitAll()
                 //静态资源的访问无需认证
                 .antMatchers(
                         HttpMethod.GET,
@@ -133,14 +133,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(loginSuccessHandler)
                 //指定登录失败处理类
                 .failureHandler(loginFailureHandler)
-                //由后端控制重定向（本项目是由前端根据JSON结果来重定向）
+                //如果是由后端控制重定向（本项目是由前端根据JSON结果来重定向,因此这里不使用）
 //                .defaultSuccessUrl("/index")
 //                .failureUrl("/login")
                 .and()
                 //记住我的配置
                 .rememberMe()
                 //一直开启记住我的功能
-//                .alwaysRemember(true)
+                .alwaysRemember(true)
                 .rememberMeCookieName("sky-remember-me")
                 //配置令牌的存储方式（存储在数据库中）
                 .tokenRepository(persistentTokenRepository())
@@ -171,7 +171,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dynamicDataSource);
+        jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;
     }
 }
