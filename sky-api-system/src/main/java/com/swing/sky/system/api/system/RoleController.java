@@ -133,12 +133,27 @@ public class RoleController extends BasicController {
     }
 
     /**
-     * 保存部门权限
+     * 获取角色部门权限树（已选择）（视图调用）
+     */
+
+    @GetMapping("/deptMultipleTree/{roleId}")
+    @ResponseBody
+    @PreAuthorize("@sca.needAuthoritySign('system:role:view')")
+    public List<TreeDTO> deptSelectedTree(@PathVariable("roleId") Long roleId) {
+        //获取该用户所有的可支配的部门信息
+        List<SysDeptDO> deptDOList = deptService.listByConditionAndUserId(UserDetailsUtil.getUserId(), null, null, null);
+        //获取该角色所有的关联部门（作为选中的依据）
+        Long[] checkIds = roleService.listDeptIdsByRoleId(roleId);
+        return BuildUtils.buildDeptSelectedTree(deptDOList, checkIds);
+    }
+
+    /**
+     * 保存部门角色关联
      */
 
     @PostMapping("/updateDeptLink")
     @ResponseBody
-    @PreAuthorize("@sca.needAuthoritySign('system:role:view')")
+    @PreAuthorize("@sca.needAuthoritySign('system:role:edit')")
     @OperateLog(module = ModuleConstants.ROLE, businessType = BusinessTypeConstants.GRANT)
     public SkyResponse authDeptSave(Long roleId, String deptIds) {
         Long[] deptIds2 = Convert.toLongArray(deptIds);
@@ -157,36 +172,7 @@ public class RoleController extends BasicController {
     }
 
     /**
-     * 保存菜单权限
-     */
-
-    @PostMapping("/updateMenuLink")
-    @ResponseBody
-    @PreAuthorize("@sca.needAuthoritySign('system:role:view')")
-    @OperateLog(module = ModuleConstants.ROLE, businessType = BusinessTypeConstants.GRANT)
-    public SkyResponse authMenuSave(Long roleId, String menuIds) {
-        Long[] menuIds2 = Convert.toLongArray(menuIds);
-        roleService.updateRoleMenuLink(roleId, menuIds2);
-        return SkyResponse.success("角色菜单关联信息插入成功！");
-    }
-
-    /**
-     * 获取角色部门权限树（已选择）
-     */
-
-    @GetMapping("/deptMultipleTree/{roleId}")
-    @ResponseBody
-    @PreAuthorize("@sca.needAuthoritySign('system:role:view')")
-    public List<TreeDTO> deptSelectedTree(@PathVariable("roleId") Long roleId) {
-        //获取该用户所有的可支配的部门信息
-        List<SysDeptDO> deptDOList = deptService.listByConditionAndUserId(UserDetailsUtil.getUserId(), null, null, null);
-        //获取该角色所有的关联部门（作为选中的依据）
-        Long[] checkIds = roleService.listDeptIdsByRoleId(roleId);
-        return BuildUtils.buildDeptSelectedTree(deptDOList, checkIds);
-    }
-
-    /**
-     * 获取角色菜单权限树（已选择）
+     * 获取角色菜单权限树（已选择）（视图调用）
      */
     @GetMapping("/menuMultipleTree/{roleId}")
     @ResponseBody
@@ -198,6 +184,21 @@ public class RoleController extends BasicController {
         Long[] checkIds = roleService.listMenuIdsByRoleId(roleId);
         return BuildUtils.buildMenuSelectedTree(menuDOList, checkIds);
     }
+
+    /**
+     * 保存角色菜单关联
+     */
+
+    @PostMapping("/updateMenuLink")
+    @ResponseBody
+    @PreAuthorize("@sca.needAuthoritySign('system:role:edit')")
+    @OperateLog(module = ModuleConstants.ROLE, businessType = BusinessTypeConstants.GRANT)
+    public SkyResponse authMenuSave(Long roleId, String menuIds) {
+        Long[] menuIds2 = Convert.toLongArray(menuIds);
+        roleService.updateRoleMenuLink(roleId, menuIds2);
+        return SkyResponse.success("角色菜单关联信息插入成功！");
+    }
+
 
     /**
      * 导出数据
