@@ -68,10 +68,6 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-  data:
-    #solr搜索引擎
-    solr:
-      host: http://39.97.185.37:8089/solr/durian_core
 
 # MyBatis配置
 mybatis:

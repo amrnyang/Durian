@@ -2,6 +2,7 @@
 <p align="center">
 <img align="center" src="doc/imgs/logo.png">
 <p>
+
 --------------------------------------------------------------------------------
 
 [English](./README.en.md) | 简体中文
@@ -20,7 +21,7 @@
 
 题库小程序演示地址：
 
-文档地址：
+文档地址： [Durian开发文档](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2720449&doc_id=892234)
 
 ## 预览 <img img align="center" src="doc/imgs/preview.png" width=25/>
 
