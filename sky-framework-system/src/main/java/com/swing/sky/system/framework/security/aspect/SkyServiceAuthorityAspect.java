@@ -165,7 +165,7 @@ public class SkyServiceAuthorityAspect {
     }
 
     /**
-     * 当遇到新增和跟新的操作时，向对象中增加公共字段的值，避免重复代码
+     * 当遇到新增和更新的操作时，向对象中增加公共字段的值，避免重复代码
      *
      * @param methodName 方法名
      * @param point      切入点

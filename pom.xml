@@ -38,6 +38,12 @@
         <module>sky-api-tiku</module>
         <!--solr模块接口-->
         <module>sky-api-solr</module>
+        <!--单点登录基础模块-->
+        <module>sky-module-oss</module>
+        <!--单点登录框架模块-->
+        <module>sky-framework-oss</module>
+        <!--单点登录接口模块-->
+        <module>sky-api-oss</module>
     </modules>
 
     <properties>
@@ -116,6 +122,22 @@
                 <artifactId>sky-api-solr</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-module-oss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-framework-oss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-api-oss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!--模块版本 END-->
 
 
