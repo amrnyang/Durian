@@ -81,6 +81,11 @@ public class JwtService {
         return token;
     }
 
+    public void deleteUser(String token) {
+        String uuid = JwtUtil.getId(token, secret);
+        redisUtils.deleteObjects(uuid);
+    }
+
     /**
      * 从redis中获取token中用户的信息
      *
