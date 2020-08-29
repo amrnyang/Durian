@@ -1,6 +1,9 @@
 package com.swing.sky.oss.framework.jwt.util;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -57,19 +60,6 @@ public class JwtUtil {
     }
 
     /**
-     * 检验jwt是否过期（其实如果jwt过期的话，就取不出任何数据，并抛出ExpiredJwtException）
-     *
-     * @param jwt    jwt
-     * @param secret 密钥
-     * @return true过期  false未过期
-     * @throws ExpiredJwtException 令牌过期
-     */
-    public static boolean isExpired(String jwt, String secret) throws ExpiredJwtException {
-        Date expiration = getExpiration(jwt, secret);
-        return expiration.before(new Date());
-    }
-
-    /**
      * 获取jwt唯一身份标识
      */
     public static String getId(String jwt, String secret) {
@@ -97,14 +87,4 @@ public class JwtUtil {
         return parse(jwt, secret).getExpiration();
     }
 
-    public static void main(String[] args) {
-        String secret = "skyjwtutil_skycontrol_9258058494";
-        Claims parse = parse("eyJhbGciOiJIUzI1NiJ9." +
-                "eyJqdGkiOiI2NWQ3MzE0MTE2OTI0MD" +
-                "k2YTFiNDA0MmQ5YmNiZWQ2NCIsInN1Yi" +
-                "I6IjEyMzQ1NjciLCJpYXQiOjE1OTg2ODgxN" +
-                "TQsImV4cCI6MTU5ODk0NzM1NH0." +
-                "74KN2vl8cyMKial3h5xtsj3hBgUwvcqRGPLI3mtjaaA", secret);
-        System.out.println(parse.getId());
-    }
 }

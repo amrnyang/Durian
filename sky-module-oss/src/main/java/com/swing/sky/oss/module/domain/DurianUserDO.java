@@ -2,6 +2,10 @@ package com.swing.sky.oss.module.domain;
 
 import com.swing.sky.common.basic.BasicDO;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -14,18 +18,23 @@ public class DurianUserDO extends BasicDO implements Serializable{
     /**
      * 部门id
      */
+    @NotNull(message = "部门id不能为null")
+    @NotBlank
     private Long deptId;
     /**
      * 用户账号（这里使用学生的学号）
      */
+    @NotNull(message = "用户账号不为null")
     private String username;
     /**
      * 密码
      */
+    @Size(min = 6, max = 20, message = "密码的长度应介于6~20之间")
     private String password;
     /**
      * 用户昵称
      */
+    @Size(min = 1, max = 20, message = "昵称的长度应介于1~20之间")
     private String nickName;
     /**
      * 用户校内地址
@@ -34,14 +43,21 @@ public class DurianUserDO extends BasicDO implements Serializable{
     /**
      * 用户邮箱
      */
+    @NotBlank
+    @NotNull(message = "用户邮箱不能为null")
+    @Email(message = "邮箱格式不正确")
     private String email;
     /**
      * 手机号码
      */
+    @NotNull(message = "电话不能为null")
+    @NotBlank
     private String phone;
     /**
      * 用户性别（M男 W女 N未知）
      */
+    @NotNull(message = "性别不能为null")
+    @NotBlank
     private String gender;
     /**
      * 头像地址

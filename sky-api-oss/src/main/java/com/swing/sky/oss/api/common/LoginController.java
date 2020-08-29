@@ -7,6 +7,7 @@ import com.swing.sky.oss.module.domain.DurianUserDO;
 import com.swing.sky.oss.module.service.DurianUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class LoginController {
         if (loginUser == null) {
             throw new RuntimeException("用户不存在，请重新输入");
         }
-        if (!password.equals(loginUser.getPassword())) {
+        if (!new BCryptPasswordEncoder().matches(password, loginUser.getPassword())) {
             throw new RuntimeException("密码不正确，请重新输入");
         }
         String token = jwtService.createToken(username);
@@ -70,5 +71,4 @@ public class LoginController {
         }
         return SkyResponse.fail(HttpStatus.NOT_ACCEPTABLE, "当前还未登陆");
     }
-
 }
