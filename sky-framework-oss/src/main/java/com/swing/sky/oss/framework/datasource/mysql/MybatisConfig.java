@@ -1,4 +1,4 @@
-package com.swing.sky.oss.framework.datasource;
+package com.swing.sky.oss.framework.datasource.mysql;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

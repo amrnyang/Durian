@@ -62,29 +62,28 @@ public class JwtUtil {
     /**
      * 获取jwt唯一身份标识
      */
-    public static String getId(String jwt, String secret) {
+    public static String getId(String jwt, String secret) throws JwtException {
         return parse(jwt, secret).getId();
     }
 
     /**
      * 获取用户名（学号）
      */
-    public static String getSubject(String jwt, String secret) {
+    public static String getSubject(String jwt, String secret) throws JwtException {
         return parse(jwt, secret).getSubject();
     }
 
     /**
      * 获取jwt签发时间
      */
-    public static Date getIssuedAt(String jwt, String secret) {
+    public static Date getIssuedAt(String jwt, String secret) throws JwtException {
         return parse(jwt, secret).getIssuedAt();
     }
 
     /**
      * 获取jwt失效时间
      */
-    public static Date getExpiration(String jwt, String secret) {
+    public static Date getExpiration(String jwt, String secret) throws JwtException {
         return parse(jwt, secret).getExpiration();
     }
-
 }

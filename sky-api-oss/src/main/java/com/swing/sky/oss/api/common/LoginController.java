@@ -32,6 +32,9 @@ public class LoginController {
         this.userService = userService;
     }
 
+    /**
+     * 登陆接口，登陆成功返回jwt
+     */
     @GetMapping("/login")
     public SkyResponse login(String username, String password) {
         DurianUserDO loginUser = userService.getUserByUsername(username);
@@ -46,24 +49,9 @@ public class LoginController {
                 .put("token", token);
     }
 
-    @GetMapping("/login-info")
-    public SkyResponse getInfo(HttpServletRequest request) {
-        String token = TokenUtils.getToken(request);
-        if (StringUtils.isNotEmpty(token)) {
-            // 检验是否无效、是否过期，无效和过期都抛出异常
-            DurianUserDO user = jwtService.getLoginUser(token);
-            if (user != null) {
-                // 刷新token和redis中的过期时间，老token只有没过期依旧可以请求数据
-                String newToken = jwtService.refreshToken(token);
-                return SkyResponse.success(2)
-                        .put("user", user)
-                        .put("token", newToken);
-            }
-        }
-        // 请求头中无token或redis无用户（已登出）
-        return SkyResponse.fail(HttpStatus.NOT_ACCEPTABLE, "当前还未登陆");
-    }
-
+    /**
+     * 注销登陆接口
+     */
     @PostMapping("/logout")
     public SkyResponse logout(HttpServletRequest request) {
         String token = TokenUtils.getToken(request);

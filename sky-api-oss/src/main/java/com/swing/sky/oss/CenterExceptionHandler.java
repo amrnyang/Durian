@@ -4,7 +4,9 @@ package com.swing.sky.oss;
 import com.swing.sky.common.web.SkyResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import io.lettuce.core.RedisConnectionException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -37,5 +39,24 @@ public class CenterExceptionHandler {
     @ExceptionHandler(JwtException.class)
     SkyResponse signatureException(JwtException e) {
         return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "令牌无效");
+    }
+
+    /**
+     * 拦截未通过 @Validated 所产生的异常
+     *
+     * @param e 异常
+     * @return 响应
+     */
+    @ExceptionHandler(BindException.class)
+    SkyResponse exception(BindException e) {
+        return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+    }
+
+    /**
+     * redis连接异常
+     */
+    @ExceptionHandler(RedisConnectionException.class)
+    SkyResponse redisConnectionException(RedisConnectionException e) {
+        return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "redis连接异常");
     }
 }
