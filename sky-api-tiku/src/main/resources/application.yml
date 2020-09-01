@@ -70,3 +70,7 @@ spring:
 mybatis:
   # 配置mapper的扫描，找到所有的DAO.xml映射文件
   mapperLocations: classpath*:mybatis/*DAO.xml
+
+#登录中心地址
+oss:
+  url: 127.0.0.1:8087
