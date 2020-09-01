@@ -20,19 +20,16 @@ public class JwtUtil {
      * jwt签证
      *
      * @param username    用户名（学号）
-     * @param uuid        唯一身份标识符
      * @param secret      密钥
      * @param expiredTime 过期时间
      * @return jwt
      */
-    public static String encode(String username, String uuid, String secret, int expiredTime) {
+    public static String encode(String username, String secret, int expiredTime) {
         long timeMillis = System.currentTimeMillis();
         // 生成密钥
         SecretKey key = new SecretKeySpec(secret.getBytes(), SignatureAlgorithm.HS256.getJcaName());
         return Jwts.builder()
-                // 唯一身份标识符(redis使用）
-                .setId(uuid)
-                // 用户名（学号）
+                // 唯一用户名（学号），同时做redis的键
                 .setSubject(username)
                 // 签发时间
                 .setIssuedAt(new Date(timeMillis))
@@ -59,12 +56,6 @@ public class JwtUtil {
                 .getBody();
     }
 
-    /**
-     * 获取jwt唯一身份标识
-     */
-    public static String getId(String jwt, String secret) throws JwtException {
-        return parse(jwt, secret).getId();
-    }
 
     /**
      * 获取用户名（学号）

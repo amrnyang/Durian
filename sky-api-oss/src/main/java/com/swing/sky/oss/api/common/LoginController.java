@@ -37,6 +37,7 @@ public class LoginController {
      */
     @GetMapping("/login")
     public SkyResponse login(String username, String password) {
+
         DurianUserDO loginUser = userService.getUserByUsername(username);
         if (loginUser == null) {
             throw new RuntimeException("用户不存在，请重新输入");
@@ -44,9 +45,12 @@ public class LoginController {
         if (!new BCryptPasswordEncoder().matches(password, loginUser.getPassword())) {
             throw new RuntimeException("密码不正确，请重新输入");
         }
-        String token = jwtService.createToken(username);
-        return SkyResponse.success("登陆成功",1)
-                .put("token", token);
+        if (jwtService.isUserInRedis(username)) {
+            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "该用户已登陆，请不要重复登陆！");
+        }
+        String newToken = jwtService.createToken(username);
+        return SkyResponse.success("登陆成功", 1)
+                .put("token", newToken);
     }
 
     /**

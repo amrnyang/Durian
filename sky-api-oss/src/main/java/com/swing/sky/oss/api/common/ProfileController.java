@@ -41,7 +41,7 @@ public class ProfileController {
         String token = TokenUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
             // 检验token是否无效、是否过期，无效和过期都抛出异常，并从redis取出用户
-            DurianUserDO user = jwtService.getLoginUser(token);
+            DurianUserDO user = jwtService.getUserFromRedis(token);
             if (user != null) {
                 // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
                 String newToken = jwtService.refreshToken(token);
@@ -62,7 +62,7 @@ public class ProfileController {
         String token = TokenUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
             // 检验token是否无效、是否过期，无效和过期都抛出异常，并从redis取出用户
-            DurianUserDO oldUser = jwtService.getLoginUser(token);
+            DurianUserDO oldUser = jwtService.getUserFromRedis(token);
             if (oldUser != null) {
                 // 生成一个要更新的对象
                 DurianUserDO newUser = new DurianUserDO();
@@ -96,8 +96,6 @@ public class ProfileController {
         if (StringUtils.isNotEmpty(token)) {
             // 检验token是否无效、是否过期，无效和过期都抛出异常，并取出用户名(不经过redis)
             String username = jwtService.getUsername(token);
-            // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
-            String newToken = jwtService.refreshToken(token);
 
             //从数据库中获取最新的用户信息
             DurianUserDO user = userService.getUserByUsername(username);
@@ -110,6 +108,8 @@ public class ProfileController {
             user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
             userService.update(user);
 
+            // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
+            String newToken = jwtService.refreshToken(token);
             return SkyResponse.success("密码修改成功！", 1)
                     .put("token", newToken);
         }
@@ -126,8 +126,6 @@ public class ProfileController {
         if (StringUtils.isNotEmpty(token)) {
             // 检验token是否无效、是否过期，无效和过期都抛出异常，并取出用户名(不经过redis)
             String username = jwtService.getUsername(token);
-            // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
-            String newToken = jwtService.refreshToken(token);
 
             //从数据库中获取最新的用户信息
             DurianUserDO user = userService.getUserByUsername(username);
@@ -141,6 +139,9 @@ public class ProfileController {
                     user.setAvatar(url);
                     userService.update(user);
 
+
+                    // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
+                    String newToken = jwtService.refreshToken(token);
                     return SkyResponse.success("头像保存成功！", 1)
                             .put("token", newToken);
                 }

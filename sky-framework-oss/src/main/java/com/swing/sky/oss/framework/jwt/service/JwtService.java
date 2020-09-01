@@ -1,6 +1,5 @@
 package com.swing.sky.oss.framework.jwt.service;
 
-import com.swing.sky.common.utils.UUIDUtils;
 import com.swing.sky.oss.framework.datasource.redis.RedisUtils;
 import com.swing.sky.oss.framework.jwt.util.JwtUtil;
 import com.swing.sky.oss.module.domain.DurianUserDO;
@@ -43,14 +42,14 @@ public class JwtService {
      * @return token
      */
     public String createToken(String username) {
-        // 生成唯一的用户标识符
-        String uuid = UUIDUtils.getUuid();
         // 从数据库中得到用户
         DurianUserDO loginUser = userService.getUserByUsername(username);
         // 存入redis
-        redisUtils.setObject(uuid, loginUser, expiredTime, TimeUnit.HOURS);
-        return JwtUtil.encode(username, uuid, secret, expiredTime);
+        redisUtils.setObject(loginUser.getUsername(), loginUser, expiredTime, TimeUnit.HOURS);
+        return JwtUtil.encode(username, secret, expiredTime);
     }
+
+
 
     /**
      * 刷新token和redis中的过期时间
@@ -64,11 +63,11 @@ public class JwtService {
         long timeMillis = System.currentTimeMillis();
         // 过期时间小于1小时则刷新
         if (expiration - timeMillis < JwtUtil.HOUR) {
-            String uuid = claims.getId();
-            DurianUserDO user = redisUtils.getObject(uuid);
-            redisUtils.deleteObjects(uuid);
-            redisUtils.setObject(uuid, user, expiredTime, TimeUnit.HOURS);
-            return JwtUtil.encode(claims.getSubject(), uuid, secret, expiredTime);
+            String username = claims.getSubject();
+            DurianUserDO user = redisUtils.getObject(username);
+            redisUtils.deleteObjects(username);
+            redisUtils.setObject(username, user, expiredTime, TimeUnit.HOURS);
+            return JwtUtil.encode(username, secret, expiredTime);
         }
         return token;
     }
@@ -81,11 +80,10 @@ public class JwtService {
      * @return 最新的token
      */
     public String refreshUser(String token, DurianUserDO user) throws JwtException {
-        Claims claims = JwtUtil.parse(token, secret);
-        String uuid = claims.getId();
-        redisUtils.deleteObjects(uuid);
-        redisUtils.setObject(uuid, user, expiredTime, TimeUnit.HOURS);
-        return JwtUtil.encode(claims.getSubject(), uuid, secret, expiredTime);
+        String username = JwtUtil.getSubject(token, secret);
+        redisUtils.deleteObjects(username);
+        redisUtils.setObject(username, user, expiredTime, TimeUnit.HOURS);
+        return JwtUtil.encode(username, secret, expiredTime);
     }
 
     /**
@@ -94,8 +92,8 @@ public class JwtService {
      * @param token token
      */
     public void deleteUser(String token) throws JwtException {
-        String uuid = JwtUtil.getId(token, secret);
-        redisUtils.deleteObjects(uuid);
+        String username = JwtUtil.getSubject(token, secret);
+        redisUtils.deleteObjects(username);
     }
 
     /**
@@ -104,9 +102,9 @@ public class JwtService {
      * @param token token
      * @return 用户实体
      */
-    public DurianUserDO getLoginUser(String token) throws JwtException {
-        String uuid = JwtUtil.getId(token, secret);
-        return redisUtils.getObject(uuid);
+    public DurianUserDO getUserFromRedis(String token) throws JwtException {
+        String username = JwtUtil.getSubject(token, secret);
+        return redisUtils.getObject(username);
     }
 
     /**
@@ -117,5 +115,16 @@ public class JwtService {
      */
     public String getUsername(String token) throws JwtException {
         return JwtUtil.getSubject(token, secret);
+    }
+
+
+    /**
+     * 该用户是否存在于redis中
+     *
+     * @param username 用户名
+     * @return true存在  false不存在
+     */
+    public boolean isUserInRedis(String username) throws JwtException {
+        return redisUtils.getObject(username) != null;
     }
 }
