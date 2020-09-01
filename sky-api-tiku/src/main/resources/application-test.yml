@@ -30,7 +30,8 @@ spring:
       initialSize: 5
       # 最小连接池数量
       minIdle: 10
-      # 最大连接池数量
+      # 最大连接池数量。
+
       maxActive: 20
       # 配置获取连接等待超时的时间
       maxWait: 60000
@@ -66,7 +67,11 @@ spring:
           config:
             multi-statement-allow: true
 
+
 # MyBatis配置
 mybatis:
   # 配置mapper的扫描，找到所有的DAO.xml映射文件
   mapperLocations: classpath*:mybatis/*DAO.xml
+
+oss:
+  url: localhost:8087

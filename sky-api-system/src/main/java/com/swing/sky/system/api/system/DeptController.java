@@ -37,11 +37,19 @@ import java.util.List;
 @Controller
 @RequestMapping("/system/dept")
 public class DeptController extends BasicController {
-    @Autowired
     private SysDeptService deptService;
 
-    @Autowired
     private SysPostService postService;
+
+    @Autowired
+    public void setPostService(SysPostService postService) {
+        this.postService = postService;
+    }
+
+    @Autowired
+    public void setDeptService(SysDeptService deptService) {
+        this.deptService = deptService;
+    }
 
     /**
      * 主界面（视图）

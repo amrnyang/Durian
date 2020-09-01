@@ -1,6 +1,5 @@
 package com.swing.sky.oss.framework.jwt.service;
 
-import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.common.utils.UUIDUtils;
 import com.swing.sky.oss.framework.datasource.redis.RedisUtils;
 import com.swing.sky.oss.framework.jwt.util.JwtUtil;
@@ -14,11 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
-
-import static com.swing.sky.oss.framework.constant.HttpConstant.TOKEN_HEADER_NAME;
-import static com.swing.sky.oss.framework.constant.HttpConstant.TOKEN_PREFIX_NAME;
 
 /**
  * @author JIANG
@@ -97,19 +92,5 @@ public class JwtService {
         return redisUtils.getObject(uuid);
     }
 
-    /**
-     * 从请求头中得到token
-     *
-     * @param request 请求
-     * @return 如果有token，则返回token，无返回null
-     */
-    public String getToken(HttpServletRequest request) {
-        String token = request.getHeader(TOKEN_HEADER_NAME);
-        if (StringUtils.isNotEmpty(token) && token.startsWith(TOKEN_PREFIX_NAME)) {
-            token = token.replace(TOKEN_PREFIX_NAME, "");
-            log.info("该用户token为{}", token);
-            return token;
-        }
-        return null;
-    }
+
 }

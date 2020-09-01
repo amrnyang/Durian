@@ -4,9 +4,9 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysNoticeDO;
 import com.swing.sky.system.module.service.SysNoticeService;
 import io.swagger.annotations.Api;
@@ -26,8 +26,12 @@ import java.util.List;
 @Controller
 @RequestMapping("system/notice")
 public class NoticeController extends BasicController {
-    @Autowired
     private SysNoticeService noticeService;
+
+    @Autowired
+    public void setNoticeService(SysNoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     /**
      * 主界面（视图）

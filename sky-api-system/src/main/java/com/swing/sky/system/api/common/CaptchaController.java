@@ -1,7 +1,7 @@
 package com.swing.sky.system.api.common;
 
 import com.alibaba.fastjson.JSON;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import com.swing.sky.common.utils.UUIDUtils;
 import com.swing.sky.system.framework.security.service.CaptchaService;
 import com.swing.sky.common.web.SkyResponse;

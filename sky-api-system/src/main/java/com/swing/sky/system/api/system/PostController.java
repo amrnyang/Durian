@@ -4,11 +4,11 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysPostDO;
 import com.swing.sky.system.module.service.SysPostService;
 import io.swagger.annotations.Api;
@@ -28,8 +28,12 @@ import java.util.List;
 @Controller
 @RequestMapping("system/post")
 public class PostController extends BasicController {
-    @Autowired
     private SysPostService postService;
+
+    @Autowired
+    public void setPostService(SysPostService postService) {
+        this.postService = postService;
+    }
 
     /**
      * 主界面（视图）

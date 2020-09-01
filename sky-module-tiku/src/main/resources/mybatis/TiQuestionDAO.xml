@@ -169,6 +169,9 @@
         <include refid="table_name"/>
         <where>
             <if test="condition != null">
+                <if test="condition.creatorId != null and condition.creatorId !=''">
+                    and creator_id = #{condition.creatorId,jdbcType=BIGINT}
+                </if>
                 <if test="condition.content != null and condition.content !=''">
                     and content like concat("%",#{condition.content,jdbcType=VARCHAR},"%")
                 </if>

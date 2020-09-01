@@ -5,7 +5,7 @@ import com.swing.sky.common.constant.CaptchaConstants;
 import com.swing.sky.system.framework.task.AsyncTaskService;
 import com.swing.sky.system.framework.task.factory.AsyncTaskFactory;
 import com.swing.sky.common.web.SkyResponse;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;

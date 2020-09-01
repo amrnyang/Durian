@@ -4,10 +4,10 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysLogLoginDO;
 import com.swing.sky.system.module.service.SysLogLoginService;
 import io.swagger.annotations.Api;
@@ -28,8 +28,12 @@ import java.util.List;
 @Controller
 @RequestMapping("system/log/login")
 public class LoginLogController extends BasicController {
-    @Autowired
     private SysLogLoginService logLoginService;
+
+    @Autowired
+    public void setLogLoginService(SysLogLoginService logLoginService) {
+        this.logLoginService = logLoginService;
+    }
 
     /**
      * 主界面（视图）

@@ -4,12 +4,11 @@ import cn.hutool.core.convert.Convert;
 import com.swing.sky.common.annotation.OperateLog;
 import com.swing.sky.common.constant.BusinessTypeConstants;
 import com.swing.sky.common.constant.ModuleConstants;
+import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.api.BasicController;
 import com.swing.sky.system.dto.response.table.TableDataInfo;
 import com.swing.sky.system.framework.excel.util.ExcelUtils;
-import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.system.module.domain.SysDictTypeDO;
-import com.swing.sky.system.module.service.SysDictDataService;
 import com.swing.sky.system.module.service.SysDictTypeService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +27,12 @@ import java.util.List;
 @Controller
 @RequestMapping("system/dict/type")
 public class DictTypeController extends BasicController {
-    @Autowired
     private SysDictTypeService dictTypeService;
 
     @Autowired
-    private SysDictDataService dictDataService;
+    public void setDictTypeService(SysDictTypeService dictTypeService) {
+        this.dictTypeService = dictTypeService;
+    }
 
     /**
      * 主界面（视图）

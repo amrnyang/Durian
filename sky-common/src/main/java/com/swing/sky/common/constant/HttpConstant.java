@@ -1,4 +1,4 @@
-package com.swing.sky.oss.framework.constant;
+package com.swing.sky.common.constant;
 
 /**
  * Http请求和响应有关的常数

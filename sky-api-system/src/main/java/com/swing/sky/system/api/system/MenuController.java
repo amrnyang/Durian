@@ -27,8 +27,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/system/menu")
 public class MenuController extends BasicController {
-    @Autowired
     private SysMenuService menuService;
+
+    @Autowired
+    public void setMenuService(SysMenuService menuService) {
+        this.menuService = menuService;
+    }
 
     /**
      * 主界面（视图）

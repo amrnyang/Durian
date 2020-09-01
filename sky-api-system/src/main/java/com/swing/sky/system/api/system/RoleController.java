@@ -34,15 +34,26 @@ import java.util.List;
 @Controller
 @RequestMapping("system/role")
 public class RoleController extends BasicController {
-    @Autowired
     private SysRoleService roleService;
 
-    @Autowired
     private SysMenuService menuService;
 
-    @Autowired
     private SysDeptService deptService;
 
+    @Autowired
+    public void setMenuService(SysMenuService menuService) {
+        this.menuService = menuService;
+    }
+
+    @Autowired
+    public void setDeptService(SysDeptService deptService) {
+        this.deptService = deptService;
+    }
+
+    @Autowired
+    public void setRoleService(SysRoleService roleService) {
+        this.roleService = roleService;
+    }
 
     /**
      * 主界面（视图)

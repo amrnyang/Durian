@@ -1,7 +1,7 @@
 package com.swing.sky.system.framework.security.service;
 
 import com.swing.sky.common.constant.CaptchaConstants;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import org.springframework.beans.factory.annotation.Value;

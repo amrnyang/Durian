@@ -25,5 +25,10 @@
             <groupId>com.swing</groupId>
             <artifactId>sky-module-system</artifactId>
         </dependency>
+        <!--登录用户模块-->
+        <dependency>
+            <groupId>com.swing</groupId>
+            <artifactId>sky-module-oss</artifactId>
+        </dependency>
     </dependencies>
 </project>

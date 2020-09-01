@@ -1,7 +1,7 @@
 package com.swing.sky.system.framework.task.factory;
 
 import com.swing.sky.common.utils.IpUtils;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import com.swing.sky.system.module.domain.SysLogLoginDO;
 import com.swing.sky.system.module.domain.SysLogOperateDO;
 import com.swing.sky.system.module.service.SysLogLoginService;

@@ -1,4 +1,4 @@
-package com.swing.sky.system.framework.web.utils;
+package com.swing.sky.common.utils;
 
 import cn.hutool.core.convert.Convert;
 import org.slf4j.Logger;

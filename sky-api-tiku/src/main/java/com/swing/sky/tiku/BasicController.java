@@ -1,12 +1,12 @@
-package com.swing.sky.system.api;
+package com.swing.sky.tiku;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.swing.sky.common.constant.PageConstants;
+import com.swing.sky.common.utils.ServletUtils;
 import com.swing.sky.common.utils.SkySqlUtil;
 import com.swing.sky.common.utils.StringUtils;
-import com.swing.sky.system.dto.response.table.TableDataInfo;
-import com.swing.sky.common.utils.ServletUtils;
+import com.swing.sky.tiku.dto.TableDataInfo;
 
 import java.util.List;
 

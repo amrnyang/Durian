@@ -1,6 +1,7 @@
 package com.swing.sky.oss.api.common;
 
 import com.swing.sky.common.utils.StringUtils;
+import com.swing.sky.common.utils.security.TokenUtils;
 import com.swing.sky.common.web.SkyResponse;
 import com.swing.sky.oss.framework.jwt.service.JwtService;
 import com.swing.sky.oss.module.domain.DurianUserDO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -46,7 +48,7 @@ public class LoginController {
 
     @GetMapping("/login-info")
     public SkyResponse getInfo(HttpServletRequest request) {
-        String token = jwtService.getToken(request);
+        String token = TokenUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
             // 检验是否无效、是否过期，无效和过期都抛出异常
             DurianUserDO user = jwtService.getLoginUser(token);
@@ -62,9 +64,9 @@ public class LoginController {
         return SkyResponse.fail(HttpStatus.NOT_ACCEPTABLE, "当前还未登陆");
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public SkyResponse logout(HttpServletRequest request) {
-        String token = jwtService.getToken(request);
+        String token = TokenUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
             jwtService.deleteUser(token);
             return SkyResponse.success("登出成功");

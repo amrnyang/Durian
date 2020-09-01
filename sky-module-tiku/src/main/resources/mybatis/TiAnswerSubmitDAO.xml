@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swing.sky.tiku.module.dao.TiAnswerDAO">
-    <resultMap id="BaseResultMap" extends="com.swing.sky.common.basic.BasicDAO.BaseResultMap"
-               type="com.swing.sky.tiku.module.domain.TiAnswerDO">
+<mapper namespace="com.swing.sky.tiku.module.dao.TiAnswerSubmitDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.tiku.module.domain.TiAnswerSubmitDO">
+        <result column="id" jdbcType="BIGINT" property="id"/>
         <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
-        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+        <result column="answer_id" jdbcType="BIGINT" property="answerId"/>
         <result column="answer" jdbcType="VARCHAR" property="answer"/>
         <result column="analysis" jdbcType="VARCHAR" property="analysis"/>
-        <result column="audit_status" jdbcType="CHAR" property="auditStatus"/>
-        <result column="like_count" jdbcType="INTEGER" property="likeCount"/>
+        <result column="submit_status" jdbcType="CHAR" property="submitStatus"/>
+        <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime"/>
+        <result column="submit_remark" jdbcType="VARCHAR" property="submitRemark"/>
     </resultMap>
 
-    <sql id="table_name">ti_answer</sql>
+    <sql id="table_name">ti_answer_submit</sql>
 
     <sql id="Base_Column_List">
-    ti_answer.id, ti_answer.creator_id,ti_answer.question_id, ti_answer.answer, ti_answer.analysis,ti_answer.audit_status, ti_answer.like_count, ti_answer.is_use, ti_answer.order_num, ti_answer.create_by, ti_answer.create_time, ti_answer.update_by, ti_answer.update_time, ti_answer.remark    </sql>
+    ti_answer_submit.id, ti_answer_submit.creator_id, ti_answer_submit.answer_id, ti_answer_submit.answer, ti_answer_submit.analysis, ti_answer_submit.submit_status, ti_answer_submit.submit_time, ti_answer_submit.submit_remark    </sql>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -23,13 +24,11 @@
         <include refid="table_name"/>
         where id = #{id,jdbcType=BIGINT}
     </select>
-
     <delete id="deleteById" parameterType="java.lang.Long">
         delete from
         <include refid="table_name"/>
         where id = #{id,jdbcType=BIGINT}
     </delete>
-
     <delete id="batchDeleteByIds" parameterType="long">
         delete from
         <include refid="table_name"/>
@@ -40,15 +39,18 @@
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.swing.sky.tiku.module.domain.TiAnswerDO" useGeneratedKeys="true">
+            parameterType="com.swing.sky.tiku.module.domain.TiAnswerSubmitDO" useGeneratedKeys="true">
         insert into
         <include refid="table_name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
             <if test="creatorId != null">
                 creator_id,
             </if>
-            <if test="questionId != null">
-                question_id,
+            <if test="answerId != null">
+                answer_id,
             </if>
             <if test="answer != null">
                 answer,
@@ -56,20 +58,25 @@
             <if test="analysis != null">
                 analysis,
             </if>
-            <if test="auditStatus != null">
-                audit_status,
+            <if test="submitStatus != null">
+                submit_status,
             </if>
-            <if test="likeCount != null">
-                like_count,
+            <if test="submitTime != null">
+                submit_time,
             </if>
-            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_up"/>
+            <if test="submitRemark != null">
+                submit_remark,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
             <if test="creatorId != null">
                 #{creatorId,jdbcType=BIGINT},
             </if>
-            <if test="questionId != null">
-                #{questionId,jdbcType=BIGINT},
+            <if test="answerId != null">
+                #{answerId,jdbcType=BIGINT},
             </if>
             <if test="answer != null">
                 #{answer,jdbcType=VARCHAR},
@@ -77,25 +84,29 @@
             <if test="analysis != null">
                 #{analysis,jdbcType=VARCHAR},
             </if>
-            <if test="auditStatus != null">
-                #{auditStatus,jdbcType=CHAR},
+            <if test="submitStatus != null">
+                #{submitStatus,jdbcType=CHAR},
             </if>
-            <if test="likeCount != null">
-                #{likeCount,jdbcType=INTEGER},
+            <if test="submitTime != null">
+                #{submitTime,jdbcType=TIMESTAMP},
             </if>
-            <include refid="com.swing.sky.common.basic.BasicDAO.common_insert_down"/>
+            <if test="submitRemark != null">
+                #{submitRemark,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
-
-    <update id="update" parameterType="com.swing.sky.tiku.module.domain.TiAnswerDO">
+    <update id="update" parameterType="com.swing.sky.tiku.module.domain.TiAnswerSubmitDO">
         update
         <include refid="table_name"/>
         <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
             <if test="creatorId != null">
                 creator_id = #{creatorId,jdbcType=BIGINT},
             </if>
-            <if test="questionId != null">
-                question_id = #{questionId,jdbcType=BIGINT},
+            <if test="answerId != null">
+                answer_id = #{answerId,jdbcType=BIGINT},
             </if>
             <if test="answer != null">
                 answer = #{answer,jdbcType=VARCHAR},
@@ -103,18 +114,20 @@
             <if test="analysis != null">
                 analysis = #{analysis,jdbcType=VARCHAR},
             </if>
-            <if test="auditStatus != null">
-                audit_status = #{auditStatus,jdbcType=CHAR},
+            <if test="submitStatus != null">
+                submit_status = #{submitStatus,jdbcType=CHAR},
             </if>
-            <if test="likeCount != null">
-                like_count = #{likeCount,jdbcType=INTEGER},
+            <if test="submitTime != null">
+                submit_time = #{submitTime,jdbcType=TIMESTAMP},
             </if>
-            <include refid="com.swing.sky.common.basic.BasicDAO.common_update"/>
+            <if test="submitRemark != null">
+                submit_remark = #{submitRemark,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="listByCondition" parameterType="com.swing.sky.tiku.module.domain.TiAnswerDO"
+    <select id="listByCondition" parameterType="com.swing.sky.tiku.module.domain.TiAnswerSubmitDO"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -125,18 +138,6 @@
                 <if test="condition.creatorId != null and condition.creatorId !=''">
                     and creator_id = #{condition.creatorId,jdbcType=BIGINT}
                 </if>
-                <if test="condition.questionId != null">
-                    and question_id = #{condition.questionId,jdbcType=BIGINT}
-                </if>
-                <if test="condition.auditStatus != null and condition.auditStatus !=''">
-                    and audit_status = #{condition.auditStatus,jdbcType=CHAR}
-                </if>
-                <if test="condition.createBy != null and condition.createBy !=''">
-                    and create_by = #{condition.createBy,jdbcType=VARCHAR}
-                </if>
-                <if test="condition.use != null">
-                    and is_use = #{condition.use,jdbcType=BOOLEAN}
-                </if>
             </if>
             <if test="beginTime != null">
                 and date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
@@ -145,18 +146,6 @@
                 and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
             </if>
         </where>
-    </select>
-    <select id="listAnswersByQuestionIds" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from
-        <include refid="table_name"/>
-        where
-        ti_answer.question_id
-        in
-        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
     </select>
 
 </mapper>

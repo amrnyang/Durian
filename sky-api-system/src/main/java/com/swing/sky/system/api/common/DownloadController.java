@@ -5,7 +5,7 @@ import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.common.utils.aliyun.oss.AliyunUploadUtils;
 import com.swing.sky.system.framework.SkyConfig;
 import com.swing.sky.common.web.SkyResponse;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.swing.sky.system.framework.web.filter;
 
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;

@@ -7,7 +7,7 @@ import com.swing.sky.common.utils.StringUtils;
 import com.swing.sky.system.framework.security.utils.UserDetailsUtil;
 import com.swing.sky.system.framework.task.AsyncTaskService;
 import com.swing.sky.system.framework.task.factory.AsyncTaskFactory;
-import com.swing.sky.system.framework.web.utils.ServletUtils;
+import com.swing.sky.common.utils.ServletUtils;
 import com.swing.sky.system.module.domain.SysLogOperateDO;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.aspectj.lang.JoinPoint;

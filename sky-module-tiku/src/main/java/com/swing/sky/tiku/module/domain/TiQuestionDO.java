@@ -2,6 +2,7 @@ package com.swing.sky.tiku.module.domain;
 
 import com.swing.sky.common.basic.BasicDO;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -30,6 +31,7 @@ public class TiQuestionDO extends BasicDO implements Serializable {
     /**
      * 课程id
      */
+    @NotNull(message = "题目所属课程不为空")
     private Long courseId;
     /**
      * 章节id
