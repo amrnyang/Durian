@@ -46,8 +46,6 @@ public class OssServer {
         if (skyResponse.getStatus().equals(HttpStatus.HTTP_INTERNAL_ERROR)) {
             throw new RuntimeException("令牌无效");
         }
-        String string = skyResponse.getBody().get("user").toString();
-        String s = JSON.parse(string).toString();
-        return JSON.parseObject(s, DurianUserDO.class);
+        return JSON.parseObject(skyResponse.getBody().get("user").toString(), DurianUserDO.class);
     }
 }
