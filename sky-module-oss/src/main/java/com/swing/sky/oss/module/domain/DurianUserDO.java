@@ -1,5 +1,6 @@
 package com.swing.sky.oss.module.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swing.sky.common.basic.BasicDO;
 
 import javax.validation.constraints.Email;
@@ -13,8 +14,8 @@ import java.io.Serializable;
  *
  * @author JIANG
  */
-public class DurianUserDO extends BasicDO implements Serializable{
-    private static final long serialVersionUID=1L;
+public class DurianUserDO extends BasicDO implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 部门id
      */
@@ -29,6 +30,7 @@ public class DurianUserDO extends BasicDO implements Serializable{
     /**
      * 密码
      */
+    @JsonIgnore
     @Size(min = 6, max = 20, message = "密码的长度应介于6~20之间")
     private String password;
     /**
@@ -183,7 +185,7 @@ public class DurianUserDO extends BasicDO implements Serializable{
                 "phone=" + phone + ',' +
                 "gender=" + gender + ',' +
                 "avatar=" + avatar + ',' +
-                "deleted=" + deleted  +
-                '}'+super.toString();
+                "deleted=" + deleted +
+                '}' + super.toString();
     }
 }

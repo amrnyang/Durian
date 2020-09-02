@@ -42,13 +42,15 @@ public class JwtService {
      * @return token
      */
     public String createToken(String username) {
-        // 从数据库中得到用户
-        DurianUserDO loginUser = userService.getUserByUsername(username);
-        // 存入redis
-        redisUtils.setObject(loginUser.getUsername(), loginUser, expiredTime, TimeUnit.HOURS);
+        //检查redis中是否已存在该用户的登录信息
+        if (redisUtils.getObject(username) == null) {
+            // 从数据库中得到用户
+            DurianUserDO loginUser = userService.getUserByUsername(username);
+            // 存入redis
+            redisUtils.setObject(loginUser.getUsername(), loginUser, expiredTime, TimeUnit.HOURS);
+        }
         return JwtUtil.encode(username, secret, expiredTime);
     }
-
 
 
     /**

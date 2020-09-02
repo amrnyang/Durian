@@ -9,7 +9,6 @@ import com.swing.sky.oss.module.service.DurianUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,18 +34,14 @@ public class LoginController {
     /**
      * 登陆接口，登陆成功返回jwt
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     public SkyResponse login(String username, String password) {
-
         DurianUserDO loginUser = userService.getUserByUsername(username);
         if (loginUser == null) {
             throw new RuntimeException("用户不存在，请重新输入");
         }
         if (!new BCryptPasswordEncoder().matches(password, loginUser.getPassword())) {
             throw new RuntimeException("密码不正确，请重新输入");
-        }
-        if (jwtService.isUserInRedis(username)) {
-            return SkyResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR, "该用户已登陆，请不要重复登陆！");
         }
         String newToken = jwtService.createToken(username);
         return SkyResponse.success("登陆成功", 1)

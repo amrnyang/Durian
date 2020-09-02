@@ -108,7 +108,7 @@ public class ProfileController {
             user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
             userService.update(user);
 
-            // 刷新token和redis中的过期时间，老token只要没过期依旧可以请求数据
+            // 刷新token和redis中的过期时间，旧token只要没过期依旧可以请求数据
             String newToken = jwtService.refreshToken(token);
             return SkyResponse.success("密码修改成功！", 1)
                     .put("token", newToken);
