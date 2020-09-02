@@ -32,7 +32,7 @@ public class OssServer {
             throw new RuntimeException("未检测到请求携带的token");
         }
         //使用该token去请求单点登录中心，获取用户登录信息
-        String body = HttpRequest.get(url + "/get-info")
+        String body = HttpRequest.get(url + "/profile/get-info")
                 .header("Authorization", "Bearer " + token)
                 .timeout(20000)
                 .execute().body();
