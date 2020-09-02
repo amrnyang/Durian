@@ -25,7 +25,7 @@
 
 后台演示地址：[https://qiu-qian.top](https://qiu-qian.top:8085/)
 
-题库小程序演示地址：
+题库小程序演示地址： （域名备案中，请稍等）
 
 文档地址： [Durian开发文档](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2720449&doc_id=892234)
 
