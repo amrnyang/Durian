@@ -62,6 +62,77 @@
 </table>
 
 
+## 快速部署
+
+在部署前，请确保你已经搭建好如下的部署环境 [Durain部署环境](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2725320&doc_id=892234)
+
+### 后台管理模块部署
+ 
+克隆代码，将`sky-api-system/src/main/resources/application.yml`文件中的数据库配置修改为你自己的配置，然后执行如下命令
+ ```shell
+cd Durian/
+#打包
+mvn clean package -Dmaven.test.skip=true
+#运行
+java -jar sky-api-system/target/sky-api-system.jar
+ ```
+启动成功后，打开浏览器，访问 `localhost:8085`
+
+### 单点登录模块部署
+为了使每个服务的用户信息得到统一，项目提供一个统一的单点登录中心，供所有模块登录，具体的登录模式，请参考 [会员单点登录模式](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2801227&doc_id=892234)
+登录用户的信息会缓存在redis中，请确保你已经启动redis。
+将`sky-api-oss/src/main/resources/application.yml`文件中的数据库配置修改为你自己的配置，然后执行如下命令
+```shell
+cd Durian/
+#打包
+mvn clean package -Dmaven.test.skip=true
+#运行
+java -jar sky-api-oss/target/sky-api-oss.jar
+```
+
+### solr搜素引擎模块
+为了实现分词全文检索，高亮标注等功能，还需要启动搜索引擎模块，确保你已经在docker中安装了solr（或其他安装方法）
+
+修改 `sky-api-solr/src/main/resources/application.yml` 中的数据库和solr配置，如下：
+```yaml
+#注意这里需要设置一个安全密钥，之后更新solr中的数据，或者全文检索，都需要携带该密钥才可请求
+sky-security:
+  #更新操作的安全密钥
+  updateKey: ainimemeda
+
+data:
+    #solr搜索引擎
+    solr:
+      host: http://localhost:8089/solr/durian_core
+```
+
+```shell
+cd Durian/
+#打包
+mvn clean package -Dmaven.test.skip=true
+#运行
+java -jar sky-api-solr/target/sky-api-solr.jar
+```
+
+### 榴莲题库模块的启动
+有了上面那些基础的服务，题库模块的启动就很简单了，搜先修改 `sky-api-oss/src/main/resources/application.yml`数据库配置和登录中心配置
+
+```yaml
+#登录中心地址
+oss:
+  url: 127.0.0.1:8087
+```
+
+```shell
+cd Durian/
+#打包
+mvn clean package -Dmaven.test.skip=true
+#运行
+java -jar sky-api-tiku/target/sky-api-tiku.jar
+```
+
+至此，题库模块的部署已经基本完成，小程序的部署请参考 [Durian小程序的部署文档](#)
+
 ## 项目结构 <img img align="center" src="doc/imgs/structure.png"/>
 
 项目采用模块化的设计，遵循低耦合高内聚的设计思想，各个模块可单独部署，一个独立的项目模块（例如榴莲题库模块）是由如下三个子模块组成：
