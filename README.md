@@ -23,7 +23,7 @@
 
 <b>特别声明：本项目可用于学习或毕设，（如需商用，请联系我） ! ! !</b>
 
-后台演示地址：[https://qiu-qian.top](https://qiu-qian.top:8085/)
+后台演示地址：[https://duriantiku.top](https://duriantiku.top:8085/)
 
 题库小程序演示地址： （域名备案中，请稍等）
 
