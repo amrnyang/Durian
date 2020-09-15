@@ -1,18 +1,23 @@
 package com.swing.sky.common.enums;
 
 /**
- * 数据源
+ * 各模块的数据源
  *
  * @author swing
  */
 public enum DataSourceEnum {
     /**
-     * 主库
+     * 后台管理模块数据库
      */
-    MASTER,
+    SYSTEM,
 
     /**
-     * 从库
+     * 学生信息中心
      */
-    SLAVE
+    CENTER,
+
+    /**
+     * 题库数据源
+     */
+    TIKU
 }

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('用户列表')"/>
+    <th:block th:include="include :: layout-latest-css"/>
+    <th:block th:include="include :: ztree-css"/>
+</head>
+<body class="gray-bg">
+<div class="ui-layout-west">
+    <div class="box box-main">
+        <div class="box-header">
+            <div class="box-title">
+                <i class="fa icon-grid"></i> 专业
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i
+                        class="fa fa-chevron-down"></i></button>
+                <button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i
+                        class="fa fa-refresh"></i></button>
+            </div>
+        </div>
+        <div class="ui-layout-content">
+            <div id="tree" class="ztree"></div>
+        </div>
+    </div>
+</div>
+
+<div class="ui-layout-center">
+    <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="user-form">
+                    <input type="hidden" id="collegeId" name="collegeId">
+                    <input type="hidden" id="parentId" name="parentId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                课程名：<input type="text" name="courseName"/>
+                            </li>
+                            <li>
+                                课程类型：<select name="courseType"
+                                             th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_course_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                        th:value="${dict.dataValue}"></option>
+                            </select>
+                            </li>
+                            <li>
+                                使用状态：<select name="use"
+                                             th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                        th:value="${dict.dataValue}"></option>
+                            </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                        class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                        class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="courseRadioTree()">
+                    <i class="fa fa-plus"></i> 分配课程
+                </a>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: layout-latest-js"/>
+<th:block th:include="include :: ztree-js"/>
+<script th:inline="javascript">
+    const sys_use_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}]];
+    const tiku_course_type = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_course_type')}]];
+    const prefix = ctx + "center/course/allocation";
+
+    $(function () {
+        let hidden = false;
+        if ($(this).width() < 769) {
+            hidden = true;
+        }
+        $('body').layout({initClosed: hidden, west__size: 255});
+        queryUserList();
+        queryDeptTree();
+    });
+
+    function queryUserList() {
+        var options = {
+            url: prefix + "/list",
+            sortName: "orderNum",
+            sortOrder: "asc",
+            modalName: "课程",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: 'orderNum',
+                    title: '显示顺序',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: 'courseCode',
+                    title: '课程编码',
+                    sortable: true
+                },
+                {
+                    field: 'courseName',
+                    title: '课程名'
+                },
+                {
+                    field: 'credit',
+                    title: '学分'
+                },
+                {
+                    field: 'teacher',
+                    title: '任课老师'
+                },
+                {
+                    field: 'courseType',
+                    title: "课程类型 ",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tiku_course_type, item.courseType);
+                    }
+                },
+                {
+                    field: 'use',
+                    title: '使用状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(sys_use_status, item.use);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: "createBy",
+                    title: "创建者",
+                    visible: false
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: "updateBy",
+                    title: "更新者",
+                    visible: false
+                },
+                {
+                    field: "remark",
+                    title: "备注",
+                    visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        const actions = [];
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="removeCourse(\'' + row.id + '\')"><i class="fa fa-remove"></i>移除课程</a> ');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    }
+
+    function queryDeptTree() {
+        var url = ctx + "center/dept/deptRadioTree";
+        var options = {
+            url: url,
+            expandLevel: 2,
+            onClick: zOnClick
+        };
+        $.tree.init(options);
+
+        function zOnClick(event, treeId, treeNode) {
+            $("#collegeId").val(treeNode.id);
+            $("#parentId").val(treeNode.pId);
+            $.table.search();
+        }
+    }
+
+    /*选择部门树 显示到课程层次*/
+    function courseRadioTree() {
+        const options = {
+            title: '课程库',
+            width: "380",
+            url: prefix + "/courseRadioTreeView/" + $("#collegeId").val(),
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    /*提交关联*/
+    function doSubmit(index, layero) {
+        const tree = layero.find("iframe")[0].contentWindow.$._tree;
+        if ($.tree.notAllowParents(tree)) {
+            const body = layer.getChildFrame('body', index);
+            const deptId = $("#collegeId").val();
+            const courseId = body.find('#treeId').val();
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: ctx + "center/course/allocation/updateDeptCourseLink",
+                data: {
+                    "deptId": deptId,
+                    "courseId": courseId
+                },
+                async: false,
+                error: function (request) {
+                    $.modal.alertError("系统错误");
+                },
+                success: function (data) {
+                    $.operate.successCallback(data);
+                }
+            });
+            layer.close(index);
+        }
+    }
+
+    /*移除关联*/
+    function removeCourse(courseId) {
+        const deptId = $("#collegeId").val();
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: ctx + "center/course/allocation/removeDeptCourseLink",
+            data: {
+                "deptId": deptId,
+                "courseId": courseId
+            },
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            }
+        });
+    }
+
+    $('#btnExpand').click(function () {
+        $._tree.expandAll(true);
+        $(this).hide();
+        $('#btnCollapse').show();
+    });
+
+    $('#btnCollapse').click(function () {
+        $._tree.expandAll(false);
+        $(this).hide();
+        $('#btnExpand').show();
+    });
+
+    $('#btnRefresh').click(function () {
+        queryDeptTree();
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>Durian</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+<div class="row  border-bottom white-bg dashboard-header">
+    <div class="col-sm-4">
+        <h2>Durian校园服务平台</h2>
+        <p>
+            榴莲校园，一个专注于Java技术的实践集合，致力于为校园提供一套便捷的技术服务。
+            <br/>
+            涉及后台管理，多级鉴权，单点登录，solr引擎全文检索，校园题库，校园二手（开发中），校园云盘等多种技术服务。搭建框架，化繁为简，提高你的开发效率，使您专注于业务逻辑的开发。
+            <br/>
+            本项目的后台管理模块是基于我的另一个开源项目Sky，除后台管理模块使用Thymeleaf渲染以外，其他模块皆为restful风格的api，使用微信小程序做的前后端分离。为了专注与业务逻辑，对于持久层的代码，我专为项目设计了与之适应的代码生成器Orange，支持关联结构(非外键)的代码生成，使您的二次开发更加快速。
+            <br/>
+        </p>
+        <p>
+            <b>当前版本：</b><span>v1.0.1</span>
+        </p>
+        <p>
+            <span class="label label-warning">&yen;免费开源</span>
+        </p>
+        <br>
+        <p>
+            <a class="btn btn-success btn-outline" href="https://gitee.com/qiu-qian/sky" target="_blank">
+                <i class="fa fa-cloud"> </i> 代码地址
+            </a>
+        </p>
+    </div>
+    <!--管理员公告-->
+    <div class="col-sm-5">
+        <h3>公告：</h3>
+        <button type="button" class="list-group-item" th:each="notice : ${notices}"
+                th:onclick="|javascript:noticeDetail(${notice.id})|">
+            <span class="fa fa-bullhorn" aria-hidden="true"></span> [[${notice.noticeTitle}]]
+        </button>
+    </div>
+
+    <div class="col-sm-3">
+        <h3>技术选型：</h3>
+        <ol>
+            <li>核心框架：Spring Boot</li>
+            <li>安全框架：Spring Security</li>
+            <li>token加密：JWT</li>
+            <li>搜索引擎：ElasticSearch</li>
+            <li>模板引擎：Thymeleaf</li>
+            <li>持久层框架：MyBatis</li>
+            <li>数据库连接池：Druid</li>
+            <li>更多……</li>
+        </ol>
+    </div>
+
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-4">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>联系信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <p><i class="fa fa-qq"></i> QQ群：1142502439</a>
+                        <img src="https://gitee.com/qiu-qian/sky/raw/master/img/qq1.jpg" width="200px" height="280px"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>捐赠</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="alert alert-warning">
+                        请作者喝瓶哇哈哈
+                    </div>
+                    <p id="pay-qrcode">
+                        <a href="javascript:;"><img src="https://gitee.com/qiu-qian/sky/raw/master/img/pay.png"
+                                                    width="200px" height="200px"/>
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: layout-latest-js"/>
+<th:block th:include="include :: ztree-js"/>
+<script th:inline="javascript">
+    $('#pay-qrcode').click(function () {
+        var html = $(this).html();
+        parent.layer.open({
+            title: false,
+            type: 1,
+            closeBtn: false,
+            shadeClose: true,
+            area: ['600px', 'auto'],
+            content: html
+        });
+    });
+
+    /* 详细公告 */
+    function noticeDetail(noticeId) {
+        const url = 'notice/' + noticeId;
+        $.modal.open("公告详情", url);
+    }
+</script>
+</body>
+</html>

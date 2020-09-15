@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('提交详情')"/>
+</head>
+<body class="white-bg">
+<h3>* * * * * * 题目内容 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${question.fullContent})]
+</div>
+<br/>
+<h3>* * * * * * 原答案 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${oldAnswer.answer})]
+</div>
+<h3>* * * * * * 原解析 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${oldAnswer.analysis})]
+</div>
+<h3>* * * * * * 提交答案 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${newAnswer.answer})]
+</div>
+<h3>* * * * * * 提交解析 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${newAnswer.analysis})]
+</div>
+<h3>* * * * * * 提交备注 * * * * * *</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${newAnswer.submitRemark})]
+</div>
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

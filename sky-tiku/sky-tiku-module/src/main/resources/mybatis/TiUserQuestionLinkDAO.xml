@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--链接mapper测试模板 1.0.3-->
+<mapper namespace="com.swing.sky.tiku.module.dao.TiUserQuestionLinkDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.tiku.module.domain.TiUserQuestionDO">
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+    </resultMap>
+
+    <sql id="table_name">ti_user_question</sql>
+    <sql id="one_id">user_id</sql>
+    <sql id="two_id">question_id</sql>
+    <sql id="column_list">(#{item.userId},#{item.questionId})</sql>
+
+
+    <resultMap id="two_BaseResultMap" extends="com.swing.sky.tiku.module.dao.TiQuestionDAO.BaseResultMap"
+               type="com.swing.sky.tiku.module.domain.TiQuestionDO">
+    </resultMap>
+
+    <sql id="Base_Column_List"><include refid="table_name"/>.<include refid="one_id"/>,<include refid="table_name"/>.
+        <include refid="two_id"/>
+    </sql>
+
+    <sql id="two_table_name">
+        <include refid="com.swing.sky.tiku.module.dao.TiQuestionDAO.table_name"/>
+    </sql>
+
+    <sql id="two_Base_Column_List">
+        <include refid="com.swing.sky.tiku.module.dao.TiQuestionDAO.Base_Column_List"/>
+    </sql>
+
+    <sql id="two_join"><include refid="table_name"/>.<include refid="two_id"/>=<include refid="two_table_name"/>.id
+    </sql>
+
+    <insert id="insert">
+        insert into
+        <include refid="table_name"/>
+        (
+        <include refid="Base_Column_List"/>
+        )
+        values (#{userId},#{questionId})
+    </insert>
+
+    <select id="listQuestionByUserId" parameterType="long" resultMap="two_BaseResultMap">
+        select
+        <include refid="two_Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        left join
+        <include refid="two_table_name"/>
+        on
+        <include refid="two_join"/>
+        where
+        <include refid="one_id"/>
+        = #{id}
+    </select>
+    <select id="isCollection" resultType="java.lang.Integer">
+        select count(*) from
+        <include refid="table_name"/>
+        where user_id=#{userId} and question_id =#{questionId}
+    </select>
+</mapper>

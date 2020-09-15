@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.swing</groupId>
+        <artifactId>sky-es</artifactId>
+        <version>1.0.0-SNAPHOT</version>
+    </parent>
+
+    <artifactId>sky-es-framework</artifactId>
+    <packaging>jar</packaging>
+    <description>搜索引擎模块框架</description>
+
+
+    <dependencies>
+        <!--项目模块 BEGIN-->
+        <dependency>
+            <groupId>com.swing</groupId>
+            <artifactId>sky-es-module</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>
