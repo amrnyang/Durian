@@ -26,6 +26,8 @@
 
 后台演示地址：[https://duriantiku.top](https://duriantiku.top:8085/)
 
+搜索引擎搜索演示: [搜素题目](https://duriantiku.top:8088/es/search/tiku/question/must?pageNum=0&pageSize=10&content=%E6%8E%A7%E5%88%B6&creatorName=swing&key=ainimemeda)
+
 文档地址： [Durian开发文档](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2720449&doc_id=892234)
 
 后台仓库地址：[https://gitee.com/qiu-qian/Durian](https://gitee.com/qiu-qian/Durian)
