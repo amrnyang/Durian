@@ -12,26 +12,29 @@
 
 ## 介绍 <img img align="center" src="doc/imgs/introduction.png"/>
 
- 榴莲校园，一个专注于Java技术的实践集合，致力于为校园提供一套便捷的技术服务。
- 
- 涉及后台管理，多级鉴权，单点登录，solr引擎全文检索，校园题库，校园二手（开发中），校园云盘等多种技术服务。搭建框架，化繁为简，提高你的开发效率，使您专注于业务逻辑的开发。
+ 榴莲校园，一个专注于Java技术的实践集合，致力于为校园提供一套便捷的技术服务平台。
+
+ 想法起于这段时间接手的几个校内应用，例如题库，信息发布，校内社交这类的应用。这些应用无一都需要管理一些基本的信息，例如会员，专业，课程等。又或者都需要一些常用的功能，例如评论，全文检索，后台管理等。慢慢发现，其实开发一个简单，低并发的校内应用，特别是在学习时，这些通用的功能其实占据了开发任务的很大一部分，十分冗余，然人很难专注与这个应用本身的业务。
+
+ 因此我想到了，做一个轻量级的校内应用平台，为在这个平台上开发的应用提供一些基本的服务，如搜索引擎服务，校内信息中心，评论系统等，化繁为简，提高你的开发效率，使您专注于业务逻辑的开发。
+
+ 平台的雏形已基本搭建，为演示效果，我使用一个题库小应用（榴莲题库）作为在此平台上开发的demo。
  
  本项目的后台管理模块是基于我的另一个开源项目<img img align="center" src="doc/imgs/sky-logo.png"/>[Sky](https://gitee.com/qiu-qian/sky.git)，除后台管理模块使用Thymeleaf渲染以外，其他模块皆为restful风格的api，使用微信小程序做的前后端分离。为了专注与业务逻辑，对于持久层的代码，我专为项目设计了与之适应的代码生成器<img img align="center" src="doc/imgs/orange-logo.png"/>[Orange](https://gitee.com/qiu-qian/Orange.git)，支持关联结构(非外键)的代码生成，使您的二次开发更加快速。
 
  详细信息，请参考项目开发文档：[Durian开发文档](https://gitee.com/qiu-qian/Durian/wikis/pages)
 
-
-<b>特别声明：本项目可用于学习或毕设，（如需商用，请联系我） ! ! !</b>
-
-后台演示地址：[https://qiu-qian.top](https://duriantiku.top:8085/)
-
-题库小程序演示地址： （域名备案中，请稍等）
+后台演示地址：[https://duriantiku.top](https://duriantiku.top:8085/)
 
 文档地址： [Durian开发文档](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2720449&doc_id=892234)
 
 后台仓库地址：[https://gitee.com/qiu-qian/Durian](https://gitee.com/qiu-qian/Durian)
 
-小程序仓库地址：[https://gitee.com/qiu-qian/durian-mini](https://gitee.com/qiu-qian/durian-mini)
+榴莲题库小程序仓库地址：[https://gitee.com/qiu-qian/durian-mini](https://gitee.com/qiu-qian/durian-mini) 
+
+(精力有限，暂时只提供了题库模块的后台接口，还未实现全部的小程序页面，欢迎爱好前端，爱好开源的小伙伴来协助我完成这个demo)
+
+<b>特别声明：本项目可用于学习或毕设，（如需商用，请联系我） ! ! !</b>
 
 ## 预览 <img img align="center" src="doc/imgs/preview.png" width=25/>
 
@@ -135,20 +138,27 @@ java -jar sky-api-tiku/target/sky-api-tiku.jar
 
 ## 项目结构 <img img align="center" src="doc/imgs/structure.png"/>
 
-项目采用模块化的设计，遵循低耦合高内聚的设计思想，各个模块可单独部署，一个独立的项目模块（例如榴莲题库模块）是由如下三个子模块组成：
+项目采用模块化的设计，遵循低耦合高内聚的设计思想，各个模块可单独部署，一个独立的项目模块（以信息中心模块举例）是由如下三个（或四个）子模块组成：
 
 <table align="center">
 <tr>
-<td>sky-module-tiku</td>
+<td>sky-center-module</td>
 <td>持久层和Service接口，此处代码可完全由生成器生成</td>
 </tr>
 <tr>
-<td>sky-framework-tiku</td>
+<td>sky-center-framework</td>
 <td>相关框架，例如spring，mybatis等配置</td>
-</tr
-><tr>
-<td>sky-api-tiku</td>
+</tr>
+<tr>
+<td>sky-center-api</td>
 <td>对外提供api服务</td>
+</tr>
+<tr>
+<td>sky-center-inner</td>
+<td>
+对内提供服务模块
+
+(由于基于RPC的微服务通信框架较为庞大，之后再考虑此方案，目前使用RestFul实现服务间同通信）</td>
 </tr>
 </table>
 
@@ -159,7 +169,7 @@ java -jar sky-api-tiku/target/sky-api-tiku.jar
 ### Solr搜索模型
 
 <p align="center">
-<img align="center" src="doc/imgs/solr.png" width=900>
+<img align="center" src="doc/imgs/es.jpg" width=900>
 <p>
 
 ## 功能概览
