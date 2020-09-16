@@ -25,7 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUserDO user = userService.getUserByUsername(username);
-        System.out.println(user.toString());
         if (user == null) {
             log.info("您输入的用户:{} 不存在!", username);
             throw new UserNotFountException(username + "：用户名或密码错误，请重新输入");
