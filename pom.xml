@@ -20,30 +20,11 @@
     <modules>
         <!--通用模块-->
         <module>sky-common</module>
-        <!--框架基础结构-->
-        <module>sky-framework-system</module>
-        <!--题库框架-->
-        <module>sky-framework-tiku</module>
-        <!--solr框架-->
-        <module>sky-framework-solr</module>
-        <!--权限管理模块-->
-        <module>sky-module-system</module>
-        <!--题库模块基本类-->
-        <module>sky-module-tiku</module>
-        <!--solr模块基本类-->
-        <module>sky-module-solr</module>
-        <!--接口模块-->
-        <module>sky-api-system</module>
-        <!--题库模块接口-->
-        <module>sky-api-tiku</module>
-        <!--solr模块接口-->
-        <module>sky-api-solr</module>
-        <!--单点登录基础模块-->
-        <module>sky-module-oss</module>
-        <!--单点登录框架模块-->
-        <module>sky-framework-oss</module>
-        <!--单点登录接口模块-->
-        <module>sky-api-oss</module>
+        <!--校内信息模块-->
+        <module>sky-center</module>
+        <module>sky-system</module>
+        <module>sky-tiku</module>
+        <module>sky-es</module>
     </modules>
 
     <properties>
@@ -70,76 +51,13 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
-
             <!--模块版本-->
             <dependency>
                 <groupId>com.swing</groupId>
                 <artifactId>sky-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-framework-system</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-framework-tiku</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-framework-solr</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-module-system</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-module-solr</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-api-system</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-module-tiku</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-api-tiku</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-api-solr</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-module-oss</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-framework-oss</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.swing</groupId>
-                <artifactId>sky-api-oss</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
             <!--模块版本 END-->
-
 
             <!-- SpringBoot集成mybatis框架 -->
             <dependency>

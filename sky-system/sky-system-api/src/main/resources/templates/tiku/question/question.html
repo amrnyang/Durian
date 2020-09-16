@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('通知公告列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="notice-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            发布者：<input type="text" name="createBy"/>
+                        </li>
+                        <li>
+                            知识点：<input type="text" name="reviewPoint"/>
+                        </li>
+                        <li>
+                            内容：<input type="text" name="content"/>
+                        </li>
+                        <li>
+                            题型：<select name="questionType"
+                                       th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_type')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                    th:value="${dict.dataValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            审核状态：<select name="auditStatus"
+                                         th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_audit_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                    th:value="${dict.dataValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            使用状态：<select name="use"
+                                         th:with="dicts=${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${dicts}" th:text="${dict.dataKey}"
+                                    th:value="${dict.dataValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.addFull()">
+                <i class="fa fa-plus"></i> 新增
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.editFull()">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <!--<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()">
+                <i class="fa fa-remove"></i> 删除
+            </a>-->
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    const sys_use_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('sys_use_status')}]];
+    const tiku_question_type = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_type')}]];
+    const tiku_question_audit_status = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_audit_status')}]];
+    const tiku_question_year = [[${@sysDictDataServiceImpl.listDictDataByTypeSign('tiku_question_year')}]];
+    const prefix = ctx + "tiku/question";
+
+    $(function () {
+        const options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            modalName: "题目",
+            sortName: "createTime",
+            sortOrder: "desc",
+            pageSize: 30,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    sortable: true
+                },
+                {
+                    field: 'orderNum',
+                    title: '显示顺序',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: 'content',
+                    title: '内容摘要'
+                },
+                {
+                    field: 'questionType',
+                    title: '题型',
+                    align: 'center',
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tiku_question_type, item.questionType);
+                    }
+                },
+                {
+                    field: 'auditStatus',
+                    title: '审核状态',
+                    align: 'center',
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tiku_question_audit_status, item.auditStatus);
+                    }
+                },
+                {
+                    field: 'use',
+                    title: '使用状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(sys_use_status, item.use);
+                    }
+                },
+                {
+                    field: 'year',
+                    title: '年份',
+                    visible: false
+                },
+                {
+                    field: "term",
+                    title: "学期",
+                    visible: false,
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tiku_question_year, item.term);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
+                },
+                {
+                    field: "createBy",
+                    title: "创建者",
+                    visible: false
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    visible: false,
+                    sortable: true
+                },
+                {
+                    field: "updateBy",
+                    title: "更新者",
+                    visible: false
+                },
+                {
+                    field: "remark",
+                    title: "备注",
+                    visible: false
+                },
+                {
+                    field: "score",
+                    title: "答案数量"
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        const actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="questionDetail(\'' + row.id + '\')"><i class="fa fa-chevron-circle-right"></i>详情</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + '" href="javascript:void(0)" onclick="showAnswer(\'' + row.id + '\')"><i class="fa fa-angellist"></i>答案</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-warning btn-xs ' + '" href="javascript:void(0)" onclick="reAudit(\'' + row.id + '\')"><i class="fa fa-eye"></i>复审</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*查看题目详情*/
+    function questionDetail(id) {
+        const url = prefix + '/detail/' + id;
+        $.modal.open("题目详情", url);
+    }
+
+    /*展示该题目的答案列表*/
+    function showAnswer(questionId) {
+        const url = prefix + '/getQuestionAnswer/' + questionId;
+        $.modal.openTab("答案列表", url);
+    }
+
+    /*复审*/
+    function reAudit(id) {
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: prefix + "/reAudit/" + id,
+            async: false,
+            error: function (request) {
+                $.modal.alertError("系统错误");
+            },
+            success: function (data) {
+                $.operate.successCallback(data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('提交详情')"/>
+</head>
+<body class="white-bg">
+<h3>- - - 原题内容 - - -</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${fullContent})]
+</div>
+<br/>
+<h3>- - - 修改后内容 - - -</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${questionSub.fullContent})]
+</div>
+<h3>- - - 错误提交备注 - - -</h3>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    [(${questionSub.submitRemark})]
+</div>
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

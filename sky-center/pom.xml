@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.swing</groupId>
+        <artifactId>durian</artifactId>
+        <version>1.0.0-SNAPHOT</version>
+    </parent>
+
+    <artifactId>sky-center</artifactId>
+    <version>1.0.0-SNAPHOT</version>
+    <packaging>pom</packaging>
+
+    <!--模块管理-->
+    <modules>
+        <!--单点登录基础模块-->
+        <module>sky-center-module</module>
+        <!--单点登录框架模块-->
+        <module>sky-center-framework</module>
+        <!--单点登录接口模块-->
+        <module>sky-center-api</module>
+        <module>sky-center-inner</module>
+    </modules>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-center-module</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-center-framework</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-center-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.swing</groupId>
+                <artifactId>sky-center-inner</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

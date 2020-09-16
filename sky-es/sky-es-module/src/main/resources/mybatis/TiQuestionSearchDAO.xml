@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swing.sky.es.module.dao.TiQuestionSearchDAO">
+    <resultMap id="BaseResultMap" type="com.swing.sky.es.module.domain.TiQuestionSearchDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="creatorName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="question_type" jdbcType="CHAR" property="questionType"/>
+        <result column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="review_point" jdbcType="VARCHAR" property="reviewPoint"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+    </resultMap>
+
+    <sql id="table_name">ti_question</sql>
+
+    <sql id="Base_Column_List">
+    ti_question.id,ti_question.creator_id,ti_question.create_by,ti_question.create_time, ti_question.update_time, ti_question.question_type, ti_question.course_id,ti_question.review_point, ti_question.content</sql>
+
+
+    <select id="listAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table_name"/>
+        where
+        is_use = '1'
+        and
+        audit_status = 'B'
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

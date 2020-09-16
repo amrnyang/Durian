@@ -4,8 +4,8 @@ import com.swing.sky.common.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.swing.sky.common.constant.HttpConstant.TOKEN_HEADER_NAME;
-import static com.swing.sky.common.constant.HttpConstant.TOKEN_PREFIX_NAME;
+import static com.swing.sky.common.constant.TokenConstant.TOKEN_HEADER_NAME;
+import static com.swing.sky.common.constant.TokenConstant.TOKEN_PREFIX_NAME;
 
 /**
  * token处理工具

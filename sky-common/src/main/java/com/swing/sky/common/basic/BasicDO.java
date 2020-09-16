@@ -1,7 +1,6 @@
 package com.swing.sky.common.basic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.swing.sky.common.annotation.Excel;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -17,43 +16,36 @@ public class BasicDO {
     /**
      * 主键id,自增字段
      */
-    @Excel(name = "ID", cellType = Excel.ColumnType.NUMERIC)
     protected Long id;
     /**
      * 是否使用（1 使用，0 停用）
      */
-    @Excel(name = "使用状态", readConverterExp = "true=使用,false=停用")
     protected Boolean use;
 
     /**
      * 显示顺序
      */
-    @Excel(name = "显示顺序")
     protected Integer orderNum;
 
     /**
      * 创建者
      */
-    @Excel(name = "创建者")
     protected String createBy;
 
     /**
      * 创建时间
      */
-    @Excel(name = "创建时间", dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     protected Date createTime;
 
     /**
      * 更新者
      */
-    @Excel(name = "更新者")
     protected String updateBy;
 
     /**
      * 更新时间
      */
-    @Excel(name = "更新时间", dateFormat = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     protected Date updateTime;
 
