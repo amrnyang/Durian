@@ -69,6 +69,8 @@
 
 在部署前，请确保你已经搭建好了部署环境 [Durain部署环境](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2866363&doc_id=892234)
 
+如果您对ES还不太熟悉，请参考我的实践笔记 [ES6.8.11实践笔记](https://gitee.com/qiu-qian/Durian/wikis/pages?sort_id=2803809&doc_id=892234)
+
 目前项目共有三个服务一个应用，如果你的计算机配置允许，可同时全部部署(大概4G内存占用）顺序为
 * sky-center 校内信息中心，提供课程，专业，学生信息等服务
 * sky-es    搜索引擎服务，为应用提供全文检索服务
